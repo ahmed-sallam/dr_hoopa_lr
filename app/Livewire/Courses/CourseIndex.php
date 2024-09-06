@@ -50,7 +50,9 @@ class CourseIndex extends Component
 
     protected function setQueryParams($courseId)
     {
-        $this->dispatch('update-url', course_id: $courseId);
+        if ($courseId) {
+            $this->dispatch('update-url', course_id: $courseId);
+        }
     }
 
     public function getFoldersTree()

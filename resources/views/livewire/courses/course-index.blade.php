@@ -3,7 +3,7 @@
     <div class="flex items-center justify-end gap-2">
         <div
             class="flex items-center gap-2 justify-start bg-gray-100 py-2 rounded-3xl dark:bg-gray-800 px-4 flex-1 flex-row-reverse">
-            <div wire:click="selectCourse()" class="cursor-pointer">الكورسات</div>
+            <div href="{{ route('course.index') }}" wire:navigate class="cursor-pointer">الكورسات</div>
             @foreach ($this->getFoldersTree() as $folder)
                 <div><svg class="w-6
                 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -13,8 +13,7 @@
                             d="m10 16 4-4-4-4" />
                     </svg>
                 </div>
-                <div wire:click="selectCourse({{ $folder }})" class="cursor-pointer">{{ $folder->title }}
-                </div>
+                <div wire:click="selectCourse({{ $folder->id }})" class="cursor-pointer">{{ $folder->title }}</div>
             @endforeach
         </div>
         {{-- Back Button --}}
@@ -99,7 +98,7 @@
                         <div>
 
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white cursor-pointer hover:text-primary hover:underline"
-                                wire:click="selectCourse({{ $mCourse }})">
+                                wire:click="selectCourse({{ $mCourse->id }})">
                                 {{ $mCourse->title }}</h5>
                             {{-- sub stitle --}}
                             <h6 class="text-sm font-light ">{{ $mCourse->sub_title }}</h6>
