@@ -3,7 +3,7 @@
     <div class="flex items-center justify-end gap-2">
         <div
             class="flex items-center gap-2 justify-start bg-gray-100 py-2 rounded-3xl dark:bg-gray-800 px-4 flex-1 flex-row-reverse">
-            <div href="{{ route('course.index') }}" wire:navigate class="cursor-pointer">الكورسات</div>
+            <div wire:click="selectCourse()" class="cursor-pointer">الكورسات</div>
             @foreach ($this->getFoldersTree() as $folder)
                 <div><svg class="w-6
                 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -199,4 +199,14 @@
 
         </ul>
     </div>
+
+    @script
+        <script>
+            window.addEventListener('update-url', event => {
+                const url = new URL(window.location);
+                url.searchParams.set('course_id', event.detail.course_id);
+                window.history.pushState({}, '', url);
+            });
+        </script>
+    @endscript
 </div>
