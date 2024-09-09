@@ -4,6 +4,7 @@ namespace App\Livewire\Courses;
 
 use App\Models\Course;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Illuminate\Database\Eloquent\Collection;
 
 class CourseIndex extends Component
@@ -12,7 +13,9 @@ class CourseIndex extends Component
     public string $logo = 'images/courses.png';
     public Collection $courses;
     public ?Course $course = null;
-    public $layout = 'layouts.app';
+
+    public bool $isCreateCourse = false;
+    public bool $showContent = true;
 
     public function mount()
     {
@@ -22,6 +25,8 @@ class CourseIndex extends Component
         // Order by id and get only parent courses
         // $this->courses = Course::where('parent_id', null)->orderBy('id', 'desc')->get();
         $this->selectCourse($this->course);
+
+        // $this->createCourse();
     }
 
     public function render()
@@ -31,7 +36,7 @@ class CourseIndex extends Component
             'logo' => $this->logo,
             'courses' => $this->courses,
             'course' => $this->course,
-        ])->layout($this->layout);
+        ])->layout('layouts.app'); // Specify the layout directly here
     }
 
     public function selectCourse(?Course $course = null)
@@ -64,5 +69,19 @@ class CourseIndex extends Component
         $tree[] = $this->course;
 
         return $tree;
+    }
+
+    public function createCourse()
+    {
+        $this->isCreateCourse = true;
+        $this->showContent = false;
+    }
+
+    #[On('course-created')]
+    public function courseCreated()
+    {
+        $this->isCreateCourse = false;
+        $this->showContent = true;
+        $this->dispatch('reset-form');
     }
 }

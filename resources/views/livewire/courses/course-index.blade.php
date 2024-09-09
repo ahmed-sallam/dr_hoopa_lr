@@ -87,117 +87,124 @@
 
         {{-- left side --}}
         <div class="lg:col-span-8 p-4 gap-4 flex  flex-col items-start justify-start">
-            @foreach ($courses as $mCourse)
-                <div
-                    class="flex hover:scale-105  transition-all duration-300  flex-col md:flex-row items-center border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 w-full ">
-                    <div class="md:w-1/3 h-full">
-                        <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg "
-                            src="{{ Storage::url($mCourse->thumbnail) }}" alt="Course Image">
-                    </div>
-                    <div class="flex flex-col justify-between items-start p-4 leading-normal md:w-2/3 h-full">
-                        <div>
-
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white cursor-pointer hover:text-primary hover:underline"
-                                wire:click="selectCourse({{ $mCourse->id }})">
-                                {{ $mCourse->title }}</h5>
-                            {{-- sub stitle --}}
-                            <h6 class="text-sm font-light ">{{ $mCourse->sub_title }}</h6>
+            @if ($isCreateCourse)
+                <livewire:courses.create-course :parent_id="$course ? $course->id : null" />
+            @elseif ($showContent)
+                {{-- courses --}}
+                @foreach ($courses as $mCourse)
+                    <div
+                        class="flex hover:scale-105  transition-all duration-300  flex-col md:flex-row items-center border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 w-full ">
+                        <div class="md:w-1/3 h-full">
+                            <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg "
+                                src="{{ Storage::url($mCourse->thumbnail) }}" alt="Course Image">
                         </div>
+                        <div class="flex flex-col justify-between items-start p-4 leading-normal md:w-2/3 h-full">
+                            <div>
 
-                        <div class="grid grid-cols-3 w-full gap-1.5 text-xs font-light">
-                            {{-- price and add to cart section --}}
-                            <div
-                                class="col-span-2  border rounded-md border-b-gray-100 dark:border-gray-800 flex items-center justify-between gap-2 p-1">
-                                <div>
-                                    <div class="flex items-center justify-start gap-2 ">
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            fill="currentColor" viewBox="0 0 24 24">
-                                            <path fill-rule="evenodd"
-                                                d="M14 7h-4v3a1 1 0 0 1-2 0V7H6a1 1 0 0 0-.997.923l-.917 11.924A2 2 0 0 0 6.08 22h11.84a2 2 0 0 0 1.994-2.153l-.917-11.924A1 1 0 0 0 18 7h-2v3a1 1 0 1 1-2 0V7Zm-2-3a2 2 0 0 0-2 2v1H8V6a4 4 0 0 1 8 0v1h-2V6a2 2 0 0 0-2-2Z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        @if ($mCourse->discount && $mCourse->discount > 0)
-                                            <p>{{ $mCourse->net_price }} ج.م</p>
-                                            <p class="line-through text-danger">{{ $mCourse->price }} ج.م</p>
-                                        @else
-                                            <p>{{ $mCourse->price }} ج.م</p>
-                                        @endif
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white cursor-pointer hover:text-primary hover:underline"
+                                    wire:click="selectCourse({{ $mCourse->id }})">
+                                    {{ $mCourse->title }}</h5>
+                                {{-- sub stitle --}}
+                                <h6 class="text-sm font-light ">{{ $mCourse->sub_title }}</h6>
+                            </div>
 
-                                    </div>
-                                    @if ($mCourse->discount && $mCourse->discount > 0)
+                            <div class="grid grid-cols-3 w-full gap-1.5 text-xs font-light">
+                                {{-- price and add to cart section --}}
+                                <div
+                                    class="col-span-2  border rounded-md border-b-gray-100 dark:border-gray-800 flex items-center justify-between gap-2 p-1">
+                                    <div>
                                         <div class="flex items-center justify-start gap-2 ">
                                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 fill="currentColor" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M20 7h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C10.4 2.842 8.949 2 7.5 2A3.5 3.5 0 0 0 4 5.5c.003.52.123 1.033.351 1.5H4a2 2 0 0 0-2 2v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V9a2 2 0 0 0-2-2Zm-9.942 0H7.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM13 14h-2v8h2v-8Zm-4 0H4v6a2 2 0 0 0 2 2h3v-8Zm6 0v8h3a2 2 0 0 0 2-2v-6h-5Z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M14 7h-4v3a1 1 0 0 1-2 0V7H6a1 1 0 0 0-.997.923l-.917 11.924A2 2 0 0 0 6.08 22h11.84a2 2 0 0 0 1.994-2.153l-.917-11.924A1 1 0 0 0 18 7h-2v3a1 1 0 1 1-2 0V7Zm-2-3a2 2 0 0 0-2 2v1H8V6a4 4 0 0 1 8 0v1h-2V6a2 2 0 0 0-2-2Z"
+                                                    clip-rule="evenodd" />
                                             </svg>
-                                            <p>توفير {{ ($mCourse->price * $mCourse->discount) / 100 }} ج.م</p>
-                                            {{-- yello badg with  20% discount  --}}
-                                            <span
-                                                class="bg-yellow-500 text-black text-xs px-2 py-1 rounded-md flex items-center gap-1.5">
-                                                خصم {{ $mCourse->discount }}%
-                                            </span>
-                                        </div>
-                                    @endif
+                                            @if ($mCourse->discount && $mCourse->discount > 0)
+                                                <p>{{ $mCourse->net_price }} ج.م</p>
+                                                <p class="line-through text-danger">{{ $mCourse->price }} ج.م</p>
+                                            @else
+                                                <p>{{ $mCourse->price }} ج.م</p>
+                                            @endif
 
+                                        </div>
+                                        @if ($mCourse->discount && $mCourse->discount > 0)
+                                            <div class="flex items-center justify-start gap-2 ">
+                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    fill="currentColor" viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M20 7h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C10.4 2.842 8.949 2 7.5 2A3.5 3.5 0 0 0 4 5.5c.003.52.123 1.033.351 1.5H4a2 2 0 0 0-2 2v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V9a2 2 0 0 0-2-2Zm-9.942 0H7.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM13 14h-2v8h2v-8Zm-4 0H4v6a2 2 0 0 0 2 2h3v-8Zm6 0v8h3a2 2 0 0 0 2-2v-6h-5Z" />
+                                                </svg>
+                                                <p>توفير {{ ($mCourse->price * $mCourse->discount) / 100 }} ج.م</p>
+                                                {{-- yello badg with  20% discount  --}}
+                                                <span
+                                                    class="bg-yellow-500 text-black text-xs px-2 py-1 rounded-md flex items-center gap-1.5">
+                                                    خصم {{ $mCourse->discount }}%
+                                                </span>
+                                            </div>
+                                        @endif
+
+                                    </div>
+                                    {{-- btton add to cart with icon --}}
+                                    <button
+                                        class=" bg-primary/80 text-black text-xs px-4 py-1 rounded-md flex items-center gap-1.5">
+                                        <svg class="w-6 h-6 text-black" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd"
+                                                d="M5 3a1 1 0 0 0 0 2h.687L7.82 15.24A3 3 0 1 0 11.83 17h2.34A3 3 0 1 0 17 15H9.813l-.208-1h8.145a1 1 0 0 0 .979-.796l1.25-6A1 1 0 0 0 19 6h-2.268A2 2 0 0 1 15 9a2 2 0 1 1-4 0 2 2 0 0 1-1.732-3h-1.33L7.48 3.796A1 1 0 0 0 6.5 3H5Z"
+                                                clip-rule="evenodd" />
+                                            <path fill-rule="evenodd"
+                                                d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        اضف الى المشتريات
+                                    </button>
                                 </div>
-                                {{-- btton add to cart with icon --}}
-                                <button
-                                    class=" bg-primary/80 text-black text-xs px-4 py-1 rounded-md flex items-center gap-1.5">
-                                    <svg class="w-6 h-6 text-black" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd"
-                                            d="M5 3a1 1 0 0 0 0 2h.687L7.82 15.24A3 3 0 1 0 11.83 17h2.34A3 3 0 1 0 17 15H9.813l-.208-1h8.145a1 1 0 0 0 .979-.796l1.25-6A1 1 0 0 0 19 6h-2.268A2 2 0 0 1 15 9a2 2 0 1 1-4 0 2 2 0 0 1-1.732-3h-1.33L7.48 3.796A1 1 0 0 0 6.5 3H5Z"
-                                            clip-rule="evenodd" />
-                                        <path fill-rule="evenodd"
-                                            d="M14 5a1 1 0 1 0-2 0v1h-1a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0V8h1a1 1 0 1 0 0-2h-1V5Z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                    اضف الى المشتريات
-                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @endif
 
         </div>
     </div>
-    {{-- addd button --}}
-    <div class="flex items-center justify-center fixed bottom-10 left-36 z-20 ">
-        <button type="button" data-dropdown-toggle="dropdownDistance" data-dropdown-offset-distance="35"
-            data-dropdown-offset-skidding="0" aria-hidden="true"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+    @if ($showContent)
+        {{-- addd button --}}
+        <div class="flex items-center justify-center fixed bottom-10 left-36 z-20 ">
+            <button type="button" data-dropdown-toggle="dropdownDistance" data-dropdown-offset-distance="35"
+                data-dropdown-offset-skidding="0" aria-hidden="true"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
             hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-500/20 ">
-            <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5 12h14m-7 7V5" />
-            </svg>
-            <span class="sr-only">add course</span>
-        </button>
-    </div>
-    <div id="dropdownDistance"
-        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-gray-700">
-        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-            <li>
-                <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
-                    كورس</a>
-            </li>
-            @if ($course)
+                <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 12h14m-7 7V5" />
+                </svg>
+                <span class="sr-only">add course</span>
+            </button>
+        </div>
+        <div id="dropdownDistance"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-gray-700">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
                 <li>
-                    <a href="#"
+                    <a wire:click="createCourse"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
-                        فيديو</a>
+                        كورس</a>
                 </li>
-            @endif
+                @if ($course)
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
+                            فيديو</a>
+                    </li>
+                @endif
 
-        </ul>
-    </div>
+            </ul>
+        </div>
+    @endif
 
     @script
         <script>
