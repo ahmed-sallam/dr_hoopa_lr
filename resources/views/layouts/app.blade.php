@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Facades\Storage;
+
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
@@ -44,12 +48,13 @@
                     <div
                         class=" border border-gray-50 dark:border-gray-800 rounded-full min-h-10 lg:max-w-1/2 flex items-center justify-start gap-1 p-1">
                         <div
-                            class="min-w-28 py-2 px-6 rounded-s-full bg-gray-50 dark:bg-gray-800 text-center hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer hover:scale-105 transition-all duration-300">
-                            {{ auth()->user()->name }}
+                            class="min-w-28 py-2 px-6 rounded-s-full bg-gray-50 dark:bg-gray-800 text-center hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer hover:scale-105 transition-all duration-300 flex items-center justify-center">
+                            <img src="{{ asset(auth()->user()->avatar) }}" class="w-10 h-10 rounded-full me-2" />
+                            {{ auth()->user()->first_name }}
                         </div>
                         <div
                             class=" py-2 px-6 rounded-e-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center gap-2">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
+                            <svg class="w-10 h-10 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z" />
@@ -57,21 +62,21 @@
                                     d="M21.707 21.707a1 1 0 0 1-1.414 0l-3.5-3.5a1 1 0 0 1 1.414-1.414l3.5 3.5a1 1 0 0 1 0 1.414Z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
+                            <svg class="w-10 h-10 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
                             </svg>
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
+                            <svg class="w-10 h-10 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd"
                                     d="M3 5.983C3 4.888 3.895 4 5 4h14c1.105 0 2 .888 2 1.983v8.923a1.992 1.992 0 0 1-2 1.983h-6.6l-2.867 2.7c-.955.899-2.533.228-2.533-1.08v-1.62H5c-1.105 0-2-.888-2-1.983V5.983Zm5.706 3.809a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Zm2.585.002a1 1 0 1 1 .003 1.414 1 1 0 0 1-.003-1.414Zm5.415-.002a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
+                            <svg class="w-10 h-10 text-gray-800 dark:text-white hover:scale-150 transition-all duration-300 cursor-pointer"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 fill="currentColor" viewBox="0 0 24 24">
                                 <path
@@ -80,6 +85,7 @@
 
                         </div>
                     </div>
+
                 </div>
                 <div class="flex items-center justify-center gap-2">
                     <h2>{{ $title ?? '' }}</h2>
@@ -129,6 +135,15 @@
 
                             <img src="{{ asset('images/home.png') }}" class="w-8 h-8" />
                             <p>الرئيسية</p>
+                        </a>
+                    </li>
+                    <li class="flex items-center justify-center ">
+                        <a href="{{ route('user.index') }}" wire:navigate
+                            class="w-28 flex items-center justify-center flex-col p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group
+                            {{ request()->routeIs('user.index') ? 'bg-gray-700' : '' }}">
+
+                            <img src="{{ asset('images/users.png') }}" class="w-8 h-8" />
+                            <p>المستخدمين</p>
                         </a>
                     </li>
                     <li class="flex items-center justify-center ">

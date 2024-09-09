@@ -31,12 +31,7 @@ class CourseIndex extends Component
 
     public function render()
     {
-        return view('livewire.courses.course-index', [
-            'title' => $this->title,
-            'logo' => $this->logo,
-            'courses' => $this->courses,
-            'course' => $this->course,
-        ])->layout('layouts.app'); // Specify the layout directly here
+        return view('livewire.courses.course-index')->layout('layouts.app', ['title' => $this->title, 'logo' => $this->logo]); // Specify the layout directly here
     }
 
     public function selectCourse(?Course $course = null)

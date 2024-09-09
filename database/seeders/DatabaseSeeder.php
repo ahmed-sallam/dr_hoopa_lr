@@ -25,10 +25,20 @@ class DatabaseSeeder extends Seeder
         $userRole = Role::create(['name' => 'user']);
 
         $admin = User::create([
-            'name' => 'Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
             'role_id' => $adminRole->id,
+            'phone' => '01000000000',
+            'guardian_phone' => '01000000000',
+            'avatar' => 'images/avatar.png',
+            'address' => 'Cairo',
+            'gender' => 'male',
+            'birth_date' => '2000-01-01',
+            'address_description' => 'Cairo',
+            'city' => 'Cairo',
+            'state' => 'Cairo',
         ]);
         // $user = User::create([
         //     'name' => 'User',
@@ -97,7 +107,7 @@ class DatabaseSeeder extends Seeder
                 'price' => $price,
                 'discount' => $discount,
                 'net_price' => $net_price,
-                'status' => $i == 0 ? 'inactive' : 'active' ,
+                'status' => $i == 0 ? 'inactive' : 'active',
                 'parent_id' => ($i >= 2) ? 1 : null,
                 // 'data' => [
                 //     'duration' => '10 hours',
@@ -107,6 +117,25 @@ class DatabaseSeeder extends Seeder
                 // ],
                 'thumbnail' => 'images/hero1.jpg',
                 'featured_video' => 'https://www.youtube.com/embed/XbVBHyK9Nxw',
+            ]);
+        }
+
+        for ($i = 0; $i < 10; $i++) {
+            $user = User::create([
+                'first_name' => 'User ' . $i,
+                'last_name' => 'User ' . $i,
+                'email' => 'user' . $i . '@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role_id' => $userRole->id,
+                'avatar' => 'images/avatar.png',
+                'phone' => '010000000' . $i,
+                'guardian_phone' => '010000000' . $i,
+                'address' => 'Cairo',
+                'gender' => 'male',
+                'birth_date' => '2000-01-01',
+                'address_description' => 'Cairo',
+                'city' => 'Cairo',
+                'state' => 'Cairo',
             ]);
         }
     }
