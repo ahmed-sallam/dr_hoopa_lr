@@ -159,7 +159,7 @@
                 </div>
                 <div class="mb-4">
                     <button type="button" wire:click="removeDataItem({{ $index }})"
-                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">حذف</button>
+                        class="text-white bg-danger/70 hover:bg-danger/80 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-danger/60 dark:hover:bg-danger/70 ">حذف</button>
                 </div>
             @endforeach
 
@@ -185,11 +185,19 @@
                 </div>
             </div>
             <button type="button" wire:click="addDataItem"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">إضافة
+                class="text-white bg-primary/70 hover:bg-primary/80 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary/60 dark:hover:bg-primary/70 ">إضافة
                 عنصر</button>
         </div>
 
-        <button type="submit"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">حفظ</button>
+        <div>
+
+            <button type="submit"
+                class="text-white bg-primary/70 hover:bg-primary/80 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary/60 dark:hover:bg-primary/70 ">حفظ</button>
+            <button type="button" wire:click="resetForm"
+                class="text-white bg-warning/70 hover:bg-warning/80  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-warning/60 dark:hover:bg-warning/70 ">إعادة
+                الإعداد</button>
+            <button type="button" wire:click="cancel"
+                class="text-white bg-danger/70 hover:bg-danger/80 focus:ring-4   font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-danger/60 dark:hover:bg-danger/70 ">إلغاء</button>
+        </div>
     </form>
 </div>

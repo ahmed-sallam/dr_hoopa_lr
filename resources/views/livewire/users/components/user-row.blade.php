@@ -9,7 +9,8 @@
             </p>
         </div>
     </div>
-    <button class="bg-primary/80 hover:bg-primary text-white font-bold py-2 px-4 rounded">
+    <button
+        class="bg-primary/70 hover:bg-primary/80 text-gray-300 font-bold py-2 px-4 rounded dark:bg-primary/60 dark:hover:bg-primary/70">
         مشاهدة
     </button>
 </div>

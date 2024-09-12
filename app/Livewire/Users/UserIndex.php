@@ -11,11 +11,11 @@ class UserIndex extends Component
 {
     public string $title = 'المستخدمين';
     public string $logo = 'images/users.png';
-    public string $selectedTab = 'users';
+    public string $selectedTab = '';
 
     public function mount()
     {
-        $this->selectedTab = request()->query('tab') ?? 'users';
+        $this->selectedTab = request()->query('query') ?? 'users';
     }
 
     public function render()
@@ -44,7 +44,7 @@ class UserIndex extends Component
 
     public function permissions()
     {
-        return Permission::all();
+        return Permission::all()->groupBy('table_name')->toArray();
     }
     public function setQueryParams($query)
     {

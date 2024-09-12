@@ -1,8 +1,8 @@
 <div class="relative">
     {{-- nvigation line --}}
-    <div class="flex items-center justify-end gap-2">
+    <div class="flex items-center justify-end gap-2 ">
         <div
-            class="flex items-center gap-2 justify-start bg-gray-100 py-2 rounded-3xl dark:bg-gray-800 px-4 flex-1 flex-row-reverse">
+            class="flex items-center gap-2 justify-start bg-gray-100 py-2 rounded-3xl dark:bg-gray-800 px-4 flex-1 flex-row-reverse  flex-wrap">
             <div href="{{ route('course.index') }}" wire:navigate class="cursor-pointer">الكورسات</div>
             @foreach ($this->getFoldersTree() as $folder)
                 <div><svg class="w-6
@@ -87,7 +87,7 @@
         {{-- left side --}}
         <div class="lg:col-span-8 p-4 gap-4 flex  flex-col items-start justify-start">
             @if ($isCreateCourse)
-                <livewire:courses.create-course :parent_id="$course ? $course->id : null" />
+                <livewire:courses.create-course :parent_id="$course ? $course->id : null" :key="$course ? $course->id : null" />
             @elseif ($showContent)
                 {{-- courses --}}
                 @foreach ($courses as $mCourse)
@@ -99,11 +99,11 @@
     </div>
     @if ($showContent)
         {{-- addd button --}}
-        <div class="flex items-center justify-center fixed bottom-10 left-36 z-20 ">
+        <div class="flex items-center justify-center fixed bottom-10 left-2 md:left-36 z-20 ">
             <button type="button" data-dropdown-toggle="dropdownDistance" data-dropdown-offset-distance="35"
                 data-dropdown-offset-skidding="0" aria-hidden="true"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-            hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-500/20 ">
+                class="text-white bg-primary/70 hover:bg-primary/80 focus:ring-4 focus:outline-none focus:ring-primary/30 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-primary/70 dark:hover:bg-primary/80 dark:focus:ring-primary/80
+            hover:scale-105 transition-all duration-300 shadow-lg shadow-primary/50/20 ">
                 <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

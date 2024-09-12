@@ -61,7 +61,7 @@
             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             @if ($this->selectedTab == 'users')
                 <button
-                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-blue-700 hover:bg-blue-800">
+                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-primary/70 hover:bg-primary/80 dark:bg-primary/60 dark:hover:bg-primary/70 text-gray-300">
                     <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -70,17 +70,28 @@
                     اضف مستخدم
                 </button>
             @endif
+            @if ($this->selectedTab == 'roles')
+                <button
+                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-primary/70 hover:bg-primary/80 dark:bg-primary/60 dark:hover:bg-primary/70 text-gray-300">
+                    <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12h14m-7 7V5" />
+                    </svg>
+                    اضف دور
+                </button>
+            @endif
         </div>
 
         {{-- left side --}}
         <div class="lg:col-span-8 p-4 gap-4 flex  flex-col items-start justify-start">
-            @if ($this->selectedTab == 'users')
+            @if ($this->selectedTab === 'users')
                 @foreach ($this->users() as $user)
                     <livewire:users.components.user-row :$user :key="$user->id" />
                 @endforeach
-            @elseif ($this->selectedTab == 'roles')
+            @elseif ($this->selectedTab === 'roles')
                 @foreach ($this->roles() as $role)
-                    <livewire:users.components.role-row :$role :key="$role->id" />
+                    @livewire('users.components.role-row', ['role' => $role, 'key' => $role->id])
                 @endforeach
             @endif
         </div>

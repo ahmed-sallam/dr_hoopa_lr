@@ -147,5 +147,8 @@ class CourseForm extends Form
         $this->status = 'inactive';
         $this->data = [];
         $this->parent_id = null;
+        $this->newDataSvg = '';
+        $this->newDataTitle = '';
+        $this->newDataLink = '';
     }
 }

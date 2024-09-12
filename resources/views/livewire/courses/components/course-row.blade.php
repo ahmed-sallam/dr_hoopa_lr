@@ -1,5 +1,5 @@
 <div
-    class="flex hover:scale-105  transition-all duration-300  flex-col md:flex-row items-center border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 w-full md:h-[200px] ">
+    class="flex hover:scale-105  transition-all duration-300  flex-col md:flex-row md:items-center  border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 w-full md:h-[200px] ">
     <div class="md:w-1/3 h-full">
         <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg "
             src="{{ Storage::url($course->thumbnail) }}" alt="Course Image">
@@ -17,7 +17,7 @@
         <div class="grid grid-cols-3 w-full gap-1.5 text-xs font-light">
             {{-- price and add to cart section --}}
             <div
-                class="col-span-2  border rounded-md border-b-gray-100 dark:border-gray-800 flex items-center justify-between gap-2 p-1">
+                class=" border rounded-md border-b-gray-100 dark:border-gray-800 flex items-center justify-between gap-2 p-1 col-span-3 md:col-span-2">
                 <div>
                     <div class="flex items-center justify-start gap-2 ">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -54,7 +54,8 @@
 
                 </div>
                 {{-- btton add to cart with icon --}}
-                <button class=" bg-primary/80 text-black text-xs px-4 py-1 rounded-md flex items-center gap-1.5">
+                <button
+                    class=" bg-primary/80 text-black text-xs px-4 py-1 rounded-md flex items-center gap-1.5 dark:bg-primary/70 dark:hover:bg-primary/80 ">
                     <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path fill-rule="evenodd"

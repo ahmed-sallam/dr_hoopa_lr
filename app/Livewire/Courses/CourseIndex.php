@@ -75,8 +75,9 @@ class CourseIndex extends Component
     #[On('course-created')]
     public function courseCreated()
     {
+        $this->selectCourse($this->course);
+        $this->dispatch('reset-form');
         $this->isCreateCourse = false;
         $this->showContent = true;
-        $this->dispatch('reset-form');
     }
 }
