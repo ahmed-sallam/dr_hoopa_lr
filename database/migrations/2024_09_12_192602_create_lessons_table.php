@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('sub_title');
+            $table->text('description');
+            $table->boolean('is_premium')->default(true);
+            $table->string('thumbnail')->nullable();
+            $table->string('featured_video')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->integer('order')->default(0);
+            $table->integer('duration')->default(0);
+            $table->json('data')->nullable();
+            $table->foreignId('course_id')->constrained('courses');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -19,11 +19,13 @@ export default {
                 "noto-kufi-arabic": ["Noto Kufi Arabic", "sans-serif"],
             },
             colors: {
-                'primary': '#007bff',
-                'secondary': '#6c757d',
-                'success': '#28a745',
-                'danger': '#dc2626',
-                'warning': '#ffc107',
+                // primary: "rgba(var(--primary))",
+                'primary': '#033468',
+                'secondary': '#1877F2',
+                'accent': '#cccccc',
+                'success': '#19b500',
+                'danger': '#ff0000',
+                'warning': '#ffd914',
                 'info': '#17a2b8',
                 'light': '#f8f9fa',
 
