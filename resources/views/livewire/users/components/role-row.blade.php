@@ -10,7 +10,7 @@
             تعديل
         </button>
         <button
-            class="bg-primary/80 hover:bg-primary text-gray-300 font-bold py-2 px-4 rounded dark:bg-primary/60 dark:hover:bg-primary/70">
+            class="bg-secondary hover:bg-primary text-gray-300 font-bold py-2 px-4 rounded dark:bg-secondary hover:bg-secondary/80">
             الصلاحيات
         </button>
     </div>

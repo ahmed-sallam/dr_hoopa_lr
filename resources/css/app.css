@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 *{
-    @apply transition-colors duration-300 ease-out ;
+    @apply transition-colors duration-100 ease-in-out ;
 
 }
 body:lang(ar) {
@@ -31,9 +31,17 @@ body {
 :root{
     /*--primary: 3, 52, 104;*/
     /*--secondary:  24, 119, 242;*/
+    --accent2: 204, 204, 204;
+    --dark: 229,229,229;
+
 }
 
 .dark{
     /*--primary: 104, 52, 104;*/
-
+    --accent2: 100, 100, 100;
+    --dark: 26,26,26;
+}
+.light{
+    --accent2: 204, 204, 204;
+    --dark: 229,229,229;
 }

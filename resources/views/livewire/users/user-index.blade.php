@@ -2,7 +2,7 @@
     {{-- nvigation line --}}
     <div class="flex items-center justify-end gap-2">
         <div
-            class="flex items-center gap-2 justify-start bg-gray-100 py-2 rounded-3xl dark:bg-gray-800 px-4 flex-1 flex-row-reverse">
+            class="flex items-center gap-2 justify-start bg-gray-100 py-2 rounded-3xl dark:bg-dark px-4 flex-1 flex-row-reverse">
             <div href="{{ route('user.index') }}" wire:navigate class="cursor-pointer">المستخدمين</div>
             {{-- @foreach ($this->getFoldersTree() as $folder)
                 <div><svg class="w-6
@@ -34,10 +34,10 @@
     {{-- main contetn --}}
     <div class="grid lg:grid-cols-12 gap-4 mt-6 lg:mt-10 w-full">
         {{-- right side --}}
-        <div class="lg:col-span-4 bg-gray-100 dark:bg-gray-800 rounded-lg p-3">
+        <div class="lg:col-span-4 bg-gray-100 dark:bg-dark rounded-lg p-3">
             <ul class="space-y-2">
                 <li @click="$wire.selectTab('users')"
-                    class="px-6 py-3 flex items-center justify-start gap-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg {{ $this->selectedTab == 'users' ? 'bg-gray-200 dark:bg-gray-700' : '' }}">
+                    class="px-6 py-3 flex items-center justify-start gap-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg {{ $this->selectedTab == 'users' ? 'bg-gray-200 dark:bg-dark' : '' }}">
                     <svg class="w-6 h-6  dark:text-white text-gray-800 " aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                         viewBox="0 0 24 24">
@@ -47,7 +47,7 @@
                     المستخدمون
                 </li>
                 <li @click="$wire.selectTab('roles')"
-                    class="px-6 py-3 flex items-center justify-start gap-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg {{ $this->selectedTab == 'roles' ? 'bg-gray-200 dark:bg-gray-700' : '' }}">
+                    class="px-6 py-3 flex items-center justify-start gap-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg {{ $this->selectedTab == 'roles' ? 'bg-gray-200 dark:bg-dark' : '' }}">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white " aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                         viewBox="0 0 24 24">
@@ -58,10 +58,10 @@
                 </li>
             </ul>
 
-            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-dark">
             @if ($this->selectedTab == 'users')
                 <button
-                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-primary/70 hover:bg-primary/80 dark:bg-primary/60 dark:hover:bg-primary/70 text-gray-300">
+                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-secondary hover:bg-secondary/80 dark:bg-secondary hover:bg-secondary/80 text-gray-300">
                     <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -72,7 +72,7 @@
             @endif
             @if ($this->selectedTab == 'roles')
                 <button
-                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-primary/70 hover:bg-primary/80 dark:bg-primary/60 dark:hover:bg-primary/70 text-gray-300">
+                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-secondary hover:bg-secondary/80 dark:bg-secondary hover:bg-secondary/80 text-gray-300">
                     <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

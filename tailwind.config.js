@@ -22,13 +22,16 @@ export default {
                 // primary: "rgba(var(--primary))",
                 'primary': '#033468',
                 'secondary': '#1877F2',
-                'accent': '#cccccc',
+                'accent2': "rgba(var(--accent2))",
+                'accent':'#d5d5d5',
                 'success': '#19b500',
                 'danger': '#ff0000',
                 'warning': '#ffd914',
                 'info': '#17a2b8',
                 'light': '#f8f9fa',
-
+                'dark': 'rgba(var(--dark))',
+                'dark2': '#252424',
+                'white': '#ffffff',
             },
         },
 

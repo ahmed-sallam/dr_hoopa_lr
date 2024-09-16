@@ -10,7 +10,7 @@
         </div>
     </div>
     <button
-        class="bg-primary/70 hover:bg-primary/80 text-gray-300 font-bold py-2 px-4 rounded dark:bg-primary/60 dark:hover:bg-primary/70">
+        class="bg-secondary hover:bg-secondary/80 text-gray-300 font-bold py-2 px-4 rounded dark:bg-secondary hover:bg-secondary/80">
         مشاهدة
     </button>
 </div>
