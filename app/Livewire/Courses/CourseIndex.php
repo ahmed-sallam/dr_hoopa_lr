@@ -33,6 +33,7 @@ EOT;
   public ?Course $course = null;
 
   public bool $isCreateCourse = false;
+  public bool $isEditCourse = false;
   public bool $showContent = true;
 
   public function mount()
@@ -57,6 +58,8 @@ EOT;
 
   public function selectCourse(?Course $course = null)
   {
+    $this->cancel();
+
     $this->course = $course;
 
     // Update the query parameters
@@ -95,6 +98,12 @@ EOT;
     $this->showContent = false;
   }
 
+  public function editCourse()
+  {
+    $this->isEditCourse = true;
+    $this->showContent = false;
+  }
+
   #[On("course-created")]
   public function courseCreated()
   {
@@ -106,6 +115,27 @@ EOT;
   {
     $this->dispatch("reset-form");
     $this->isCreateCourse = false;
+    $this->isEditCourse = false;
     $this->showContent = true;
+  }
+
+  public function deleteCourse()
+  {
+    $children = $this->course->children;
+
+    if ($children->count() == 0) {
+      $this->course->delete();
+      $this->goBackCourse();
+    }
+  }
+
+  public function goBackCourse()
+  {
+    $treeCount = count($this->getFoldersTree());
+    if ($treeCount > 1) {
+      $this->selectCourse($this->getFoldersTree()[$treeCount - 2]);
+    } else {
+      $this->selectCourse(null);
+    }
   }
 }

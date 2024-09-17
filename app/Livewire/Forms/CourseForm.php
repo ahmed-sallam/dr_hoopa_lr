@@ -42,7 +42,6 @@ class CourseForm extends Form
             'status' => 'required|in:active,inactive',
             'data' => 'nullable|array',
             'parent_id' => 'nullable|exists:courses,id',
-            // New validation rules for dynamic data input
             'data.*.svg' => 'required|string',
             'data.*.title' => 'required|string',
             'data.*.link' => 'required|string|url',
@@ -51,14 +50,6 @@ class CourseForm extends Form
             'newDataLink' => 'nullable|string|url',
         ];
     }
-
-
-
-    // private function calculateNetPrice()
-    // {
-    //     $this->net_price = round($this->price - ($this->price * ($this->discount / 100)), 2);
-    //     return $this->net_price;
-    // }
 
     public function setCourse(Course $course)
     {
@@ -94,12 +85,44 @@ class CourseForm extends Form
 
     public function update()
     {
-        $this->validate();
+        // Determine if thumbnail is a file upload
+        $thumbnailIsFile = $this->thumbnail && !is_string($this->thumbnail);
+
+        // Define base validation rules
+        $rules = [
+            'title' => 'required|string|max:255',
+            'sub_title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0|max:100',
+            'featured_video' => 'nullable|string',
+            'status' => 'required|in:active,inactive',
+            'data' => 'nullable|array',
+            'parent_id' => 'nullable|exists:courses,id',
+            'data.*.svg' => 'required|string',
+            'data.*.title' => 'required|string',
+            'data.*.link' => 'required|string|url',
+            'newDataSvg' => 'nullable|string',
+            'newDataTitle' => 'nullable|string',
+            'newDataLink' => 'nullable|string|url',
+        ];
+
+        // Add thumbnail validation rule if it's a file upload
+        if ($thumbnailIsFile) {
+            $rules['thumbnail'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
+
+        // Validate the data
+        $this->validate($rules);
 
         $data = $this->all();
 
-        if ($this->thumbnail && !is_string($this->thumbnail)) {
+        // Handle file upload for thumbnail
+        if ($thumbnailIsFile) {
             $data['thumbnail'] = $this->thumbnail->store('thumbnails', 'public');
+        } else {
+            // If thumbnail is a string, use the existing path
+            $data['thumbnail'] = $this->course->thumbnail;
         }
 
         // Ensure data is stored as JSON

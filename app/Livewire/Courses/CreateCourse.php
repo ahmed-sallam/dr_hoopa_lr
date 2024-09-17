@@ -12,18 +12,29 @@ class CreateCourse extends Component
     use WithFileUploads;
 
     public CourseForm $form;
+    public $course = null;
 
-    public function mount($parent_id)
+    public function mount($parent_id, $course = null)
     {
         // $this->form = new CourseForm();
         $this->form->parent_id = $parent_id;
+        if ($course) {
+            $this->course=$course;
+            $this->form->setCourse($course);
+        }
     }
 
-    public function save()
+    public function save():void
     {
+        if($this->course)
+        {
+            $this->form->update();
+            session()->flash("message", "Course Updated successfully.");
+        }else{
         $this->form->save();
-        session()->flash('message', 'Course created successfully.');
-        $this->dispatch('course-created');
+        session()->flash("message", "Course created successfully.");
+        }
+        $this->dispatch("course-created");
         // return redirect()->route('courses.index');
     }
 
@@ -39,10 +50,10 @@ class CreateCourse extends Component
 
     public function render()
     {
-        return view('livewire.courses.create-course');
+        return view("livewire.courses.create-course");
     }
 
-    #[On('reset-form')]
+    #[On("reset-form")]
     public function resetForm()
     {
         $this->form->resetForm();

@@ -1,12 +1,12 @@
 <div class="relative"
-    x-data>
+    x-data="{show_delete_confirm: false}">
     {{-- nvigation line --}}
-    <div class="flex items-center justify-end gap-2 ">
+    <div class="flex items-center justify-end gap-2 text-xs md:text-base">
         <div
             class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-dark">
             <a href="{{ route('course.index') }}" wire:navigate
                 class="cursor-pointer">الكورسات</a>
-            @foreach ($this->getFoldersTree() as $folder)
+                @foreach ($this->getFoldersTree() as $folder)
                 <div><svg class="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -21,16 +21,15 @@
                             d="m10 16 4-4-4-4" />
                     </svg>
                 </div>
-                <div wire:click="selectCourse({{ $folder->id }})"
+                    <div wire:click="selectCourse({{ $folder->id }})"
                     @click="$store.courses.reset()"
                     class="cursor-pointer">{{ $folder->title }}</div>
             @endforeach
         </div>
         {{-- Back Button --}}
-        <div>
+            <div>
             @if ($course)
-                <a href="{{ route('course.index') }}"
-                    wire:navigate
+                <a wire:click="goBackCourse()"
                     class="">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -63,8 +62,62 @@
 
 
     {{-- main contetn --}}
-    <div class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10">
+    <div class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px]">
         @if ($course)
+        <div class="p-4 col-span-12 bg-transparent absolute top-[-180px] right-0 left-0 z-10">
+          <div class="w-full text-white bg-primary dark:bg-dark rounded-3xl width h-56 shadow-lg flex flex-col items-start justify-between p-2 md:p-3">
+              {{-- first row title --}}
+                <div class="flex items-center justify-between w-full">
+                      {{-- title & icon --}}
+                      <div class="flex itms-center justify-start gap-2">
+                            <svg class="w-12 h-12 md:w-16 md:h-16" viewBox="0 0 79 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M62.5411 57H7.37846C5.42779 57 3.55701 56.2493 2.17767
+                              54.9131C0.798339 53.5769 0.0234375 51.7647 0.0234375
+                              49.875V7.125C0.0234375 3.17062 3.29642 0 7.37846 0H29.4435L36.7985
+                              7.125H62.5411C64.4918 7.125 66.3626 7.87567 67.7419 9.21186C69.1212
+                              10.5481 69.8961 12.3603 69.8961 14.25H7.37846V49.875L15.2483 21.375H78.0234L69.6387
+                              51.6562C68.7929 54.7556 65.9244 57 62.5411 57Z" fill="white"/>
+                            </svg>
+
+                            <div class="flex flex-col gap-2 items-start justify-center">
+                              <h2 class="text-base md:text-xl font-semibold">{{$course->title}}</h2>
+                              <p class="text-xs md:tex-sm">{{$course->sub_title}}</p>
+                            </div>
+                      </div>
+                      @if (!$isCreateCourse && !$isEditCourse)
+                        <div class="flex gap-2 " >
+                          <button wire:click="editCourse()"
+                            typee="button"
+                            class=" p-1.5 md:p-3 rounded-full bg-white/20 hover:bg-white/10 cursor-pointer">
+                          <svg class="text-secondary h-4 w-4 md:w-6 md:h-6 "
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" >
+                              <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2
+                                0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0
+                                .83-.497z"/>
+                              <path d="m15 5 4 4"/>
+                            </svg>
+                            </button>
+                            <button
+                              x-on:click="show_delete_confirm = true"
+                              type="button" class="p-1.5 md:p-3 rounded-full bg-white/20 hover:bg-white/10 cursor-pointer">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="h-4 w-4 md:w-6 md:h-6 text-danger"><path d="M3 6h18"/>
+                                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                <line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                            </button>
+                        </div>
+                        @endif
+
+                </div>
+                {{-- last row actions --}}
+                <div></div>
+            </div>
+          </div>
             {{-- if course is selected --}}
             {{-- right side --}}
             <div class="p-3 bg-gray-100 rounded-lg lg:col-span-4 dark:bg-dark">
@@ -83,11 +136,12 @@
                 {{-- tow buttons for facebook and telegram --}}
                 <div class="grid grid-cols-2 gap-2 mt-3">
                     <a href="#"
-                        class="flex items-center gap-2 px-4 py-1 text-sm text-white bg-gray-800 rounded-md dark:text-gray-800 dark:bg-white">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                        class="flex items-center gap-2 px-4 py-1 text-xs text-white bg-primary rounded-md dark:text-gray-800 dark:bg-white">
+                        <svg class="w-6 h-6 "
                             xmlns="http://www.w3.org/2000/svg"
                             x="0px"
                             y="0px"
+                            fill="currentColor"
                             viewBox="0 0 30 30">
                             <path
                                 d="M 25.154297 3.984375 C 24.829241 3.998716 24.526384 4.0933979 24.259766 4.2011719 C 24.010014 4.3016357 23.055766 4.7109106 21.552734 5.3554688 C 20.048394 6.0005882 18.056479 6.855779 15.931641 7.7695312 C 11.681964 9.5970359 6.9042108 11.654169 4.4570312 12.707031 C 4.3650097 12.746607 4.0439208 12.849183 3.703125 13.115234 C 3.3623292 13.381286 3 13.932585 3 14.546875 C 3 15.042215 3.2360676 15.534319 3.5332031 15.828125 C 3.8303386 16.121931 4.144747 16.267067 4.4140625 16.376953 C 5.3912284 16.775666 8.4218473 18.015862 8.9941406 18.25 C 9.195546 18.866983 10.29249 22.222526 10.546875 23.044922 C 10.714568 23.587626 10.874198 23.927519 11.082031 24.197266 C 11.185948 24.332139 11.306743 24.45034 11.453125 24.542969 C 11.511635 24.579989 11.575789 24.608506 11.640625 24.634766 L 11.644531 24.636719 C 11.659471 24.642719 11.67235 24.652903 11.6875 24.658203 C 11.716082 24.668202 11.735202 24.669403 11.773438 24.677734 C 11.925762 24.726927 12.079549 24.757812 12.216797 24.757812 C 12.80196 24.757814 13.160156 24.435547 13.160156 24.435547 L 13.181641 24.419922 L 16.191406 21.816406 L 19.841797 25.269531 C 19.893193 25.342209 20.372542 26 21.429688 26 C 22.057386 26 22.555319 25.685026 22.875 25.349609 C 23.194681 25.014192 23.393848 24.661807 23.478516 24.21875 L 23.478516 24.216797 C 23.557706 23.798129 26.921875 6.5273437 26.921875 6.5273438 L 26.916016 6.5507812 C 27.014496 6.1012683 27.040303 5.6826405 26.931641 5.2695312 C 26.822973 4.8564222 26.536648 4.4608905 26.181641 4.2480469 C 25.826669 4.0352506 25.479353 3.9700339 25.154297 3.984375 z M 24.966797 6.0742188 C 24.961997 6.1034038 24.970391 6.0887279 24.962891 6.1230469 L 24.960938 6.1347656 L 24.958984 6.1464844 C 24.958984 6.1464844 21.636486 23.196371 21.513672 23.845703 C 21.522658 23.796665 21.481573 23.894167 21.439453 23.953125 C 21.379901 23.91208 21.257812 23.859375 21.257812 23.859375 L 21.238281 23.837891 L 16.251953 19.121094 L 12.726562 22.167969 L 13.775391 17.96875 C 13.775391 17.96875 20.331562 11.182109 20.726562 10.787109 C 21.044563 10.471109 21.111328 10.360953 21.111328 10.251953 C 21.111328 10.105953 21.035234 10 20.865234 10 C 20.712234 10 20.506484 10.14875 20.396484 10.21875 C 18.963383 11.132295 12.671823 14.799141 9.8515625 16.439453 C 9.4033769 16.256034 6.2896636 14.981472 5.234375 14.550781 C 5.242365 14.547281 5.2397349 14.548522 5.2480469 14.544922 C 7.6958673 13.491784 12.47163 11.434667 16.720703 9.6074219 C 18.84524 8.6937992 20.838669 7.8379587 22.341797 7.1933594 C 23.821781 6.5586849 24.850125 6.1218894 24.966797 6.0742188 z">
@@ -96,11 +150,12 @@
                         جروبالتليجرام
                     </a>
                     <a href="#"
-                        class="flex items-center gap-2 px-4 py-1 text-sm text-white bg-gray-800 rounded-md dark:text-gray-800 dark:bg-white">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                        class="flex items-center gap-2 px-4 py-1 text-xs text-white bg-primary rounded-md dark:text-gray-800 dark:bg-white">
+                        <svg class="w-6 h-6 "
                             xmlns="http://www.w3.org/2000/svg"
                             x="0px"
                             y="0px"
+                            fill="currentColor"
                             viewBox="0 0 50 50">
                             <path
                                 d="M 25 3 C 12.861562 3 3 12.861562 3 25 C 3 36.019135 11.127533 45.138355 21.712891 46.728516 L 22.861328 46.902344 L 22.861328 29.566406 L 17.664062 29.566406 L 17.664062 26.046875 L 22.861328 26.046875 L 22.861328 21.373047 C 22.861328 18.494965 23.551973 16.599417 24.695312 15.410156 C 25.838652 14.220896 27.528004 13.621094 29.878906 13.621094 C 31.758714 13.621094 32.490022 13.734993 33.185547 13.820312 L 33.185547 16.701172 L 30.738281 16.701172 C 29.349697 16.701172 28.210449 17.475903 27.619141 18.507812 C 27.027832 19.539724 26.84375 20.771816 26.84375 22.027344 L 26.84375 26.044922 L 32.966797 26.044922 L 32.421875 29.564453 L 26.84375 29.564453 L 26.84375 46.929688 L 27.978516 46.775391 C 38.71434 45.319366 47 36.126845 47 25 C 47 12.861562 37.138438 3 25 3 z M 25 5 C 36.057562 5 45 13.942438 45 25 C 45 34.729791 38.035799 42.731796 28.84375 44.533203 L 28.84375 31.564453 L 34.136719 31.564453 L 35.298828 24.044922 L 28.84375 24.044922 L 28.84375 22.027344 C 28.84375 20.989871 29.033574 20.060293 29.353516 19.501953 C 29.673457 18.943614 29.981865 18.701172 30.738281 18.701172 L 35.185547 18.701172 L 35.185547 12.009766 L 34.318359 11.892578 C 33.718567 11.811418 32.349197 11.621094 29.878906 11.621094 C 27.175808 11.621094 24.855567 12.357448 23.253906 14.023438 C 21.652246 15.689426 20.861328 18.170128 20.861328 21.373047 L 20.861328 24.046875 L 15.664062 24.046875 L 15.664062 31.566406 L 20.861328 31.566406 L 20.861328 44.470703 C 11.816995 42.554813 5 34.624447 5 25 C 5 13.942438 13.942438 5 25 5 z">
@@ -116,12 +171,13 @@
 
         {{-- left side --}}
 
-        @if ($isCreateCourse)
+
+
+        @if ($isCreateCourse || $isEditCourse)
         <div class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8"
         >
-            <!-- x-show="$store.courses.isCreateCourse" -->
             <livewire:courses.create-course :parent_id="$course?->id"
-                :key="$course?->id" />
+                :key="'create-course-' . now()"  :course="$isEditCourse? $course: null" />
         </div>
         {{-- @endif --}}
 
@@ -133,7 +189,7 @@
 
             @foreach ($courses as $mCourse)
                 <livewire:courses.components.course-row :course="$mCourse"
-                    :key="$mCourse->id" />
+                    :key="'create-course-' . now()"  />
             @endforeach
         </div>
         @endif
@@ -196,6 +252,42 @@
         </div>
     </div>
    @endif
+
+
+
+
+   {{-- delete course confirm --}}
+   <div x-show="show_delete_confirm"
+     id="delete-course-confirm" tabindex="-1" data-modal-backdrop="static"
+     class="flex items-center justify-center overflow-y-auto overflow-x-hidden bg-dark/50
+     fixed top-0 right-0 left-0 z-50
+     w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+       <div class="relative p-4 w-full max-w-md max-h-full">
+           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+               <button
+               x-on:click="show_delete_confirm = false"
+                 type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" >
+                   <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                   </svg>
+                   <span class="sr-only">Close modal</span>
+               </button>
+               <div class="p-4 md:p-5 text-center">
+                   <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                   </svg>
+                   <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">هل انت متأكد تريد حذف هذا الكورس </h3>
+                   <button wire:click="deleteCourse()" x-on:click="show_delete_confirm = false"
+                      type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                       نعم، انا متأكد
+                   </button>
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+
 
     @script
         <script>
