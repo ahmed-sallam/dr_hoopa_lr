@@ -26,7 +26,7 @@
         <div class="grid grid-cols-3 w-full gap-1.5 text-xs font-light">
             {{-- price and add to cart section --}}
             <div
-                class=" border rounded-md border-b-gray-100 dark:border-gray-800 flex items-end justify-between gap-2 p-1 col-span-3 lg:col-span-2">
+                class=" border rounded-md border-b-gray-100 dark:border-gray-800 flex items-end justify-between gap-2 p-1 col-span-3 lg:col-span-3">
                 <div>
                     <div class="flex items-center justify-start gap-2 ">
                         <svg class="w-6 h-6 dark:text-white text-dark"
