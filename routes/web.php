@@ -17,9 +17,9 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 
+Route::get('courses', CourseIndex::class)->name('course.index');
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
-    Route::get('courses', CourseIndex::class)->name('course.index');
     Route::get('courses/create', CreateCourse::class)->name('course.create');
     Route::get('users', UserIndex::class)->name('user.index');
 });

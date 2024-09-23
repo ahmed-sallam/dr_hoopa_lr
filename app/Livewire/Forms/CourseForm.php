@@ -38,7 +38,7 @@ class CourseForm extends Form
             'price' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0|max:100',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'featured_video' => 'nullable|string',
+            'featured_video' => 'nullable|string|url',
             'status' => 'required|in:active,inactive',
             'data' => 'nullable|array',
             'parent_id' => 'nullable|exists:courses,id',

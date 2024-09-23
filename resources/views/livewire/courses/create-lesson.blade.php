@@ -6,7 +6,7 @@
             <label
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 for="thumbnail">صورة
-                الكورس</label>
+                المحتوى</label>
             <div class="flex items-center justify-center w-full"
                 x-data="{ dragOver: false }">
                 <label for="dropzone-file"
@@ -103,85 +103,91 @@
             @enderror
         </div>
 
-        <!-- Price, Discount, and Net Price -->
-        <div class="grid grid-cols-3 gap-4 mb-6"
-            x-data="{ price: 0, discount: 0, netPrice: 0 }">
-            <div>
-                <label for="price"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">السعر</label>
-                <input type="number"
-                    wire:model.live="form.price"
-                    id="price"
-                    step="1"
-                    x-model="price"
-                    :input="netPrice = price - (price * discount / 100)"
-                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                @error('form.price')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="discount"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الخصم
-                    (%)</label>
-                <input type="number"
-                    wire:model.live="form.discount"
-                    id="discount"
-                    step="1"
-                    min="0"
-                    max="100"
-                    x-model="discount"
-                    :input="netPrice = price -
-                        (price * discount / 100)"
-                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                @error('form.discount')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="net_price"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">السعر
-                    النهائي</label>
-                <input type="number"
-                    wire:model="form.net_price"
-                    id="net_price"
-                    step="0.01"
-                    readonly
-                    x-init="$watch('netPrice', (value) => $wire.form.net_price = value)"
-                    class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            </div>
-        </div>
-
         <!-- Featured Video -->
         <div class="mb-6">
-            <label for="featured_video"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الفيديو
-                المميز</label>
+            <label for="content_url"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">رابط
+                المحتوى</label>
             <input type="url"
-                wire:model="form.featured_video"
-                id="featured_video"
+                wire:model="form.content_url"
+                id="content_url"
                 class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            @error('form.featured_video')
+            @error('form.content_url')
                 <span class="text-red-500">{{ $message }}</span>
             @enderror
         </div>
 
-        <!-- Status -->
-        <div class="mb-6">
-            <label for="status"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">حالة
-                الكورس</label>
-            <select wire:model="form.status"
-                id="status"
-                class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="active">فعال</option>
-                <option value="inactive">غير فعال</option>
-            </select>
-            @error('form.status')
-                <span class="text-red-500">{{ $message }}</span>
-            @enderror
-        </div>
+        <div class="grid grid-cols-2 gap-2 md:gap-4">
+            <!-- Status -->
+            <div class="mb-6">
+                <label for="status"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">حالة
+                    المحتوى</label>
+                <select wire:model="form.status"
+                    id="status"
+                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="active"
+                        selected>فعال</option>
+                    <option value="inactive">غير فعال</option>
+                </select>
+                @error('form.status')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <!-- Content Type -->
+            <div class="mb-6">
+                <label for="content_type"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">نوع
+                    المحتوى</label>
+                <select wire:model="form.content_type"
+                    id="content_type"
+                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="video"
+                        selected>فيديو</option>
+                    <option value="quiz">تدريب</option>
+                    <option value="item">اخرى</option>
+                </select>
+                @error('form.content_type')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
 
+        </div>
+        <div class="grid grid-cols-2 gap-2 md:gap-4">
+            <!-- Is Premimum -->
+            <div class="mb-6">
+                <label for="is_premium"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">محتوى
+                    مدفوع</label>
+                <select wire:model="form.is_premium"
+                    id="is_premium"
+                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="{{ true }}"
+                        selected>مدفوع</option>
+                    <option value="{{ false }}">مجاني</option>
+                </select>
+                @error('form.is_premium')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <!-- Order -->
+            <div class="mb-6">
+                <label for="order"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ترتيب
+                    العرض</label>
+                <select wire:model="form.order"
+                    id="order"
+                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @foreach (range(0, 100) as $index)
+                        <option value="{{ $index }}">
+                            {{ $index }}</option>
+                    @endforeach
+                </select>
+                @error('form.order')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
         <!-- Dynamic Data Section -->
         <div class="mb-6">
             <h3
@@ -190,7 +196,7 @@
 
             <!-- Display existing data items as editable inputs -->
             @foreach ($form->data as $index => $item)
-                <div class="grid grid-cols-3 gap-4 mb-4">
+                <div class="grid grid-cols-3 gap-2 mb-4 md:gap-4">
                     <div>
                         <label for="data_svg_{{ $index }}"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SVG</label>
@@ -224,7 +230,7 @@
             @endforeach
 
             <!-- Add new data item -->
-            <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="grid grid-cols-3 gap-2 mb-4 md:gap-4">
                 <div>
                     <label for="newDataSvg"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SVG</label>
@@ -259,7 +265,7 @@
         <div class="flex flex-row gap-2 ">
 
             <button type="submit"
-                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-20 px-5 py-2.5 text-center dark:bg-secondary hover:bg-secondary/80 ">حفظ</button>
+                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-20 px-5 py-2.5 text-center dark:bg-secondary  ">حفظ</button>
             <button type="button"
                 wire:click="resetForm"
                 class="text-white bg-yellow-400 hover:bg-yellow-500  font-medium rounded-lg text-sm w-32 px-5 py-2.5 text-center dark:bg-yellow-500 dark:hover:bg-yellow-600 ">إعادة

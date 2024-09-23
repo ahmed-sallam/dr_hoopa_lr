@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -18,10 +18,11 @@ return new class extends Migration
             $table->text('description');
             $table->boolean('is_premium')->default(true);
             $table->string('thumbnail')->nullable();
-            $table->string('featured_video')->nullable();
+            $table->string(column: 'content_url')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum(column: 'content_type', allowed: ['video', 'quiz', 'item'])->default('video');
             $table->integer('order')->default(0);
-            $table->integer('duration')->default(0);
+            // $table->integer('duration')->default(0);
             $table->json('data')->nullable();
             $table->foreignId('course_id')->constrained('courses');
             $table->timestamps();

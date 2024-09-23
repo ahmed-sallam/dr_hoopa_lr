@@ -1,12 +1,13 @@
 <div class="relative"
-    x-data="{show_delete_confirm: false}">
+    x-data="{ show_delete_confirm: false }">
     {{-- nvigation line --}}
     <div class="flex items-center justify-end gap-2 text-xs md:text-base">
         <div
             class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-dark">
-            <a href="{{ route('course.index') }}" wire:navigate
+            <a href="{{ route('course.index') }}"
+                wire:navigate
                 class="cursor-pointer">الكورسات</a>
-                @foreach ($this->getFoldersTree() as $folder)
+            @foreach ($this->getFoldersTree() as $folder)
                 <div><svg class="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -21,13 +22,13 @@
                             d="m10 16 4-4-4-4" />
                     </svg>
                 </div>
-                    <div wire:click="selectCourse({{ $folder->id }})"
+                <div wire:click="selectCourse({{ $folder->id }})"
                     @click="$store.courses.reset()"
                     class="cursor-pointer">{{ $folder->title }}</div>
             @endforeach
         </div>
         {{-- Back Button --}}
-            <div>
+        <div>
             @if ($course)
                 <a wire:click="goBackCourse()"
                     class="">
@@ -62,62 +63,91 @@
 
 
     {{-- main contetn --}}
-    <div class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px]">
+    <div
+        class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px]">
         @if ($course)
-        <div class="p-4 col-span-12 bg-transparent absolute top-[-180px] right-0 left-0 z-10">
-          <div class="w-full text-white bg-primary dark:bg-dark rounded-3xl width h-56 shadow-lg flex flex-col items-start justify-between p-2 md:p-3">
-              {{-- first row title --}}
-                <div class="flex items-center justify-between w-full">
-                      {{-- title & icon --}}
-                      <div class="flex itms-center justify-start gap-2">
-                            <svg class="w-12 h-12 md:w-16 md:h-16" viewBox="0 0 79 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M62.5411 57H7.37846C5.42779 57 3.55701 56.2493 2.17767
+            <div
+                class="p-4 col-span-12 bg-transparent absolute top-[-180px] right-0 left-0 z-10">
+                <div
+                    class="flex flex-col items-start justify-between w-full h-56 p-2 text-white shadow-lg bg-primary dark:bg-dark rounded-3xl width md:p-3">
+                    {{-- first row title --}}
+                    <div class="flex items-center justify-between w-full">
+                        {{-- title & icon --}}
+                        <div class="flex justify-start gap-2 itms-center">
+                            <svg class="w-12 h-12 md:w-16 md:h-16"
+                                viewBox="0 0 79 57"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M62.5411 57H7.37846C5.42779 57 3.55701 56.2493 2.17767
                               54.9131C0.798339 53.5769 0.0234375 51.7647 0.0234375
                               49.875V7.125C0.0234375 3.17062 3.29642 0 7.37846 0H29.4435L36.7985
                               7.125H62.5411C64.4918 7.125 66.3626 7.87567 67.7419 9.21186C69.1212
                               10.5481 69.8961 12.3603 69.8961 14.25H7.37846V49.875L15.2483 21.375H78.0234L69.6387
-                              51.6562C68.7929 54.7556 65.9244 57 62.5411 57Z" fill="white"/>
+                              51.6562C68.7929 54.7556 65.9244 57 62.5411 57Z"
+                                    fill="white" />
                             </svg>
 
-                            <div class="flex flex-col gap-2 items-start justify-center">
-                              <h2 class="text-base md:text-xl font-semibold">{{$course->title}}</h2>
-                              <p class="text-xs md:tex-sm">{{$course->sub_title}}</p>
+                            <div
+                                class="flex flex-col items-start justify-center gap-2">
+                                <h2 class="text-base font-semibold md:text-xl">
+                                    {{ $course->title }}</h2>
+                                <p class="text-xs md:tex-sm">
+                                    {{ $course->sub_title }}</p>
                             </div>
-                      </div>
-                      @if (!$isCreateCourse && !$isEditCourse)
-                        <div class="flex gap-2 " >
-                          <button wire:click="editCourse()"
-                            typee="button"
-                            class=" p-1.5 md:p-3 rounded-full bg-white/20 hover:bg-white/10 cursor-pointer">
-                          <svg class="text-secondary h-4 w-4 md:w-6 md:h-6 "
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" >
-                              <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2
-                                0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0
-                                .83-.497z"/>
-                              <path d="m15 5 4 4"/>
-                            </svg>
-                            </button>
-                            <button
-                              x-on:click="show_delete_confirm = true"
-                              type="button" class="p-1.5 md:p-3 rounded-full bg-white/20 hover:bg-white/10 cursor-pointer">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="h-4 w-4 md:w-6 md:h-6 text-danger"><path d="M3 6h18"/>
-                                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-                                <line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                            </button>
                         </div>
+                        @if (!$isCreateCourse && !$isEditCourse && !$isCreateLesson && !$isEditLesson)
+                            <div class="flex gap-2 ">
+                                <button wire:click="editCourse()"
+                                    typee="button"
+                                    class=" p-1.5 md:p-3 rounded-full bg-white/90  dark:bg-white/90 hover:bg-white/10 cursor-pointer">
+                                    <svg class="w-4 h-4 text-secondary md:w-6 md:h-6 "
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2
+                                0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0
+                                .83-.497z" />
+                                        <path d="m15 5 4 4" />
+                                    </svg>
+                                </button>
+                                <button x-on:click="show_delete_confirm = true"
+                                    type="button"
+                                    class="p-1.5 md:p-3 rounded-full bg-danger/80 hover:bg-white/10 cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="w-4 h-4 text-white md:w-6 md:h-6">
+                                        <path d="M3 6h18" />
+                                        <path
+                                            d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                        <path
+                                            d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                        <line x1="10"
+                                            x2="10"
+                                            y1="11"
+                                            y2="17" />
+                                        <line x1="14"
+                                            x2="14"
+                                            y1="11"
+                                            y2="17" />
+                                    </svg>
+                                </button>
+                            </div>
                         @endif
 
+                    </div>
+                    {{-- last row actions --}}
+                    <div></div>
                 </div>
-                {{-- last row actions --}}
-                <div></div>
             </div>
-          </div>
             {{-- if course is selected --}}
             {{-- right side --}}
             <div class="p-3 bg-gray-100 rounded-lg lg:col-span-4 dark:bg-dark">
@@ -136,7 +166,7 @@
                 {{-- tow buttons for facebook and telegram --}}
                 <div class="grid grid-cols-2 gap-2 mt-3">
                     <a href="#"
-                        class="flex items-center gap-2 px-4 py-1 text-xs text-white bg-primary rounded-md dark:text-gray-800 dark:bg-white">
+                        class="flex items-center gap-2 px-4 py-1 text-xs text-white rounded-md bg-primary dark:text-gray-800 dark:bg-white">
                         <svg class="w-6 h-6 "
                             xmlns="http://www.w3.org/2000/svg"
                             x="0px"
@@ -150,7 +180,7 @@
                         جروبالتليجرام
                     </a>
                     <a href="#"
-                        class="flex items-center gap-2 px-4 py-1 text-xs text-white bg-primary rounded-md dark:text-gray-800 dark:bg-white">
+                        class="flex items-center gap-2 px-4 py-1 text-xs text-white rounded-md bg-primary dark:text-gray-800 dark:bg-white">
                         <svg class="w-6 h-6 "
                             xmlns="http://www.w3.org/2000/svg"
                             x="0px"
@@ -174,117 +204,150 @@
 
 
         @if ($isCreateCourse || $isEditCourse)
-        <div class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8"
-        >
-            <livewire:courses.create-course :parent_id="$course?->id"
-                :key="'create-course-' . now()"  :course="$isEditCourse? $course: null" />
-        </div>
-        {{-- @endif --}}
+            <div
+                class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
+                <livewire:courses.create-course :parent_id="$course?->id"
+                    :key="'create-course-' . now()"
+                    :course="$isEditCourse ? $course : null" />
+            </div>
+        @elseif ($isCreateLesson || $isEditLesson)
+            <div
+                class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
+                <livewire:courses.create-lesson :course_id="$course?->id"
+                    :key="'create-lesson-' . now()"
+                    :lesson="$isEditCourse ? $lesson : null" />
+            </div>
+            {{-- @endif --}}
+        @elseif ($showContent)
+            {{-- courses --}}
+            <div
+                class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
+                <!-- x-show="$store.courses.showContent" -->
 
-         @elseif ($showContent)
-        {{-- courses --}}
-        <div class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8"
-        >
-            <!-- x-show="$store.courses.showContent" -->
-
-            @foreach ($courses as $mCourse)
-                <livewire:courses.components.course-row :course="$mCourse"
-                    :key="'create-course-' . now()"  />
-            @endforeach
-        </div>
+                @foreach ($courses as $mCourse)
+                    <livewire:courses.components.course-row :course="$mCourse"
+                        :key="'create-course-' . now()" />
+                @endforeach
+                @if ($course)
+                    @foreach ($course->lessons as $lesson)
+                        <livewire:courses.components.lesson-row
+                            :lesson="$lesson" />
+                    @endforeach
+                @endif
+            </div>
         @endif
 
 
     </div>
     {{-- addd button --}}
     @if ($showContent)
-      <!-- x-show="$store.courses.showContent" -->
-    <div
-        class="sticky left-0 z-20 flex flex-col items-end justify-center gap-4 bottom-10"
-        x-data="{ show_dropdown: false }"
-    >
-        <div x-show="show_dropdown"
-            class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownDefault">
-                <li>
-                        <!-- @click="$store.courses.setShowContent(fagrid w-full gap-4 mt-6 lg:gridlse); $store.courses.setIsCreateCourse(true); show_dropdown=false" -->
-                    <a wire:click="createCourse"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
-                        كورس</a>
-                </li>
-                @if ($course)
+        <!-- x-show="$store.courses.showContent" -->
+        <div class="sticky left-0 z-20 flex flex-col items-end justify-center gap-4 bottom-10"
+            x-data="{ show_dropdown: false }">
+            <div x-show="show_dropdown"
+                class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownDefault">
                     <li>
-                        <a @click="show_dropdown=false"
-                            href="#"
+                        <!-- @click="$store.courses.setShowContent(fagrid w-full gap-4 mt-6 lg:gridlse); $store.courses.setIsCreateCourse(true); show_dropdown=false" -->
+                        <a wire:click="createCourse"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
-                            فيديو</a>
+                            كورس</a>
                     </li>
-                @endif
+                    @if ($course)
+                        <li>
+                            <a wire:click="createLesson"
+                                href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
+                                درس</a>
+                        </li>
+                    @endif
 
-            </ul>
-        </div>
-        <div class="">
-            <button type="button"
-                x-on:click="show_dropdown = !show_dropdown"
-                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-secondary
+                </ul>
+            </div>
+            <div class="">
+                <button type="button"
+                    x-on:click="show_dropdown = !show_dropdown"
+                    class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-secondary
             hover:scale-105 transition-all duration-300 shadow-md
             shadow-primary dark:shadow-white/50 ">
-                <svg class="w-6 h-6 "
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24">
-                    <path stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="
+                    <svg class="w-6 h-6 "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="
             M5
             12h14m-7
             7V5" />
-                </svg>
-                <span class="sr-only">add course</span>
-            </button>
+                    </svg>
+                    <span class="sr-only">add course</span>
+                </button>
 
+            </div>
         </div>
-    </div>
-   @endif
+    @endif
 
 
 
 
-   {{-- delete course confirm --}}
-   <div x-show="show_delete_confirm"
-     id="delete-course-confirm" tabindex="-1" data-modal-backdrop="static"
-     class="flex items-center justify-center overflow-y-auto overflow-x-hidden bg-dark/50
+    {{-- delete course confirm --}}
+    <div x-show="show_delete_confirm"
+        id="delete-course-confirm"
+        tabindex="-1"
+        data-modal-backdrop="static"
+        class="flex items-center justify-center overflow-y-auto overflow-x-hidden bg-dark/50
      fixed top-0 right-0 left-0 z-50
      w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-       <div class="relative p-4 w-full max-w-md max-h-full">
-           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-               <button
-               x-on:click="show_delete_confirm = false"
-                 type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" >
-                   <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                   </svg>
-                   <span class="sr-only">Close modal</span>
-               </button>
-               <div class="p-4 md:p-5 text-center">
-                   <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                   </svg>
-                   <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">هل انت متأكد تريد حذف هذا الكورس </h3>
-                   <button wire:click="deleteCourse()" x-on:click="show_delete_confirm = false"
-                      type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                       نعم، انا متأكد
-                   </button>
-               </div>
-           </div>
-       </div>
-   </div>
+        <div class="relative w-full max-w-md max-h-full p-4">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button x-on:click="show_delete_confirm = false"
+                    type="button"
+                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-4 text-center md:p-5">
+                    <svg class="w-12 h-12 mx-auto mb-4 text-gray-400 dark:text-gray-200"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20">
+                        <path stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h3
+                        class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                        هل انت متأكد تريد حذف هذا الكورس </h3>
+                    <button wire:click="deleteCourse()"
+                        x-on:click="show_delete_confirm = false"
+                        type="button"
+                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                        نعم، انا متأكد
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -292,8 +355,8 @@
     @script
         <script>
             window.addEventListener('update-url', event => {
-              console.log(event.detail);
-              console.log(event);
+                console.log(event.detail);
+                console.log(event);
                 const url = new URL(window.location);
                 if (event.detail.course_id) {
                     url.searchParams.set('course_id', event.detail.course_id);

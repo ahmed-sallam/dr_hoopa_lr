@@ -3,14 +3,15 @@
 namespace App\Livewire\Courses;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Database\Eloquent\Collection;
 
 class CourseIndex extends Component
 {
-  public string $title = "الكورسات";
-  public string $logo = <<<'EOT'
+    public string $title = "الكورسات";
+    public string $logo = <<<'EOT'
      <svg class="w-12 h-12 "
                              viewBox="0 0 30 30" fill="currentColor"
                              xmlns="http://www.w3.org/2000/svg">
@@ -29,113 +30,135 @@ class CourseIndex extends Component
                         </svg>
 EOT;
 
-  public Collection $courses;
-  public ?Course $course = null;
+    public Collection $courses;
+    public Collection $lessons;
+    public ?Course $course = null;
+    public ?Lesson $lesson = null;
 
-  public bool $isCreateCourse = false;
-  public bool $isEditCourse = false;
-  public bool $showContent = true;
+    public bool $isCreateCourse = false;
+    public bool $isEditCourse = false;
+    public bool $showContent = true;
+    public bool $isCreateLesson = false;
+    public bool $isEditLesson = false;
 
-  public function mount()
-  {
-    $selectedCourseId = request()->query("course_id");
-    $this->course = $selectedCourseId ? Course::find($selectedCourseId) : null;
+    public function mount()
+    {
+        $selectedCourseId = request()->query("course_id");
+        $this->course = $selectedCourseId ? Course::with('children', 'lessons')->find($selectedCourseId) : null;
 
-    // Order by id and get only parent courses
-    // $this->courses = Course::where('parent_id', null)->orderBy('id', 'desc')->get();
-    $this->selectCourse($this->course);
+        // Order by id and get only parent courses
+        // $this->courses = Course::where('parent_id', null)->orderBy('id', 'desc')->get();
+        $this->selectCourse($this->course);
 
-    // $this->createCourse();
-  }
-
-  public function render()
-  {
-    return view("livewire.courses.course-index")->layout("layouts.app", [
-      "title" => $this->title,
-      "logo" => $this->logo,
-    ]); // Specify the layout directly here
-  }
-
-  public function selectCourse(?Course $course = null)
-  {
-    $this->cancel();
-
-    $this->course = $course;
-
-    // Update the query parameters
-    $this->setQueryParams($course ? $course->id : null);
-
-    if ($course == null) {
-      $this->courses = Course::where("parent_id", null)
-        ->orderBy("id", "desc")
-        ->get();
-    } else {
-      $this->courses = $this->course->children;
+        // $this->createCourse();
     }
-  }
 
-  protected function setQueryParams($courseId)
-  {
-    if ($courseId) {
-      $this->dispatch("update-url", course_id: $courseId);
+    public function render()
+    {
+        return view("livewire.courses.course-index")->layout("layouts.app", [
+            "title" => $this->title,
+            "logo" => $this->logo,
+        ]); // Specify the layout directly here
     }
-  }
 
-  public function getFoldersTree()
-  {
-    if ($this->course == null) {
-      return [];
+    public function selectCourse(?Course $course = null)
+    {
+        $this->cancel();
+
+        $this->course = $course;
+
+        // Update the query parameters
+        $this->setQueryParams($course ? $course->id : null);
+
+        if ($course == null) {
+            $this->courses = Course::where("parent_id", null)
+                ->orderBy("id", "desc")
+                ->get();
+        } else {
+            $this->courses = $this->course->children;
+        }
     }
-    $tree = $this->course->parentsArray();
-    $tree[] = $this->course;
+    // public function loadLessons()
+    // {
+    //     $this->lessons = $this->course->lessons()->orderBy(column: 'order')->get();
+    // }
 
-    return $tree;
-  }
-
-  public function createCourse()
-  {
-    $this->isCreateCourse = true;
-    $this->showContent = false;
-  }
-
-  public function editCourse()
-  {
-    $this->isEditCourse = true;
-    $this->showContent = false;
-  }
-
-  #[On("course-created")]
-  public function courseCreated()
-  {
-    $this->selectCourse($this->course);
-    $this->cancel();
-  }
-
-  public function cancel()
-  {
-    $this->dispatch("reset-form");
-    $this->isCreateCourse = false;
-    $this->isEditCourse = false;
-    $this->showContent = true;
-  }
-
-  public function deleteCourse()
-  {
-    $children = $this->course->children;
-
-    if ($children->count() == 0) {
-      $this->course->delete();
-      $this->goBackCourse();
+    protected function setQueryParams($courseId)
+    {
+        if ($courseId) {
+            $this->dispatch("update-url", course_id: $courseId);
+        }
     }
-  }
 
-  public function goBackCourse()
-  {
-    $treeCount = count($this->getFoldersTree());
-    if ($treeCount > 1) {
-      $this->selectCourse($this->getFoldersTree()[$treeCount - 2]);
-    } else {
-      $this->selectCourse(null);
+    public function getFoldersTree()
+    {
+        if ($this->course == null) {
+            return [];
+        }
+        $tree = $this->course->parentsArray();
+        $tree[] = $this->course;
+
+        return $tree;
     }
-  }
+
+    public function createCourse()
+    {
+        $this->isCreateCourse = true;
+        $this->showContent = false;
+    }
+
+    public function createLesson(): void
+    {
+        $this->isCreateLesson = true;
+        $this->showContent = false;
+    }
+
+    public function editCourse()
+    {
+        $this->isEditCourse = true;
+        $this->showContent = false;
+    }
+    public function editLesson(): void
+    {
+        $this->isEditLesson = true;
+        $this->showContent = false;
+    }
+
+    #[On("course-created")]
+    #[On("lesson-saved")]
+    public function courseCreated()
+    {
+        $this->selectCourse($this->course);
+        $this->cancel();
+    }
+
+    public function cancel()
+    {
+        $this->dispatch("reset-form");
+        $this->isCreateCourse = false;
+        $this->isEditCourse = false;
+        $this->showContent = true;
+        $this->isCreateLesson = false;
+        $this->isEditLesson = false;
+    }
+
+    public function deleteCourse()
+    {
+        $children = $this->course->children;
+
+        if ($children->count() == 0) {
+            $this->course->delete();
+            $this->goBackCourse();
+        }
+    }
+
+    public function goBackCourse()
+    {
+        $treeCount = count($this->getFoldersTree());
+        if ($treeCount > 1) {
+            $this->selectCourse($this->getFoldersTree()[$treeCount - 2]);
+        } else {
+            $this->selectCourse(null);
+        }
+    }
 }
