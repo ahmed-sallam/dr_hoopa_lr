@@ -6,6 +6,8 @@ use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Permission;
+use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Cache;
 
 class UserIndex extends Component
 {
@@ -21,10 +23,15 @@ class UserIndex extends Component
 EOT;
 
     public string $selectedTab = '';
+    public string $activeModal = '';
+    public $permissions;
+    public  $selectedRole =  null;
+
 
     public function mount()
     {
         $this->selectedTab = request()->query('query') ?? 'users';
+        $this->permissions();
     }
 
     public function render()
@@ -48,17 +55,41 @@ EOT;
 
     public function roles()
     {
-        return Role::all();
+        return Cache::remember('roles', 60 * 60, function () {
+            return Role::all();
+        });
     }
 
     public function permissions()
     {
-        return Permission::all()->groupBy('table_name')->toArray();
+        $this->permissions = Cache::remember('permissions', 60 * 60, function () {
+            return Permission::all()->groupBy('table_name')->toArray();
+        });
     }
     public function setQueryParams($query)
     {
         if ($query) {
             $this->dispatch('update-url', query: $query);
         }
+    }
+
+    public function selectRole($role)
+    {
+        $this->selectedRole = $role;
+    }
+
+    public function openModal($modal, $data = null)
+    {
+        $this->activeModal = $modal;
+        if ($modal == 'role' && $data) {
+            $this->selectedRole = $data;
+        }
+    }
+
+    #[On('closeModal')]
+    public function cancel()
+    {
+        $this->selectedRole = null;
+        $this->activeModal = '';
     }
 }

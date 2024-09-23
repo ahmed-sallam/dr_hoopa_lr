@@ -155,7 +155,7 @@ EOT;
     public function cancel()
     {
         $this->dispatch("reset-form");
-        $this->selectChildrenView('main_courses');
+        $this->selectChildrenView('one_course');
     }
 
     public function deleteCourse()

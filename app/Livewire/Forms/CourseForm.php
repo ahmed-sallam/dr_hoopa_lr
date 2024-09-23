@@ -101,7 +101,7 @@ class CourseForm extends Form
             'parent_id' => 'nullable|exists:courses,id',
             'data.*.svg' => 'required|string',
             'data.*.title' => 'required|string',
-            'data.*.link' => 'required|string|url',
+            'data.*.link' => 'required|string',
             'newDataSvg' => 'nullable|string',
             'newDataTitle' => 'nullable|string',
             'newDataLink' => 'nullable|string|url',
@@ -136,7 +136,7 @@ class CourseForm extends Form
         $this->validate([
             'newDataSvg' => 'required|string',
             'newDataTitle' => 'required|string',
-            'newDataLink' => 'required|string|url',
+            'newDataLink' => 'required|string',
         ]);
 
         $this->data[] = [

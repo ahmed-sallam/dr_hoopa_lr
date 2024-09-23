@@ -30,10 +30,10 @@ class LessonForm extends Form
         return [
             'title' => 'required|string|max:255',
             'sub_title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'is_premium' => 'required|boolean',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'content_url' => 'nullable|string|url',
+            'content_url' => 'required|string|url',
             'status' => 'required|in:active,inactive',
             'order' => 'required|integer',
             'data' => 'nullable|array',

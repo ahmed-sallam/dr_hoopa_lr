@@ -228,9 +228,9 @@
                             hover:dark:text-white
                             {{ request()->routeIs('dashboard')
                                 ? ' bg-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            dark:bg-white/15 text-primary dark:text-white '
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:bg-white/15 text-primary dark:text-white '
                                 : ' text-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            dark:text-accent ' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:text-accent ' }}">
                             <svg class="w-8 h-8"
                                 viewBox="0 0 30 29"
                                 fill="currentColor"
@@ -253,9 +253,9 @@
                             hover:dark:text-white
                             {{ request()->routeIs('user.index')
                                 ? ' bg-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            dark:bg-white/15 text-primary dark:text-white '
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:bg-white/15 text-primary dark:text-white '
                                 : ' text-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            dark:text-accent ' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:text-accent ' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     width="24"
                                     height="24"
@@ -286,9 +286,9 @@
                             hover:dark:text-white
                             {{ request()->routeIs('course.index')
                                 ? ' bg-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            dark:bg-white/15 text-primary dark:text-white '
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:bg-white/15 text-primary dark:text-white '
                                 : ' text-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            dark:text-accent ' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:text-accent ' }}">
                             <svg class="w-8 h-8 "
                                 viewBox="0 0 30 30"
                                 fill="currentColor"
@@ -404,41 +404,6 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('alpine:init', () => {
-            // Define the 'darkMode' store
-            Alpine.store('darkMode', {
-                on: false, // Default value
-                init() {
-                    this.on = localStorage.getItem('darkMode') ===
-                        'true';
-                },
-                toggle() {
-                    this.on = !this.on;
-                    localStorage.setItem('darkMode', JSON.stringify(
-                        this.on));
-                }
-            });
-
-            // Define the 'courses' store
-            Alpine.store('courses', {
-                showContent: true,
-                isCreateCourse: false,
-                setShowContent(value) {
-                    this.showContent = value;
-                    console.log('setShowContent', value);
-                },
-                setIsCreateCourse(value) {
-                    this.isCreateCourse = value;
-                    console.log('setIsCreateCourse', value);
-                },
-                reset() {
-                    this.showContent = true;
-                    this.isCreateCourse = false;
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

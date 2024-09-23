@@ -1,12 +1,14 @@
-<div class="relative">
+<div class="relative"
+    x-data="{ show_delete_confirm: false, show_role_modal: false }">
     {{-- nvigation line --}}
     <div class="flex items-center justify-end gap-2">
         <div
-            class="flex items-center gap-2 justify-start bg-gray-100 py-2 rounded-3xl dark:bg-dark px-4 flex-1 flex-row-reverse">
-            <div href="{{ route('user.index') }}" wire:navigate class="cursor-pointer">المستخدمين</div>
+            class="flex flex-row-reverse items-center justify-start flex-1 gap-2 px-4 py-2 bg-gray-100 rounded-3xl dark:bg-dark">
+            <div href="{{ route('user.index') }}"
+                wire:navigate
+                class="cursor-pointer">المستخدمين</div>
             {{-- @foreach ($this->getFoldersTree() as $folder)
-                <div><svg class="w-6
-                h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                <div><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                         viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -32,26 +34,40 @@
     </div>
 
     {{-- main contetn --}}
-    <div class="grid lg:grid-cols-12 gap-4 mt-6 lg:mt-10 w-full">
+    <div class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10">
         {{-- right side --}}
-        <div class="lg:col-span-4 bg-gray-100 dark:bg-dark rounded-lg p-3">
+        <div class="p-3 bg-gray-100 rounded-lg lg:col-span-4 dark:bg-dark">
             <ul class="space-y-2">
                 <li @click="$wire.selectTab('users')"
                     class="px-6 py-3 flex items-center justify-start gap-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg {{ $this->selectedTab == 'users' ? 'bg-gray-200 dark:bg-dark' : '' }}">
-                    <svg class="w-6 h-6  dark:text-white text-gray-800 " aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
                         viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        <path stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
                             d="M10 16 4 10 10 4" />
                     </svg>
                     المستخدمون
                 </li>
                 <li @click="$wire.selectTab('roles')"
                     class="px-6 py-3 flex items-center justify-start gap-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg {{ $this->selectedTab == 'roles' ? 'bg-gray-200 dark:bg-dark' : '' }}">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white " aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
                         viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        <path stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
                             d="M10 16 4 10 10 4" />
                     </svg>
                     الادوار
@@ -61,21 +77,37 @@
             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-dark">
             @if ($this->selectedTab == 'users')
                 <button
-                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-secondary hover:bg-secondary/80 dark:bg-secondary hover:bg-secondary/80 text-gray-300">
-                    <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="flex items-center justify-center w-full gap-2 py-2 text-gray-300 rounded-lg bg-secondary hover:bg-secondary/80 dark:bg-secondary">
+                    <svg class="w-6 h-6 "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
                             d="M5 12h14m-7 7V5" />
                     </svg>
                     اضف مستخدم
                 </button>
             @endif
             @if ($this->selectedTab == 'roles')
-                <button
-                    class="flex items-center gap-2 justify-center w-full py-2 rounded-lg bg-secondary hover:bg-secondary/80 dark:bg-secondary hover:bg-secondary/80 text-gray-300">
-                    <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                <button wire:click="openModal('role')"
+                    class="flex items-center justify-center w-full gap-2 py-2 text-white rounded-lg bg-secondary hover:bg-secondary/80 dark:bg-secondary">
+                    <svg class="w-6 h-6 "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
                             d="M5 12h14m-7 7V5" />
                     </svg>
                     اضف دور
@@ -84,18 +116,31 @@
         </div>
 
         {{-- left side --}}
-        <div class="lg:col-span-8 p-4 gap-4 flex  flex-col items-start justify-start">
+        <div
+            class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
             @if ($this->selectedTab === 'users')
                 @foreach ($this->users() as $user)
-                    <livewire:users.components.user-row :$user :key="$user->id" />
+                    <livewire:users.components.user-row :$user
+                        :key="$user->id . 'users'" />
                 @endforeach
             @elseif ($this->selectedTab === 'roles')
                 @foreach ($this->roles() as $role)
-                    @livewire('users.components.role-row', ['role' => $role, 'key' => $role->id])
+                    <livewire:users.components.role-row :$role
+                        :key="$role->id . 'roles ?>'" />
                 @endforeach
             @endif
         </div>
     </div>
+
+
+
+
+
+    {{-- Modals --}}
+    @if ($activeModal == 'role')
+        <livewire:users.components.role-modal :$permissions
+            :role="$selectedRole" />
+    @endif
 
     @script
         <script>

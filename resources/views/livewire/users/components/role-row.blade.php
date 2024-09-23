@@ -1,17 +1,21 @@
 <div
-    class="flex hover:scale-105  transition-all duration-300  flex-col md:flex-row items-center border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 w-full  p-4 gap-2">
-    <div class="flex flex-col justify-between items-start p-4 leading-normal md:w-2/3 h-full">
-        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $role->name }}</h5>
+    class="flex flex-col items-center w-full gap-2 p-4 transition-all duration-300 border border-gray-200 rounded-lg shadow hover:scale-105 md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div
+        class="flex flex-col items-start justify-between h-full p-4 leading-normal md:w-2/3">
+        <h5
+            class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{ $role->name }}</h5>
         <p class="text-sm font-light">{{ $role->users->count() }} مستخدم</p>
     </div>
     <div class="flex items-center justify-center gap-2">
-        <button
-            class="bg-info/80 hover:bg-info text-gray-300 font-bold py-2 px-4 rounded dark:bg-info/60 dark:hover:bg-info/70">
+        <button wire:click="$parent.openModal('role', {{ $role }})"
+            x-on:click="show_role_modal=true"
+            class="px-4 py-2 font-bold text-white rounded bg-info hover:bg-info/80 dark:bg-info/60 dark:hover:bg-info/70">
             تعديل
         </button>
-        <button
-            class="bg-secondary hover:bg-primary text-gray-300 font-bold py-2 px-4 rounded dark:bg-secondary hover:bg-secondary/80">
+        {{-- <button
+            class="px-4 py-2 font-bold text-gray-300 rounded bg-secondary hover:bg-primary dark:bg-secondary hover:bg-secondary/80">
             الصلاحيات
-        </button>
+        </button> --}}
     </div>
 </div>
