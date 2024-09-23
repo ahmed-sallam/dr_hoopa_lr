@@ -15,9 +15,9 @@ class CourseForm extends Form
     public string $title = '';
     public string $sub_title = '';
     public string $description = '';
-    public float $price = 0;
-    public float $discount = 0;
-    public float $net_price = 0;
+    public  $price = 0;
+    public  $discount = 0;
+    public  $net_price = 0;
     public $thumbnail = '';
     public string $featured_video = '';
     public string $status = 'inactive';

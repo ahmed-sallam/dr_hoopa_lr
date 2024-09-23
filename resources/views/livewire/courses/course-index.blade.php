@@ -66,88 +66,11 @@
     <div
         class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px]">
         @if ($course)
-            <div
-                class="p-4 col-span-12 bg-transparent absolute top-[-180px] right-0 left-0 z-10">
-                <div
-                    class="flex flex-col items-start justify-between w-full h-56 p-2 text-white shadow-lg bg-primary dark:bg-dark rounded-3xl width md:p-3">
-                    {{-- first row title --}}
-                    <div class="flex items-center justify-between w-full">
-                        {{-- title & icon --}}
-                        <div class="flex justify-start gap-2 itms-center">
-                            <svg class="w-12 h-12 md:w-16 md:h-16"
-                                viewBox="0 0 79 57"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M62.5411 57H7.37846C5.42779 57 3.55701 56.2493 2.17767
-                              54.9131C0.798339 53.5769 0.0234375 51.7647 0.0234375
-                              49.875V7.125C0.0234375 3.17062 3.29642 0 7.37846 0H29.4435L36.7985
-                              7.125H62.5411C64.4918 7.125 66.3626 7.87567 67.7419 9.21186C69.1212
-                              10.5481 69.8961 12.3603 69.8961 14.25H7.37846V49.875L15.2483 21.375H78.0234L69.6387
-                              51.6562C68.7929 54.7556 65.9244 57 62.5411 57Z"
-                                    fill="white" />
-                            </svg>
-
-                            <div
-                                class="flex flex-col items-start justify-center gap-2">
-                                <h2 class="text-base font-semibold md:text-xl">
-                                    {{ $course->title }}</h2>
-                                <p class="text-xs md:tex-sm">
-                                    {{ $course->sub_title }}</p>
-                            </div>
-                        </div>
-                        @if (!$isCreateCourse && !$isEditCourse && !$isCreateLesson && !$isEditLesson)
-                            <div class="flex gap-2 ">
-                                <button wire:click="editCourse()"
-                                    typee="button"
-                                    class=" p-1.5 md:p-3 rounded-full bg-white/90  dark:bg-white/90 hover:bg-white/10 cursor-pointer">
-                                    <svg class="w-4 h-4 text-secondary md:w-6 md:h-6 "
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2
-                                0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0
-                                .83-.497z" />
-                                        <path d="m15 5 4 4" />
-                                    </svg>
-                                </button>
-                                <button x-on:click="show_delete_confirm = true"
-                                    type="button"
-                                    class="p-1.5 md:p-3 rounded-full bg-danger/80 hover:bg-white/10 cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="w-4 h-4 text-white md:w-6 md:h-6">
-                                        <path d="M3 6h18" />
-                                        <path
-                                            d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                        <path
-                                            d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                        <line x1="10"
-                                            x2="10"
-                                            y1="11"
-                                            y2="17" />
-                                        <line x1="14"
-                                            x2="14"
-                                            y1="11"
-                                            y2="17" />
-                                    </svg>
-                                </button>
-                            </div>
-                        @endif
-
-                    </div>
-                    {{-- last row actions --}}
-                    <div></div>
-                </div>
-            </div>
+            <livewire:courses.components.content-header :content="$currentChildrenView == 'view_lesson'
+                ? $lesson
+                : $course"
+                :$currentChildrenView
+                :key="$currentChildrenView . '' . $course->id" />
             {{-- if course is selected --}}
             {{-- right side --}}
             <div class="p-3 bg-gray-100 rounded-lg lg:col-span-4 dark:bg-dark">
@@ -203,22 +126,32 @@
 
 
 
-        @if ($isCreateCourse || $isEditCourse)
+        @if (
+            $currentChildrenView == 'create_course' ||
+                $currentChildrenView == 'edit_course')
             <div
                 class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
                 <livewire:courses.create-course :parent_id="$course?->id"
                     :key="'create-course-' . now()"
-                    :course="$isEditCourse ? $course : null" />
+                    :course="$currentChildrenView == 'edit_course'
+                        ? $course
+                        : null" />
             </div>
-        @elseif ($isCreateLesson || $isEditLesson)
+        @elseif (
+            $currentChildrenView == 'create_lesson' ||
+                $currentChildrenView == 'edit_lesson')
             <div
                 class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
                 <livewire:courses.create-lesson :course_id="$course?->id"
                     :key="'create-lesson-' . now()"
-                    :lesson="$isEditCourse ? $lesson : null" />
+                    :lesson="$currentChildrenView == 'edit_lesson'
+                        ? $lesson
+                        : null" />
             </div>
             {{-- @endif --}}
-        @elseif ($showContent)
+        @elseif (
+            $currentChildrenView == 'main_courses' ||
+                $currentChildrenView == 'one_course')
             {{-- courses --}}
             <div
                 class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
@@ -235,12 +168,19 @@
                     @endforeach
                 @endif
             </div>
+        @elseif($currentChildrenView == 'view_lesson')
+            <div
+                class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
+                <livewire:courses.components.view-lesson-video :$lesson />
+            </div>
         @endif
 
 
     </div>
     {{-- addd button --}}
-    @if ($showContent)
+    @if (
+        $currentChildrenView == 'main_courses' ||
+            $currentChildrenView == 'one_course')
         <!-- x-show="$store.courses.showContent" -->
         <div class="sticky left-0 z-20 flex flex-col items-end justify-center gap-4 bottom-10"
             x-data="{ show_dropdown: false }">
@@ -250,16 +190,18 @@
                     aria-labelledby="dropdownDefault">
                     <li>
                         <!-- @click="$store.courses.setShowContent(fagrid w-full gap-4 mt-6 lg:gridlse); $store.courses.setIsCreateCourse(true); show_dropdown=false" -->
-                        <a wire:click="createCourse"
+                        <button wire:click="selectChildrenView('create_course')"
+                            x-on:click="show_dropdown=false"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
-                            كورس</a>
+                            كورس</button>
                     </li>
                     @if ($course)
                         <li>
-                            <a wire:click="createLesson"
-                                href="#"
+                            <button
+                                wire:click="selectChildrenView('create_lesson')"
+                                x-on:click="show_dropdown=false"
                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">اضف
-                                درس</a>
+                                درس</button>
                         </li>
                     @endif
 
@@ -361,6 +303,13 @@
                 if (event.detail.course_id) {
                     url.searchParams.set('course_id', event.detail.course_id);
                 }
+                if (event.detail.view) {
+                    url.searchParams.set('view', event.detail.view);
+                }
+                if (event.detail.lesson_id) {
+                    url.searchParams.set('lesson_id', event.detail.lesson_id);
+                }
+
                 window.history.pushState({}, '', url);
             });
 
@@ -369,4 +318,6 @@
             });
         </script>
     @endscript
+
+
 </div>

@@ -35,15 +35,33 @@ EOT;
     public ?Course $course = null;
     public ?Lesson $lesson = null;
 
-    public bool $isCreateCourse = false;
-    public bool $isEditCourse = false;
-    public bool $showContent = true;
-    public bool $isCreateLesson = false;
-    public bool $isEditLesson = false;
+    // public bool $isCreateCourse = false;
+    // public bool $isEditCourse = false;
+    // public bool $showContent = true;
+    // public bool $isCreateLesson = false;
+    // public bool $isEditLesson = false;
+
+    public array $availableChldrenViews = [
+        'main_courses',
+        'one_course',
+        'view_lesson',
+        'create_course',
+        'edite_course',
+        'edit_lesson',
+        'create_lesson'
+    ];
+
+    public string $currentChildrenView = '';
 
     public function mount()
     {
         $selectedCourseId = request()->query("course_id");
+        $this->currentChildrenView = request()->query("view") ?? 'main_courses';
+        $lesson = request()->query("lesson_id");
+
+        if ($lesson) {
+            $this->lesson = Lesson::find($lesson);
+        }
         $this->course = $selectedCourseId ? Course::with('children', 'lessons')->find($selectedCourseId) : null;
 
         // Order by id and get only parent courses
@@ -74,8 +92,10 @@ EOT;
             $this->courses = Course::where("parent_id", null)
                 ->orderBy("id", "desc")
                 ->get();
+            // $this->selectChildrenView("main_courses");
         } else {
             $this->courses = $this->course->children;
+            // $this->selectChildrenView("one_course");
         }
     }
     // public function loadLessons()
@@ -101,28 +121,28 @@ EOT;
         return $tree;
     }
 
-    public function createCourse()
-    {
-        $this->isCreateCourse = true;
-        $this->showContent = false;
-    }
+    // public function createCourse()
+    // {
+    //     $this->isCreateCourse = true;
+    //     $this->showContent = false;
+    // }
 
-    public function createLesson(): void
-    {
-        $this->isCreateLesson = true;
-        $this->showContent = false;
-    }
+    // public function createLesson(): void
+    // {
+    //     $this->isCreateLesson = true;
+    //     $this->showContent = false;
+    // }
 
-    public function editCourse()
-    {
-        $this->isEditCourse = true;
-        $this->showContent = false;
-    }
-    public function editLesson(): void
-    {
-        $this->isEditLesson = true;
-        $this->showContent = false;
-    }
+    // public function editCourse()
+    // {
+    //     $this->isEditCourse = true;
+    //     $this->showContent = false;
+    // }
+    // public function editLesson(): void
+    // {
+    //     $this->isEditLesson = true;
+    //     $this->showContent = false;
+    // }
 
     #[On("course-created")]
     #[On("lesson-saved")]
@@ -135,11 +155,7 @@ EOT;
     public function cancel()
     {
         $this->dispatch("reset-form");
-        $this->isCreateCourse = false;
-        $this->isEditCourse = false;
-        $this->showContent = true;
-        $this->isCreateLesson = false;
-        $this->isEditLesson = false;
+        $this->selectChildrenView('main_courses');
     }
 
     public function deleteCourse()
@@ -159,6 +175,16 @@ EOT;
             $this->selectCourse($this->getFoldersTree()[$treeCount - 2]);
         } else {
             $this->selectCourse(null);
+        }
+    }
+
+    public function selectChildrenView(string $view, $lesson = null)
+    {
+        $this->currentChildrenView = $view;
+        $this->dispatch("update-url", view: $view);
+        if ($lesson != null) {
+            $this->lesson = Lesson::find($lesson);
+            $this->dispatch("update-url", lesson_id: $lesson);
         }
     }
 }

@@ -1,9 +1,9 @@
 <div
-    class="flex hover:scale-105  transition-all duration-200 ease-in-out
+    class="flex dark:bg-white/10 hover:scale-105  transition-all duration-200 ease-in-out
 flex-col md:flex-row md:items-center
 border border-dark dark:border-white/25 hover:border-primary
 dark:hover:border-primary rounded-lg bg-gray-100
-shadow hover:bg-gray-200  dark:hover:bg-white/10 w-full md:h-[80px] p-4">
+shadow hover:bg-gray-200  dark:hover:bg-white/5 w-full md:h-[80px] p-4">
 
     {{-- Lesson title --}}
     <div class="flex items-center justify-between px-4 py-4">
@@ -25,7 +25,7 @@ shadow hover:bg-gray-200  dark:hover:bg-white/10 w-full md:h-[80px] p-4">
             </div>
 
             <div class="flex flex-col p-4">
-                <h5
+                <h5 wire:click="$parent.selectChildrenView('view_lesson', {{ $lesson->id }})"
                     class="mb-2 text-2xl font-bold tracking-tight text-gray-900 cursor-pointer dark:text-white hover:text-primary hover:underline">
                     {{ $lesson->title }}</h5>
                 <h6 class="text-sm font-light ">{{ $lesson->sub_title }}</h6>
