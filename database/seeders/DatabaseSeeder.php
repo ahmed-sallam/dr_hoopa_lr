@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Stage;
 use App\Models\Course;
+use App\Models\Category;
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -78,6 +79,8 @@ class DatabaseSeeder extends Seeder
         $stage2 = Stage::create(['name' => 'ثانية ثانوي']);
         $stage3 = Stage::create(['name' => 'ثالثة ثانوي']);
 
+        // create default Categoires
+        $category1 = Category::create(['name' => 'أحياء']);
 
         // attach permissions to admin
         $adminRole->permissions()->attach([
@@ -116,6 +119,8 @@ class DatabaseSeeder extends Seeder
                 'net_price' => $net_price,
                 'status' => $i == 0 ? 'inactive' : 'active',
                 'parent_id' => ($i >= 2) ? 1 : null,
+                'category_id' => $category1->id,
+                'stage_id' => ($i >= 2) ? 1 : 2,
                 // 'data' => [
                 //     'duration' => '10 hours',
                 //     'level' => 'beginner',
