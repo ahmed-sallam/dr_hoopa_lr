@@ -28,9 +28,9 @@ Route::view('profile', 'profile')
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
-    Route::get('courses', CourseIndex::class)->name('course.index');
-    Route::get('courses/create', CreateCourse::class)->name('course.create');
-    Route::get('users', UserIndex::class)->name('user.index');
+    Route::get('admin/courses', CourseIndex::class)->name('course.index');
+    Route::get('admin/courses/create', CreateCourse::class)->name('course.create');
+    Route::get('admin/users', UserIndex::class)->name('user.index');
 });
 
 require __DIR__ . '/auth.php';
