@@ -21,7 +21,7 @@ export default {
             },
             colors: {
                 // primary: "rgba(var(--primary))",
-                primary: "#033468",
+                // primary: "#033468",
                 secondary: "#1877F2",
                 accent2: "rgba(var(--accent2))",
                 accent: "#d5d5d5",
@@ -39,11 +39,17 @@ export default {
     daisyui: {
         themes: [
             {
+                dark: {
+                    ...require("daisyui/src/theming/themes")["dark"],
+                    primary: "#1877F2",
+                },
+            },
+            {
                 light: {
+                    ...require("daisyui/src/theming/themes")["light"],
                     primary: "#053468",
                 },
             },
-            "dark",
         ],
     },
     plugins: [

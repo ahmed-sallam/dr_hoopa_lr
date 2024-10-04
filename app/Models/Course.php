@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Stage;
 use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
@@ -60,5 +62,10 @@ class Course extends Model
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
+    }
+
+    public function stage(): BelongsTo
+    {
+        return $this->belongsTo(Stage::class);
     }
 }

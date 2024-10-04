@@ -2,7 +2,10 @@
 
 namespace App\Livewire\Client;
 
+use App\Models\Stage;
 use Livewire\Component;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 
 class ClientCourses extends Component
 {
@@ -26,8 +29,58 @@ class ClientCourses extends Component
                         </svg>
 EOT;
 
+
+    public Collection $stages;
+    public  $categories;
+    public $activedStage;
+
+    public function mount()
+    {
+        $this->stages = $this->getStages();
+        $this->activedStage = 'all';
+        $this->categories = $this->getCategoriesWithCoursesGroupdedByStage();
+        // dd($this->categories);
+    }
+
     public function render()
     {
         return view('livewire.client.client-courses')->layout('layouts.client');
+    }
+
+
+
+    public function getStages()
+    {
+        return Stage::all();
+    }
+
+    public function setActiveStage($stage): void
+    {
+        $this->activedStage = $stage;
+        $this->categories = $this->getCategoriesWithCoursesGroupdedByStage($stage != 'all' ? $stage['id'] : null);
+    }
+
+    public function getCategoriesWithCoursesGroupdedByStage($stage = null)
+    {
+        return Category::with(['courses' => function ($query) use ($stage) {
+            $query->whereNull('parent_id')
+                ->when($stage, function ($query) use ($stage) {
+                    $query->whereHas('stage', function ($query) use ($stage) {
+                        $query->where('id', $stage);
+                    });
+                })
+                ->withCount('children as children_count')
+                ->withCount(['lessons as video_lessons_count' => function ($query) {
+                    $query->where('content_type', 'video');
+                }])
+                ->withCount(['lessons as item_lessons_count' => function ($query) {
+                    $query->where('content_type', 'item');
+                }])
+                ->withCount(['lessons as quiz_lessons_count' => function ($query) {
+                    $query->where('content_type', 'quiz');
+                }]);
+        }])->get()->groupBy(function ($category) {
+            return $category->courses->first()->stage->name ?? null;
+        })->filter()->all();
     }
 }
