@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Role;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\Stage;
 use App\Models\Course;
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
@@ -70,6 +71,12 @@ class DatabaseSeeder extends Seeder
         $SoftDeleteRolePermission = Permission::create(['name' => 'soft-delete', 'table_name' => 'roles']);
         $viewRolePermission = Permission::create(['name' => 'view', 'table_name' => 'roles']);
         $restoreRolePermission = Permission::create(['name' => 'restore', 'table_name' => 'roles']);
+
+
+        // create default stages
+        $stage1 = Stage::create(['name' => 'اولى ثانوي']);
+        $stage2 = Stage::create(['name' => 'ثانية ثانوي']);
+        $stage3 = Stage::create(['name' => 'ثالثة ثانوي']);
 
 
         // attach permissions to admin
