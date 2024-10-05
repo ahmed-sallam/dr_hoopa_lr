@@ -44,7 +44,10 @@ EOT;
 
     public function render()
     {
-        return view('livewire.client.client-courses')->layout('layouts.client');
+        return view('livewire.client.client-courses')->layout('layouts.client', [
+            "title" => $this->title,
+            "logo" => $this->logo,
+        ]);
     }
 
 

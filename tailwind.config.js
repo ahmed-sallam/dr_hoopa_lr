@@ -41,13 +41,14 @@ export default {
             {
                 dark: {
                     ...require("daisyui/src/theming/themes")["dark"],
-                    primary: "#1877F2",
+                    info: "#1877F2",
                 },
             },
             {
                 light: {
                     ...require("daisyui/src/theming/themes")["light"],
                     primary: "#053468",
+                    info: "#1877F2",
                 },
             },
         ],

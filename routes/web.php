@@ -27,10 +27,19 @@ Route::view('profile', 'profile')
 
 
 Route::middleware(['auth'])->group(function () {
+    // new admin routes
+    Route::get('admin', Dashboard::class)->name('admin.dashboard');
+    Route::get('admin/courses', CourseIndex::class)->name('admin.course.index');
+    Route::get('admin/courses/create', CreateCourse::class)->name('admin.course.create');
+    Route::get('admin/users', UserIndex::class)->name('admin.user.index');
+
+
+
+    // old admin routes
     Route::get('dashboard', Dashboard::class)->name('dashboard');
-    Route::get('admin/courses', CourseIndex::class)->name('course.index');
-    Route::get('admin/courses/create', CreateCourse::class)->name('course.create');
-    Route::get('admin/users', UserIndex::class)->name('user.index');
+    Route::get('old-admin/courses', CourseIndex::class)->name('course.index');
+    Route::get('old-admin/courses/create', CreateCourse::class)->name('course.create');
+    Route::get('old-admin/users', UserIndex::class)->name('user.index');
 });
 
 require __DIR__ . '/auth.php';
