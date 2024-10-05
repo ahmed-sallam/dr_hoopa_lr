@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         // default data
 
         $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
+        $userRole = Role::create(['name' => 'student']);
+        $teacherRole = Role::create(['name' => 'teacher']);
 
         $admin = User::create([
             'first_name' => 'Admin',
