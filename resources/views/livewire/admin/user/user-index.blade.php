@@ -1,5 +1,5 @@
 <div class="relative">
-    <div class="flex items-center justify-end gap-2 text-xs md:text-base">
+    {{-- <div class="flex items-center justify-end gap-2 text-xs md:text-base">
         <div
             class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-neutral">
             <a href="{{ route('admin.user.index') }}"
@@ -7,7 +7,7 @@
                 class="cursor-pointer">المستخدمين</a>
 
         </div>
-    </div>
+    </div> --}}
     <div class="mt-10">
         <x-mary-header title="المستخدمين"
             subtitle="جميع المستخدمين "
@@ -127,6 +127,13 @@
                         @endif
                         <x-mary-menu-item title="مشاهدة"
                             icon="o-eye"
+                            href="{{ route('admin.user.view', $user['id']) }}"
+                            wire:navigate
+                            class="text-primary" />
+                        <x-mary-menu-item title="تعديل"
+                            icon="o-pencil"
+                            href="{{ route('admin.user.edit', $user['id']) }}"
+                            wire:navigate
                             class="text-info" />
                     @endif
                 </x-mary-dropdown>

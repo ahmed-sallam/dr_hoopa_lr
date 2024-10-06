@@ -3,6 +3,8 @@
 use App\Livewire\Dashboard;
 use App\Livewire\Client\Home;
 use App\Livewire\Users\UserIndex;
+use App\Livewire\Admin\User\UserEdit;
+use App\Livewire\Admin\User\UserView;
 use App\Livewire\Client\ClientCourse;
 use App\Livewire\Client\ClientLesson;
 use App\Livewire\Courses\CourseIndex;
@@ -32,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/courses', CourseIndex::class)->name('admin.course.index');
     Route::get('admin/courses/create', CreateCourse::class)->name('admin.course.create');
     Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
+    Route::get('admin/users/{id}', UserView::class)->name('admin.user.view');
+    Route::get('admin/users/{id}/edit', UserEdit::class)->name('admin.user.edit');
+
 
 
 
