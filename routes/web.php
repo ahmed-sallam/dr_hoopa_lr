@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin', Dashboard::class)->name('admin.dashboard');
     Route::get('admin/courses', CourseIndex::class)->name('admin.course.index');
     Route::get('admin/courses/create', CreateCourse::class)->name('admin.course.create');
-    Route::get('admin/users', UserIndex::class)->name('admin.user.index');
+    Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
 
 
 

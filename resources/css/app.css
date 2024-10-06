@@ -45,3 +45,9 @@ body {
     --accent2: 204, 204, 204;
     --dark: 229,229,229;
 }
+
+
+
+.mary-table-pagination select {
+    @apply w-20 h-10 me-4 ;
+  }

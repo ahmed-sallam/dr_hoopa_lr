@@ -197,7 +197,7 @@
 
 
 
-        <livewire:client.components.sidebar />
+        <livewire:admin.components.sidebar />
 
 
         <!-- Content wrapper -->
