@@ -51,3 +51,8 @@ body {
 .mary-table-pagination select {
     @apply w-20 h-10 me-4 ;
   }
+
+
+.overflow-table > div > div {
+    overflow: visible !important;
+}

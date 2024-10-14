@@ -1,5 +1,4 @@
-<div class="relative">
-
+<div class="">
 
     <div class="flex items-center justify-end gap-2 text-xs md:text-base">
 
@@ -20,8 +19,8 @@
                     المزيد
                 </div>
             </x-slot:trigger>
-            <x-mary-menu-item title="الادوار"
-                href="{{ route('admin.role.index') }}"
+            <x-mary-menu-item title="المستخدمين"
+                href="{{ route('admin.user.index') }}"
                 wire:navigate
                 class="text-primary" />
         </x-mary-dropdown>
@@ -34,95 +33,38 @@
         </div>
 
     </div>
+
     <div class="mt-10">
-        <x-mary-header title="المستخدمين"
-            subtitle="إدارة المستخدمين في النظام"
+
+        <x-mary-header title="الأدوار"
+            subtitle="إدارة أدوار المستخدمين"
             separator
             progress-indicator>
-            <x-slot:middle
-                class="!justify-end ">
-                <x-mary-input placeholder="بحث"
-                    wire:model.blur="searchWord"
-                    wire:keydown.enter="users"
-                    class="">
-                </x-mary-input>
+            <x-slot:middle>
             </x-slot:middle>
             <x-slot name="actions">
-                <x-mary-button icon="o-funnel"
-                    class="relative btn-circle"
-                    @click="$wire.showFilterDrawer = true">
-                    @if ($this->filtersCount() > 0)
-                        <x-mary-badge value="{{ $this->filtersCount() }}"
-                            class="absolute badge-warning -right-2 -top-2" />
-                    @endif
-                </x-mary-button>
-                {{-- @can('create', User::class)
-                    <x-mary-button icon="o-plus"
-                        class="btn-primary btn-circle "
-                        @click="$wire.showAddModal">
-                    </x-mary-button>
-                @endcan --}}
+                {{-- <x-mary-toggle label="{{ __('show_archived_only') }}"
+                wire:model.live="showArchived"
+                class="focus:bg-primary/10 focus:border-primary focus:outline-primary focus-within:outline-primary"
+                right /> --}}
 
+
+                <x-mary-button icon="o-plus"
+                    class="btn-primary btn-circle"
+                    {{-- @click="$wire.showAddModal" --}}>
+                </x-mary-button>
             </x-slot>
         </x-mary-header>
-
-        <x-mary-drawer wire:model="showFilterDrawer"
-            wire:ignore.self
-            class="w-11/12 lg:w-1/3 "
-            title="تصفية"
-            with-close-button
-            right
-            separator>
-            <div class="space-y-2">
-                <x-mary-input placeholder="بحث"
-                    wire:model.blur="searchWord" />
-                <x-mary-select label="نوع المستخدم"
-                    :options="$roles"
-                    placeholder="اختر الدور"
-                    placeholder-value="0"
-                    wire:model.live="roleId" />
-                {{--
-
-                <x-mary-select label="{{ __('medical_centers') }}"
-                    :options="$medicalCenters"
-                    icon="c-briefcase"
-                    placeholder="{{ __('select_medical_center') }}"
-                    placeholder-value="0"
-                    wire:model.live="medicalCenterId" /> --}}
-                <x-mary-toggle label="عرض المستخدمين تم ارشفتهم"
-                    wire:model.live="showArchived"
-                    class="mt-2 focus:bg-primary/10 focus:border-primary focus:outline-primary focus-within:outline-primary"
-                    right
-                    tight />
-            </div>
-            <x-slot:actions>
-                @if ($this->filtersCount() > 0)
-                    <x-mary-button label="إعادة ضبط"
-                        wire:click="clearFilters"
-                        class="btn-warning " />
-                @endif
-                <x-mary-button label="تم"
-                    @click="$wire.showFilterDrawer = false"
-                    class="btn-primary " />
-            </x-slot:actions>
-        </x-mary-drawer>
         <div class="overflow-table">
 
             <x-mary-table :headers="$headers"
-                :rows="$this->users()"
-                with-pagination
-                per-page="perPage"
-                :sort-by="$sortBy"
-                {{-- :row-decoration="$this->getRowDecoration()" --}}
-                class="[&_th>*]:!text-black [&_th>*]:!inline-flex
-            [&_th>*]:!font-bold "
-                :per-page-values="$perPageOptions"
-                show-empty-text
-                empty-text="{{ __('no_data_found') }}">
+                :rows="$this->roles()"
+                class="h-full">
 
 
-                @scope('actions', $user)
-                    <x-mary-dropdown>
+
+                @scope('actions', $role)
+                    <x-mary-dropdown right>
                         <x-slot:trigger>
                             <x-mary-button class="btn-circle btn-ghost">
                                 <svg class="h-6 text-primary"
@@ -141,35 +83,26 @@
                         @if ($this->showArchived)
                             <x-mary-menu-item title="إعادة تنشيط"
                                 icon="o-arrow-path"
-                                class="text-primary"
-                                wire:click="restore({{ $user['id'] }})"
-                                wire:confirm="{{ __('are_you_sure_restore') }}" />
+                                class="text-primary" />
                         @else
-                            @if ($user->role_id != 1)
+                            @if ($role->role_id != 1)
                                 <x-mary-menu-item title="ارشفة"
                                     icon="o-trash"
-                                    class="text-error"
-                                    wire:click="delete({{ $user['id'] }})"
-                                    wire:confirm="{{ __('are_you_sure_delete') }}" />
+                                    class="text-error" />
                             @endif
                             <x-mary-menu-item title="مشاهدة"
                                 icon="o-eye"
-                                href="{{ route('admin.user.view', $user['id']) }}"
-                                wire:navigate
                                 class="text-primary" />
                             <x-mary-menu-item title="تعديل"
                                 icon="o-pencil"
-                                href="{{ route('admin.user.edit', $user['id']) }}"
-                                wire:navigate
                                 class="text-info" />
                         @endif
                     </x-mary-dropdown>
                 @endscope
 
-
-
             </x-mary-table>
+
+
         </div>
     </div>
-
 </div>

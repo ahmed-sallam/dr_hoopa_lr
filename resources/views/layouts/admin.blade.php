@@ -112,7 +112,7 @@
                                 </svg>
                             </button>
 
-                            <button x-on:click="show_search_modal = true">
+                            {{-- <button x-on:click="show_search_modal = true">
                                 <svg class="w-6 h-6 text-gray-800 transition-all duration-100 ease-in-out cursor-pointer dark:text-white hover:scale-150"
                                     viewBox="0 0 25 25"
                                     fill="none"
@@ -121,7 +121,7 @@
                                         d="M18.2622 18.0481C18.6415 17.6714 19.2494 17.6714 19.6287 18.0481L22.1354 20.0715H22.179C22.6861 20.5841 22.6861 21.4152 22.179 21.9278C21.6718 22.4404 20.8496 22.4404 20.3424 21.9278L18.2622 19.5436L18.1832 19.4546C18.0362 19.2684 17.955 19.0364 17.955 18.7959C17.955 18.5152 18.0655 18.2462 18.2622 18.0481ZM11.3513 2.6875C13.5835 2.6875 15.7243 3.5838 17.3028 5.17922C18.8812 6.77464 19.768 8.93849 19.768 11.1948C19.768 15.8932 15.9997 19.702 11.3513 19.702C6.70285 19.702 2.93457 15.8932 2.93457 11.1948C2.93457 6.49633 6.70285 2.6875 11.3513 2.6875Z"
                                         fill="white" />
                                 </svg>
-                            </button>
+                            </button> --}}
 
                             <svg class="w-6 h-6 text-gray-800 transition-all duration-100 ease-in-out cursor-pointer dark:text-white hover:scale-150"
                                 viewBox="0 0 30 31"
@@ -211,7 +211,7 @@
     </div>
 
     {{-- Search modal --}}
-    <div id="search-modal"
+    {{-- <div id="search-modal"
         x-show="show_search_modal"
         x-transition
         tabindex="-1"
@@ -283,7 +283,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </body>
 

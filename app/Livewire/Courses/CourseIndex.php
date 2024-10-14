@@ -73,7 +73,7 @@ EOT;
 
     public function render()
     {
-        return view("livewire.courses.course-index")->layout("layouts.app", [
+        return view("livewire.courses.course-index")->layout("layouts.admin", [
             "title" => $this->title,
             "logo" => $this->logo,
         ]); // Specify the layout directly here

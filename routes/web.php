@@ -9,8 +9,10 @@ use App\Livewire\Client\ClientCourse;
 use App\Livewire\Client\ClientLesson;
 use App\Livewire\Courses\CourseIndex;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Admin\User\RoleIndex;
 use App\Livewire\Client\ClientCourses;
 use App\Livewire\Courses\CreateCourse;
+use App\Livewire\Admin\Category\CategoryIndex;
 
 // Route::view('/', 'welcome');
 Route::get("/", Home::class)->name("home");
@@ -36,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
     Route::get('admin/users/{id}', UserView::class)->name('admin.user.view');
     Route::get('admin/users/{id}/edit', UserEdit::class)->name('admin.user.edit');
+    Route::get('admin/roles', RoleIndex::class)->name('admin.role.index');
+    Route::get('admin/categories', CategoryIndex::class)->name('admin.category.index');
 
 
 

@@ -26,17 +26,17 @@
                 </a>
             </li>
             <li class="flex items-center justify-center ">
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('home') }}"
                     wire:navigate
                     class="w-full flex items-center justify-center flex-col
            p-2  rounded-lg font-semibold group hover:bg-white
                 hover:dark:bg-white/15 hover:text-primary
                 hover:dark:text-white
-                {{ request()->routeIs('dashboard')
+                {{ request()->routeIs('home')
                     ? ' bg-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:bg-white/15 text-primary dark:text-white '
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:bg-white/15 text-primary dark:text-white '
                     : ' text-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:text-accent ' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:text-accent ' }}">
                     <svg class="w-8 h-8"
                         viewBox="0 0 30 29"
                         fill="currentColor"
@@ -49,52 +49,17 @@
                     <p>الرئيسية</p>
                 </a>
             </li>
-            @if (auth()->user())
-                <li class="flex items-center justify-center w-full">
-                    <a href="{{ route('admin.user.index') }}"
-                        wire:navigate
-                        class="w-full flex items-center justify-center flex-col
-           p-2  rounded-lg font-semibold group hover:bg-white
-                hover:dark:bg-white/15 hover:text-primary
-                hover:dark:text-white
-                {{ request()->routeIs('admin.user.index')
-                    ? ' bg-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:bg-white/15 text-primary dark:text-white '
-                    : ' text-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:text-accent ' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="w-8 h-8 ">
-                            <path d="M18 21a8 8 0 0 0-16 0" />
-                            <circle cx="10"
-                                cy="8"
-                                r="5" />
-                            <path
-                                d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
-                        </svg>
-                        <p>المستخدمين</p>
-                    </a>
-                </li>
-            @endif
+
             <li class="flex items-center justify-center ">
-                <a href="{{ route('course.index') }}"
+                <a href="{{ route('client.courses.index') }}"
                     wire:navigate
                     class="w-full flex items-center justify-center flex-col
            p-2  rounded-lg font-semibold group hover:bg-white
                 hover:dark:bg-white/15 hover:text-primary
                 hover:dark:text-white
-                {{ request()->routeIs('course.index')
-                    ? ' bg-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:bg-white/15 text-primary dark:text-white '
-                    : ' text-white
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        dark:text-accent ' }}">
+                {{ request()->routeIs('client.courses.index')
+                    ? ' bg-white  dark:bg-white/15 text-primary dark:text-white '
+                    : ' text-white  dark:text-accent ' }}">
                     <svg class="w-8 h-8 "
                         viewBox="0 0 30 30"
                         fill="currentColor"

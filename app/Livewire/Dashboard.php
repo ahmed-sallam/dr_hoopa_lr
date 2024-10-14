@@ -20,7 +20,7 @@ EOT;
 
     public function render()
     {
-        return view('livewire.dashboard')->layout('layouts.app', [
+        return view('livewire.dashboard')->layout('layouts.admin', [
             'title' => $this->title,
             'logo' => $this->logo,
         ]);
