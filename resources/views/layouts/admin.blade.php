@@ -35,8 +35,8 @@
 
 <body x-data="{ show_search_modal: false }"
     class="font-sans antialiased
-    {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} bg-base-100   ">
-    <div class="min-h-screen ">
+    {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} bg-base-100   overflow-hidden">
+    <div class="min-h-screen overflow-hidden">
 
         {{--
         <livewire:components.navbar :$logo
@@ -201,9 +201,11 @@
 
 
         <!-- Content wrapper -->
-        <main class="py-12 mt-20 sm:ml-40 lg:ms-4">
+        <main class="py-12 mt-20 sm:ml-40 lg:ms-4 ">
             <div
-                class="py-4 mx-auto border-2 rounded-3xl max-w-screen-2xl sm:px-6 lg:px-8 border-base-300 dark:border-neutral min-h-[calc(100vh-200px)]">
+                class="py-4 mx-auto border-2 rounded-3xl max-w-screen-2xl
+                sm:px-6 lg:px-8 border-base-300 dark:border-neutral
+                h-[calc(100vh-140px)]  overflow-auto hide-scrollbar">
                 @yield('content-header')
                 {{ $slot }}
             </div>

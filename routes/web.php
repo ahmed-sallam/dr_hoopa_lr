@@ -40,8 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/courses/create', CreateCourse::class)->name('admin.course.create');
     Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
     Route::get('admin/users/{id}', UserView::class)->name('admin.user.view');
-    Route::get('admin/users/{id}/edit', UserEdit::class)->name('admin.user.e
-    dit');
+    Route::get('admin/users/{id}/edit', UserEdit::class)->name('admin.user.edit');
     Route::get('admin/roles', RoleIndex::class)->name('admin.role.index');
     Route::get('admin/categories', CategoryIndex::class)->name('admin.category.index');
 
