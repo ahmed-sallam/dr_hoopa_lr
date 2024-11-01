@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\Admin\AbandonedCartIndex;
+use App\Livewire\Admin\OrderIndex;
+use App\Livewire\Admin\PaymentIndex;
 use App\Livewire\Dashboard;
 use App\Livewire\Client\Home;
 use App\Livewire\Users\UserIndex;
@@ -37,11 +40,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/courses/create', CreateCourse::class)->name('admin.course.create');
     Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
     Route::get('admin/users/{id}', UserView::class)->name('admin.user.view');
-    Route::get('admin/users/{id}/edit', UserEdit::class)->name('admin.user.edit');
+    Route::get('admin/users/{id}/edit', UserEdit::class)->name('admin.user.e
+    dit');
     Route::get('admin/roles', RoleIndex::class)->name('admin.role.index');
     Route::get('admin/categories', CategoryIndex::class)->name('admin.category.index');
 
-
+    // admin finance
+    Route::prefix('finance')->group(function () {
+        // Redirect /finance to /finance/cart
+        Route::redirect('/', '/finance/cart')->name('admin.finance.index');
+        Route::get('/cart', AbandonedCartIndex::class)->name('admin.finance.abandoned-cart.index');
+        Route::get('/orders', OrderIndex::class)->name('admin.finance.orders.index');
+        Route::get('/payments', PaymentIndex::class)->name('admin.finance.payments.index');
+    });
 
 
     // old admin routes
