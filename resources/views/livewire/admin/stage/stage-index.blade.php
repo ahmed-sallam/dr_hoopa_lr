@@ -10,6 +10,7 @@
                 </div>
             </x-slot:trigger>
             <x-mary-menu-item title="الكورسات" href="{{ route('admin.course.index') }}" wire:navigate class="text-primary" />
+            <x-mary-menu-item title="الاقسام" href="{{ route('admin.category.index') }}" wire:navigate class="text-primary" />
         </x-mary-dropdown>
         <div class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 h-10 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-neutral">
         </div>

@@ -23,6 +23,10 @@
                 href="{{ route('admin.category.index') }}"
                 wire:navigate
                 class="text-primary" />
+            <x-mary-menu-item title="المراحل"
+                href="{{ route('admin.stage.index') }}"
+                wire:navigate
+                class="text-primary" />
         </x-mary-dropdown>
         <div
             class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-dark">
