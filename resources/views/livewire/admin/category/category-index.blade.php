@@ -55,12 +55,10 @@
                             class="absolute badge-warning -right-2 -top-2" />
                     @endif
                 </x-mary-button> --}}
-                {{-- @can('create', category::class)
-                    <x-mary-button icon="o-plus"
-                        class="btn-primary btn-circle "
-                        @click="$wire.showAddModal">
-                    </x-mary-button>
-                @endcan --}}
+                <x-mary-button icon="o-plus"
+                    class="btn-primary btn-circle"
+                    @click="$wire.showAddModal = true">
+                </x-mary-button>
 
             </x-slot>
         </x-mary-header>
@@ -129,4 +127,16 @@
     </div>
 
 
+    {{-- Add Category Modal --}}
+    <x-mary-modal wire:model="showAddModal" title="إضافة قسم جديد">
+        <div class="space-y-4">
+            <x-mary-input label="اسم القسم" wire:model="form.name" />
+        </div>
+
+        <x-slot:actions>
+            <x-mary-button label="إلغاء" @click="$wire.showAddModal = false" />
+            <x-mary-button label="حفظ" class="btn-primary" 
+                wire:click="save" spinner="save" />
+        </x-slot:actions>
+    </x-mary-modal>
 </div>

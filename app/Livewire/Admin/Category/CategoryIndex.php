@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Category;
 use Mary\Traits\Toast;
 use Livewire\Component;
 use App\Models\Category;
+use App\Livewire\Forms\CategoryForm;
 
 class CategoryIndex extends Component
 {
@@ -34,6 +35,8 @@ EOT;
     public string $successMessage = '';
     public bool $showArchived = false;
     public bool $showFilterDrawer = false;
+    public bool $showAddModal = false;
+    public CategoryForm $form;
 
     public function mount()
     {
@@ -61,5 +64,12 @@ EOT;
     public function categories()
     {
         return Category::all();
+    }
+
+    public function save()
+    {
+        $this->form->store();
+        $this->showAddModal = false;
+        $this->success('تم إضافة القسم بنجاح');
     }
 }
