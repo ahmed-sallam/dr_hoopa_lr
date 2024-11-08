@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Forms;
 
+use Illuminate\Support\Facades\Hash;
 use Livewire\Form;
 use App\Models\User;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
+use App\Helpers\PasswordHelper;
 
 class UserForm extends Form
 {
@@ -45,6 +47,7 @@ class UserForm extends Form
             'gender' => 'required|string|in:male,female',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => $this->user ? 'nullable|string|min:8' : 'required|string|min:8',
+//            'password' => 'nullable|string|min:8', // Always allow password to be nullable
             'role_id' => 'required|integer|exists:roles,id'
         ];
     }
@@ -72,24 +75,33 @@ class UserForm extends Form
         if ($this->avatar && !is_string($this->avatar)) {
             $this->avatar = $this->avatar->store('avatars', 'public');
         }
+        
+        // Ensure password is always set and hashed
+//        if (empty($this->password)) {
+//            $this->password = PasswordHelper::generate(); // Generate a secure random password if not provided
+//        }
+        $data =  [
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'guardian_phone' => $this->guardian_phone,
+            'address' => $this->address,
+            'city' => $this->city,
+            'state' => $this->state,
+            'address_description' => $this->address_description,
+            'gender' => $this->gender,
+            'avatar' => $this->avatar,
+            'role_id' => $this->role_id,
+            'password' => Hash::make($this->password)
+        ];
+//        dd($data);
         $user = User::create(
-            [
-                'first_name' => $this->first_name,
-                'middle_name' => $this->middle_name,
-                'last_name' => $this->last_name,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'guardian_phone' => $this->guardian_phone,
-                'address' => $this->address,
-                'city' => $this->city,
-                'state' => $this->state,
-                'address_description' => $this->address_description,
-                'gender' => $this->gender,
-                'avatar' => $this->avatar,
-                'role_id' => $this->role_id,
-                'password' =>  bcrypt($this->password)
-            ]
+           $data
         );
+        
+        return $user;
     }
 
     public function update()
@@ -111,7 +123,7 @@ class UserForm extends Form
             'address_description' => 'nullable|string',
             'gender' => 'required|string|in:male,female',
             // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'password' => $this->user ? 'nullable|string|min:8' : 'required|string|min:8',
+            'password' => 'nullable|string|min:8',
             'role_id' => 'required|integer|exists:roles,id'
         ];
 
@@ -122,22 +134,27 @@ class UserForm extends Form
             $this->avatar = $this->user->avatar;
         }
 
-        $this->user->update(
-            [
-                'first_name' => $this->first_name,
-                'middle_name' => $this->middle_name,
-                'last_name' => $this->last_name,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'guardian_phone' => $this->guardian_phone,
-                'address' => $this->address,
-                'city' => $this->city,
-                'state' => $this->state,
-                'address_description' => $this->address_description,
-                'gender' => $this->gender,
-                'avatar' => $this->avatar,
-                'role_id' => $this->role_id,
-            ]
-        );
+        $updateData = [
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'guardian_phone' => $this->guardian_phone,
+            'address' => $this->address,
+            'city' => $this->city,
+            'state' => $this->state,
+            'address_description' => $this->address_description,
+            'gender' => $this->gender,
+            'avatar' => $this->avatar,
+            'role_id' => $this->role_id,
+        ];
+
+//        // Only update password if a new password is provided
+//        if (!empty($this->password)) {
+//            $updateData['password'] = bcrypt($this->password);
+//        }
+
+        $this->user->update($updateData);
     }
 }

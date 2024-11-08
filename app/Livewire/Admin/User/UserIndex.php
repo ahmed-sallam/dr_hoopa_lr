@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\User;
 
 use App\Models\Role;
 use App\Models\User;
+use Livewire\Attributes\On;
 use Mary\Traits\Toast;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -71,12 +72,21 @@ EOT;
     }
 
 
-    public function render()
+    #[On('user-create')]
+    public function showCreateModal()
     {
-        return view('livewire.admin.user.user-index')->layout('layouts.admin', ['title' => $this->title, 'logo' => $this->logo]);
+        $this->dispatch('show-user-create-modal');
     }
 
-    public function users()
+    public function render()
+    {
+        $users = $this->users();
+        return view('livewire.admin.user.user-index', [
+            'users' => $users
+        ])->layout('layouts.admin', ['title' => $this->title, 'logo' => $this->logo]);
+    }
+
+    protected function users()
     {
         return User::where(function ($query) {
             $query->whereRaw('LOWER(first_name) LIKE ?', ['%' . strtolower($this->searchWord) . '%'])
