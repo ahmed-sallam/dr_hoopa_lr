@@ -72,6 +72,10 @@
                         <x-mary-menu-item title="عرض" icon="o-eye"
                                           href="{{ route('admin.user.view', $user['id']) }}"
                                           wire:navigate class="text-primary"/>
+                        <x-mary-menu-item title="تغيير كلمة المرور" 
+                                          icon="o-key" 
+                                         @click="$dispatch('show-change-password-modal', { userId: {{ $user['id'] }} })"
+                                          class="text-warning"/>
                     @endif
 
 
@@ -82,4 +86,68 @@
     </div>
 
     <livewire:admin.user.user-create/>
-</div>
+
+    {{-- Change Password Modal --}}
+    <div x-data="{
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+    userId: null,
+
+    showModal(userId) {
+        this.userId = userId;
+        this.oldPassword = '';
+        this.newPassword = '';
+        this.confirmPassword = '';
+        $wire.set('showChangePasswordModal', true);
+    },
+
+    changePassword() {
+        console.log('Changing password for user ID:', this.userId);
+        $wire.set('oldPassword', this.oldPassword);
+        $wire.set('newPassword', this.newPassword);
+        $wire.set('confirmPassword', this.confirmPassword);
+        $wire.call('changePassword');
+    }
+}">
+        <x-mary-modal
+                x-show="$wire.showChangePasswordModal"
+                wire:model="showChangePasswordModal"
+                title="تغيير كلمة المرور"
+                @close="$wire.set('showChangePasswordModal', false)"
+        >
+            <div class="space-y-4">
+                <x-mary-input
+                        label="كلمة المرور الحالية"
+                        type="password"
+                        x-model="oldPassword"
+                        wire:model="oldPassword"
+                />
+
+                <x-mary-input
+                        label="كلمة المرور الجديدة"
+                        type="password"
+                        x-model="newPassword"
+                        wire:model="newPassword"
+                />
+
+                <x-mary-input
+                        label="تأكيد كلمة المرور الجديدة"
+                        type="password"
+                        x-model="confirmPassword"
+                        wire:model="confirmPassword"
+                />
+
+            </div>
+
+            <x-slot:actions>
+                <x-mary-button label="إلغاء" @click="$wire.set('showChangePasswordModal', false)" />
+                <x-mary-button
+                        label="تغيير كلمة المرور"
+                        class="btn-primary !ms-2"
+                        @click="changePassword()"
+                        wire:loading.attr="disabled"
+                />
+            </x-slot:actions>
+        </x-mary-modal>
+    </div>

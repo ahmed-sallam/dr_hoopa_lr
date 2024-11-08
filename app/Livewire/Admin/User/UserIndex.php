@@ -9,6 +9,7 @@ use Mary\Traits\Toast;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 class UserIndex extends Component
 {
@@ -40,6 +41,20 @@ EOT;
     public bool $showArchived = false;
     public bool $showFilterDrawer = false;
     public int $roleId = 0;
+
+    public $selectedUserId = null;
+    public $oldPassword = '';
+    public $newPassword = '';
+    public $confirmPassword = '';
+    public bool $showChangePasswordModal = false;
+
+    public function updatedShowChangePasswordModal($value)
+    {
+        // Reset form when modal is closed
+        if (!$value) {
+            $this->reset(['selectedUserId', 'oldPassword', 'newPassword', 'confirmPassword']);
+        }
+    }
 
 
 
@@ -101,11 +116,7 @@ EOT;
                     $query->where('id', $this->roleId);
                 });
             })
-            // ->when($this->medicalCenterId > 0, function ($query) {
-            //     $query->whereHas('medicalCenters', function ($query) {
-            //         $query->where('id', $this->medicalCenterId);
-            //     });
-            // })
+
             ->when($this->showArchived, function ($query) {
                 $query->onlyTrashed();
             })
@@ -151,5 +162,55 @@ EOT;
         $user = User::withTrashed()->findOrFail($id);
         // $this->authorize('restore', $user);
         $user->restore();
+    }
+
+    #[On('show-change-password-modal')]
+    public function showChangePasswordModalF($userId)
+    {
+        $this->selectedUserId = $userId;
+        $this->showChangePasswordModal = true;
+    }
+
+    public function changePassword()
+    {
+        $validationRules = [
+            'oldPassword' => 'required',
+            'newPassword' => [
+                'required', 
+                'min:8', 
+//                'different:oldPassword',
+//                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+            ],
+            'confirmPassword' => 'required|same:newPassword'
+        ];
+
+        $validationMessages = [
+            'oldPassword.required' => 'كلمة المرور الحالية مطلوبة',
+            'newPassword.required' => 'كلمة المرور الجديدة مطلوبة',
+            'newPassword.min' => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
+            'newPassword.different' => 'كلمة المرور الجديدة يجب أن تكون مختلفة عن كلمة المرور القديمة',
+            'newPassword.regex' => 'كلمة المرور يجب أن تحتوي على حرف كبير وصغير ورقم ورمز خاص',
+            'confirmPassword.required' => 'تأكيد كلمة المرور مطلوب',
+            'confirmPassword.same' => 'تأكيد كلمة المرور غير متطابق'
+        ];
+
+        $this->validate($validationRules, $validationMessages);
+
+        $user = User::findOrFail($this->selectedUserId);
+
+        // Verify old password
+        if (!Hash::check($this->oldPassword, $user->password)) {
+            $this->addError('oldPassword', 'كلمة المرور القديمة غير صحيحة');
+            return;
+        }
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($this->newPassword)
+        ]);
+
+        $this->reset(['selectedUserId', 'oldPassword', 'newPassword', 'confirmPassword']);
+        $this->showChangePasswordModal = false;
+        $this->success('تم تغيير كلمة المرور بنجاح');
     }
 }
