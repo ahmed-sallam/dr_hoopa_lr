@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/users/{id}/edit', UserEdit::class)->name('admin.user.edit');
     Route::get('admin/roles', RoleIndex::class)->name('admin.role.index');
     Route::get('admin/categories', CategoryIndex::class)->name('admin.category.index');
+    Route::get('admin/stages', \App\Livewire\Admin\Stage\StageIndex::class)->name('admin.stage.index');
 
     // admin finance
     Route::prefix('finance')->group(function () {
