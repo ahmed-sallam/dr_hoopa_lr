@@ -1,6 +1,8 @@
 <?php
 
 use App\Livewire\Admin\AbandonedCartIndex;
+use App\Livewire\Admin\Courses\AdminCourse;
+use App\Livewire\Admin\Courses\AdminCourses;
 use App\Livewire\Admin\OrderIndex;
 use App\Livewire\Admin\PaymentIndex;
 use App\Livewire\Dashboard;
@@ -32,12 +34,14 @@ Route::get("courses/{courseId}/lesson/{lessonId}", ClientLesson::class)->name("c
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
+// TODO: there are many classes with same name may be confusing i will remove it at the end
 
 Route::middleware(['auth', \App\Http\Middleware\AdminPermissionMiddleware::class])->group(function () {
     // new admin routes
     Route::get('admin', Dashboard::class)->name('admin.dashboard');
-    Route::get('admin/courses', CourseIndex::class)->name('admin.course.index');
+    Route::get('admin/courses', AdminCourses::class)->name('admin.course.index');
+    Route::get('admin/courses/{id}', AdminCourse::class)->name('admin.course.view');
+    Route::get('old/courses', CourseIndex::class)->name('old.admin.course.index');
     Route::get('admin/courses/create', CreateCourse::class)->name('admin.course.create');
     Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
     Route::get('admin/users/{id}', UserView::class)->name('admin.user.view');
