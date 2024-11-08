@@ -34,7 +34,7 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\AdminPermissionMiddleware::class])->group(function () {
     // new admin routes
     Route::get('admin', Dashboard::class)->name('admin.dashboard');
     Route::get('admin/courses', CourseIndex::class)->name('admin.course.index');
