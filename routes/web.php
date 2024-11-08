@@ -11,6 +11,7 @@ use App\Livewire\Admin\User\UserView;
 use App\Livewire\Client\ClientCourse;
 use App\Livewire\Client\ClientLesson;
 use App\Livewire\Courses\CourseIndex;
+use App\Livewire\VideoPlayer;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\User\RoleIndex;
 use App\Livewire\Client\ClientCourses;
@@ -60,5 +61,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('old-admin/courses/create', CreateCourse::class)->name('course.create');
     Route::get('old-admin/users', UserIndex::class)->name('user.index');
 });
+
+// routes/web.php
+
+// test video
+use App\Http\Controllers\VideoStreamController;
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/video/{videoId}', VideoPlayer::class)->name('video.player');
+    Route::get('/video/stream/{videoId}', [VideoStreamController::class, 'stream'])
+        ->name('video.stream')
+        ->middleware('signed');
+});
+
 
 require __DIR__ . '/auth.php';

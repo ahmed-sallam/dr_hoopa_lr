@@ -27,6 +27,9 @@
         rel="stylesheet" />
 
     <!-- Scripts -->
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Lato&display=swap">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
