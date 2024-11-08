@@ -3,12 +3,14 @@
 namespace App\Livewire\Admin\User;
 
 use App\Models\Role;
+use App\Models\Permission;
 use Mary\Traits\Toast;
 use Livewire\Component;
+use App\Livewire\Forms\RoleForm;
 
 class RoleIndex extends Component
 {
-    use  Toast;
+    use Toast;
 
     public string $title = 'المستخدمين';
     public string $logo = <<<'EOT'
@@ -21,27 +23,30 @@ class RoleIndex extends Component
                             <circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
 EOT;
 
-
     public array $headers;
+    public array $sortBy;
     public bool $showArchived = false;
-
-    public $successMessage;
-
+    public bool $showAddModal = false;
+    public bool $showEditModal = false;
+    public RoleForm $form;
+    public ?Role $roleToEdit = null;
 
     public function mount()
     {
         $this->headers = [
-            ['key' => 'id', 'label' => __('id')],
-            ['key' => 'name', 'label' => __('name')],
+            ['key' => 'id', 'label' => '#'],
+            ['key' => 'name', 'label' => 'اسم الدور'],
         ];
-        $this->successMessage = __('success');
-        // $this->permissions = Permission::all()->groupBy('table_name')->toArray();
+        $this->sortBy = ['column' => 'id', 'direction' => 'asc'];
     }
-
 
     public function render()
     {
-        return view('livewire.admin.user.role-index')->layout('layouts.admin', [
+        $groupedPermissions = Permission::all()->groupBy('table_name');
+        
+        return view('livewire.admin.user.role-index', [
+            'groupedPermissions' => $groupedPermissions
+        ])->layout('layouts.admin', [
             'title' => $this->title,
             'logo' => $this->logo
         ]);
@@ -50,5 +55,26 @@ EOT;
     public function roles()
     {
         return Role::all();
+    }
+
+    public function save()
+    {
+        $this->form->store();
+        $this->showAddModal = false;
+        $this->success('تم إضافة الدور بنجاح');
+    }
+
+    public function edit(Role $role)
+    {
+        $this->roleToEdit = $role;
+        $this->form->setRole($role);
+        $this->showEditModal = true;
+    }
+
+    public function update()
+    {
+        $this->form->update();
+        $this->showEditModal = false;
+        $this->success('تم تحديث الدور بنجاح');
     }
 }
