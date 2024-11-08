@@ -110,8 +110,7 @@
                                 class=" text-primary" />
                             <x-mary-menu-item title="تعديل"
                                 icon="o-pencil"
-                                {{-- href="{{ route('admin.category.edit', $category['id']) }}" --}}
-                                wire:navigate
+                                wire:click="edit({{ $category['id'] }})"
                                 class="text-info" />
                         @endif
                     </x-mary-dropdown>
@@ -137,6 +136,19 @@
             <x-mary-button label="إلغاء" @click="$wire.showAddModal = false" />
             <x-mary-button label="حفظ" class="btn-primary" 
                 wire:click="save" spinner="save" />
+        </x-slot:actions>
+    </x-mary-modal>
+
+    {{-- Edit Category Modal --}}
+    <x-mary-modal wire:model="showEditModal" title="تعديل القسم">
+        <div class="space-y-4">
+            <x-mary-input label="اسم القسم" wire:model="form.name" />
+        </div>
+
+        <x-slot:actions>
+            <x-mary-button label="إلغاء" @click="$wire.showEditModal = false" />
+            <x-mary-button label="حفظ التغييرات" class="btn-primary" 
+                wire:click="update" spinner="update" />
         </x-slot:actions>
     </x-mary-modal>
 </div>

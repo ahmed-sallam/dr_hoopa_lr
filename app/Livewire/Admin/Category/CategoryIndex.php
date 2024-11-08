@@ -36,7 +36,9 @@ EOT;
     public bool $showArchived = false;
     public bool $showFilterDrawer = false;
     public bool $showAddModal = false;
+    public bool $showEditModal = false;
     public CategoryForm $form;
+    public ?Category $categoryToEdit = null;
 
     public function mount()
     {
@@ -71,5 +73,19 @@ EOT;
         $this->form->store();
         $this->showAddModal = false;
         $this->success('تم إضافة القسم بنجاح');
+    }
+
+    public function edit(Category $category)
+    {
+        $this->categoryToEdit = $category;
+        $this->form->setCategory($category);
+        $this->showEditModal = true;
+    }
+
+    public function update()
+    {
+        $this->form->update($this->categoryToEdit);
+        $this->showEditModal = false;
+        $this->success('تم تحديث القسم بنجاح');
     }
 }

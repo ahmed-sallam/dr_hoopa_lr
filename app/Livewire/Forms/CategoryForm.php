@@ -19,4 +19,20 @@ class CategoryForm extends Form
 
         $this->reset();
     }
+
+    public function setCategory(Category $category): void
+    {
+        $this->name = $category->name;
+    }
+
+    public function update(Category $category): void
+    {
+        $validated = $this->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $category->update($validated);
+
+        $this->reset();
+    }
 }
