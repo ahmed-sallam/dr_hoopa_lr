@@ -55,7 +55,8 @@
 
         <x-slot:actions>
             <x-mary-button label="إلغاء" @click="$wire.showAddModal = false" />
-            <x-mary-button label="حفظ" class="btn-primary" wire:click="save" spinner="save" />
+            <x-mary-button label="حفظ" class="btn-primary !mx-2" wire:click="save"
+                           spinner="save" />
         </x-slot:actions>
     </x-mary-modal>
 
@@ -68,7 +69,8 @@
 
         <x-slot:actions>
             <x-mary-button label="إلغاء" @click="$wire.showEditModal = false" />
-            <x-mary-button label="حفظ التغييرات" class="btn-primary" wire:click="update" spinner="update" />
+            <x-mary-button label="حفظ التغييرات" class="btn-primary !mx-2"
+                           wire:click="update" spinner="update" />
         </x-slot:actions>
     </x-mary-modal>
 </div>

@@ -59,9 +59,10 @@
                         <h4 class="font-medium">{{ $tableName }}</h4>
                         <div class="grid grid-cols-2 gap-2">
                             @foreach ($permissions as $permission)
-                                <label class="flex items-center space-x-2 cursor-pointer">
+                                <label class="flex items-center  cursor-pointer">
                                     <input type="checkbox" wire:model="form.permissions.{{ $permission->id }}" class="checkbox">
-                                    <span>{{ $permission->name }}</span>
+                                    <span class="ms-2">{{ $permission->name
+                                    }}</span>
                                 </label>
                             @endforeach
                         </div>
@@ -72,7 +73,8 @@
 
         <x-slot:actions>
             <x-mary-button label="إلغاء" @click="$wire.showAddModal = false" />
-            <x-mary-button label="حفظ" class="btn-primary" wire:click="save" spinner="save" />
+            <x-mary-button label="حفظ" class="btn-primary !mx-2"
+                           wire:click="save" spinner="save" />
         </x-slot:actions>
     </x-mary-modal>
 
@@ -88,9 +90,9 @@
                         <h4 class="font-medium">{{ $tableName }}</h4>
                         <div class="grid grid-cols-2 gap-2">
                             @foreach ($permissions as $permission)
-                                <label class="flex items-center space-x-2 cursor-pointer">
+                                <label class="flex items-center  cursor-pointer">
                                     <input type="checkbox" wire:model="form.permissions.{{ $permission->id }}" class="checkbox">
-                                    <span>{{ $permission->name }}</span>
+                                    <span class="ms-2">{{ $permission->name }}</span>
                                 </label>
                             @endforeach
                         </div>
@@ -101,7 +103,8 @@
 
         <x-slot:actions>
             <x-mary-button label="إلغاء" @click="$wire.showEditModal = false" />
-            <x-mary-button label="حفظ التغييرات" class="btn-primary" wire:click="update" spinner="update" />
+            <x-mary-button label="حفظ التغييرات" class="btn-primary !mx-2"
+                           wire:click="update" spinner="update" />
         </x-slot:actions>
     </x-mary-modal>
 </div>
