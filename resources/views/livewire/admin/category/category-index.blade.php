@@ -102,16 +102,16 @@
                                 wire:click="restore({{ $category['id'] }})"
                                 wire:confirm="{{ __('are_you_sure_restore') }}" />
                         @else
-                            <x-mary-menu-item title="ارشفة"
-                                icon="o-trash"
-                                class="text-error"
-                                {{-- wire:click="delete({{ $category['id'] }})" --}}
-                                {{-- wire:confirm="{{ __('are_you_sure_delete') }}" --}} />
-                            <x-mary-menu-item title="مشاهدة"
-                                icon="o-eye"
-                                {{-- href="{{ route('admin.category.view', $category['id']) }}" --}}
-                                wire:navigate
-                                class=" text-primary" />
+{{--                            <x-mary-menu-item title="ارشفة"--}}
+{{--                                icon="o-trash"--}}
+{{--                                class="text-error"--}}
+{{--                                --}}{{-- wire:click="delete({{ $category['id'] }})" --}}
+{{--                                --}}{{-- wire:confirm="{{ __('are_you_sure_delete') }}" --}}{{-- />--}}
+{{--                            <x-mary-menu-item title="مشاهدة"--}}
+{{--                                icon="o-eye"--}}
+{{--                                --}}{{-- href="{{ route('admin.category.view', $category['id']) }}" --}}
+{{--                                wire:navigate--}}
+{{--                                class=" text-primary" />--}}
                             <x-mary-menu-item title="تعديل"
                                 icon="o-pencil"
                                 wire:click="edit({{ $category['id'] }})"
