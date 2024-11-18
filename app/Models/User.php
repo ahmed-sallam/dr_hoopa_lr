@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -79,5 +80,10 @@ class User extends Authenticatable
         return $this->role->permissions->contains(function ($value, $key) use ($table, $permission) {
             return $value->table_name === $table && $value->name === $permission;
         });
+    }
+
+    public function cart(): HasMany
+    {
+        return $this->hasMany(Cart::class);
     }
 }

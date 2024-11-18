@@ -229,7 +229,9 @@
 
                 {{--  --}}
                 <button
-                    class="rounded-full btn btn-info !text-xs px-2 md:px-4">
+                    class="rounded-full btn btn-info !text-xs px-2 md:px-4"
+                    @click="$wire.addToCart()"
+                >
                     شراء | اضافه الي السله
                     <svg class="w-6 md:w-8 "
                         viewBox="0 0 16 16"

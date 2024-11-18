@@ -5,6 +5,7 @@ use App\Livewire\Admin\Courses\AdminCourse;
 use App\Livewire\Admin\Courses\AdminCourses;
 use App\Livewire\Admin\OrderIndex;
 use App\Livewire\Admin\PaymentIndex;
+use App\Livewire\Client\Cart;
 use App\Livewire\Dashboard;
 use App\Livewire\Client\Home;
 use App\Livewire\Users\UserIndex;
@@ -26,6 +27,15 @@ Route::get("courses", ClientCourses::class)->name("client.courses.index");
 Route::get("courses/{id}", ClientCourse::class)->name("client.course.view");
 Route::get("courses/{courseId}/lesson/{lessonId}", ClientLesson::class)->name("client.lesson.view");
 
+// Client routes
+Route::middleware('auth')->group(function () {
+    // Client user routes
+    Route::prefix('users')->group(function () {
+//        Route::get('/{id}', UserView::class)->name('user.view');
+//        Route::get('/{id}/edit', UserEdit::class)->name('user.edit');
+        Route::get('/{id}/cart', Cart::class)->name('user.cart');
+    });
+});
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
@@ -58,6 +68,8 @@ Route::middleware(['auth', \App\Http\Middleware\AdminPermissionMiddleware::class
         Route::get('/orders', OrderIndex::class)->name('admin.finance.orders.index');
         Route::get('/payments', PaymentIndex::class)->name('admin.finance.payments.index');
     });
+
+
 
 
     // old admin routes

@@ -14,4 +14,9 @@ class ContentHeader extends Component
     {
         return view('livewire.clinet.components.content-header');
     }
+    public function addToCart(): void
+    {
+        $this->dispatch('addToCart', $this->content->id);
+    }
+
 }

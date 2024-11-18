@@ -3,12 +3,16 @@
 namespace App\Livewire\Client;
 
 use App\Models\Stage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
+use Mary\Traits\Toast;
 
 class ClientCourses extends Component
 {
+    use Toast;
+
     public string $title = "الكورسات";
     public string $logo = <<<'EOT'
      <svg class="w-12 h-12 "
@@ -31,7 +35,7 @@ EOT;
 
 
     public Collection $stages;
-    public  $categories;
+    public $categories;
     public $activedStage;
 
     public function mount()
@@ -51,7 +55,6 @@ EOT;
     }
 
 
-
     public function getStages()
     {
         return Stage::all();
@@ -65,25 +68,50 @@ EOT;
 
     public function getCategoriesWithCoursesGroupdedByStage($stage = null)
     {
-        return Category::with(['courses' => function ($query) use ($stage) {
-            $query->whereNull('parent_id')
-                ->when($stage, function ($query) use ($stage) {
-                    $query->whereHas('stage', function ($query) use ($stage) {
-                        $query->where('id', $stage);
-                    });
-                })
-                ->withCount('children as children_count')
-                ->withCount(['lessons as video_lessons_count' => function ($query) {
-                    $query->where('content_type', 'video');
-                }])
-                ->withCount(['lessons as item_lessons_count' => function ($query) {
-                    $query->where('content_type', 'item');
-                }])
-                ->withCount(['lessons as quiz_lessons_count' => function ($query) {
-                    $query->where('content_type', 'quiz');
-                }]);
-        }])->get()->groupBy(function ($category) {
+        return Category::with([
+            'courses' => function ($query) use ($stage) {
+                $query->whereNull('parent_id')
+                    ->when($stage, function ($query) use ($stage) {
+                        $query->whereHas('stage', function ($query) use ($stage) {
+                            $query->where('id', $stage);
+                        });
+                    })
+                    ->withCount('children as children_count')
+                    ->withCount([
+                        'lessons as video_lessons_count' => function ($query) {
+                            $query->where('content_type', 'video');
+                        }
+                    ])
+                    ->withCount([
+                        'lessons as item_lessons_count' => function ($query) {
+                            $query->where('content_type', 'item');
+                        }
+                    ])
+                    ->withCount([
+                        'lessons as quiz_lessons_count' => function ($query) {
+                            $query->where('content_type', 'quiz');
+                        }
+                    ]);
+            }
+        ])->get()->groupBy(function ($category) {
             return $category->courses->first()->stage->name ?? null;
         })->filter()->all();
+    }
+
+    #[On('addToCart')]
+    public function addToCart(int $courseId): void
+    {
+        $cart = auth()->user()->cart->where('course_id', $courseId)->first();
+        if (!$cart) {
+            $cart = \App\Models\Cart::create([
+                'course_id' => $courseId,
+                'user_id' => auth()->id(),
+            ]);
+            $this->success('تمت إضافة الكورس إلى سلة المشتريات');
+//            $this->redirectRoute('user.cart', [auth()->user()->id], true, true);
+
+        } else {
+            $this->warning('الكورس موجود بالفعل في سلة المشتريات');
+        }
     }
 }

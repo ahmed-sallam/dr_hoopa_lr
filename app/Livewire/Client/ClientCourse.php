@@ -3,11 +3,14 @@
 namespace App\Livewire\Client;
 
 use App\Models\Course;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Collection;
+use Mary\Traits\Toast;
 
 class ClientCourse extends Component
 {
+    use Toast;
     public string $title = "الكورسات";
     public string $logo = <<<'EOT'
      <svg class="w-12 h-12 "
@@ -70,5 +73,22 @@ EOT;
         $tree[] = $this->course;
 
         return $tree;
+    }
+
+    #[On('addToCart')]
+    public function addToCart(int $courseId): void
+    {
+        $cart = auth()->user()->cart->where('course_id', $courseId)->first();
+        if (!$cart) {
+            $cart = \App\Models\Cart::create([
+                'course_id' => $courseId,
+                'user_id' => auth()->id(),
+            ]);
+            $this->success('تمت إضافة الكورس إلى سلة المشتريات');
+//            $this->redirectRoute('user.cart', [auth()->user()->id], true, true);
+
+        } else {
+            $this->warning('الكورس موجود بالفعل في سلة المشتريات');
+        }
     }
 }

@@ -13,4 +13,11 @@ class CourseRow extends Component
     {
         return view('livewire.clinet.components.course-row');
     }
+
+    public function addToCart(): void
+    {
+        $this->dispatch('addToCart', $this->course->id);
+    }
+
+
 }
