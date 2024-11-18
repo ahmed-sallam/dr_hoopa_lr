@@ -25,9 +25,11 @@ EOT;
 
 
     public $user;
-    public function mount($id)
+    public $nested= false;
+    public function mount($id, $nested=false)
     {
         $this->user = $this->getUser($id);
+        $this->nested = $nested;
     }
 
     public function render()

@@ -66,7 +66,7 @@ EOT;
         $this->categories = $this->getCategoriesWithCoursesGroupdedByStage($stage != 'all' ? $stage['id'] : null);
     }
 
-    public function getCategoriesWithCoursesGroupdedByStage($stage = null)
+    public function getCategoriesWithCoursesGroupdedByStage($stage = null): array
     {
         return Category::with([
             'courses' => function ($query) use ($stage) {
@@ -103,7 +103,7 @@ EOT;
     {
         $cart = auth()->user()->cart->where('course_id', $courseId)->first();
         if (!$cart) {
-            $cart = \App\Models\Cart::create([
+            \App\Models\Cart::create([
                 'course_id' => $courseId,
                 'user_id' => auth()->id(),
             ]);

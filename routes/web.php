@@ -6,6 +6,7 @@ use App\Livewire\Admin\Courses\AdminCourses;
 use App\Livewire\Admin\OrderIndex;
 use App\Livewire\Admin\PaymentIndex;
 use App\Livewire\Client\Cart;
+use App\Livewire\Client\CreateOrder;
 use App\Livewire\Dashboard;
 use App\Livewire\Client\Home;
 use App\Livewire\Users\UserIndex;
@@ -31,9 +32,10 @@ Route::get("courses/{courseId}/lesson/{lessonId}", ClientLesson::class)->name("c
 Route::middleware('auth')->group(function () {
     // Client user routes
     Route::prefix('users')->group(function () {
-//        Route::get('/{id}', UserView::class)->name('user.view');
+        Route::get('/{id}', \App\Livewire\Client\UserProfile::class)->name('user.profile');
 //        Route::get('/{id}/edit', UserEdit::class)->name('user.edit');
         Route::get('/{id}/cart', Cart::class)->name('user.cart');
+        Route::get('/{id}/create-order', CreateOrder::class)->name('user.create-order');
     });
 });
 

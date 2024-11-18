@@ -48,9 +48,9 @@
                     {{ $category[0]->name . ' | ' . $key }}
                 </div>
                 <div class="flex flex-col gap-6 mt-12">
-                    @foreach ($category[0]->courses as $key => $course)
-                        <livewire:clinet.components.main-course-row :$course
-                            :key="$course->id" />
+                    @foreach ($category[0]->courses as  $course)
+                        <livewire:clinet.components.main-course-row :course="$course"
+                                                                    wire:key="course-{{ $course->id }}" />
                 </div>
             @endforeach
     </div>

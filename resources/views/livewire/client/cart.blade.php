@@ -9,7 +9,10 @@ justify-between">
             @endforeach
         </div>
 
-        <button class="btn btn-primary w-full mt-6">
+        <button class="btn btn-primary w-full mt-6"
+        href="{{route('user.create-order', auth()->user()->id)}}"
+                wire:navigate
+        >
             إتمام الشراء
         </button>
     @else
