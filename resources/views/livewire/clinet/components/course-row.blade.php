@@ -12,7 +12,7 @@
         </div>
         <div class="flex flex-col items-start justify-between h-full md:w-3/4 ">
             <div>
-                <a href="{{ route('client.course.view', $course->id) }}"
+                <a href="{{ Route::is('admin.*') ? route('admin.course.view', $course->id) : route('client.course.view', $course->id) }}"
                     wire:navigate>
                     <h5
                         class="mb-2 text-2xl font-bold tracking-tight text-gray-900 cursor-pointer dark:text-white hover:text-primary hover:underline">
@@ -22,12 +22,14 @@
                 <h6 class="text-sm font-light ">{{ $course->sub_title }}</h6>
                 <p class="text-sm font-light ">د. عبدالوهاب - Doctor HOopa</p>
             </div>
-
+            @if(!auth()->check() || (auth()?->user()?->role_id == 2 ))
             <div
                 class="grid grid-cols-4 w-full gap-1.5 text-xs font-light mt-2">
                 {{-- price and add to cart section --}}
                 {{-- <div
                 class="flex items-end justify-between col-span-4 gap-2 p-1 border rounded-md border-b-gray-100 dark:border-gray-800 lg:col-span-3"> --}}
+                @if(!auth()?->user()?->hasCourse($course->id))
+
                 <div
                     class="flex items-center justify-between h-full gap-2 p-1 md:p-2 !text-xs border-2 rounded-lg border-base-200 dark:border-white/10 w-full col-span-4 md:col-span-3">
                     {{--  --}}
@@ -130,6 +132,7 @@
 
                     </button>
                 </div>
+                @endif
 
                 <button
                     class="flex items-center justify-center h-full col-span-4 gap-2 p-4 border-0 rounded -lg md:col-span-1 bg-base-200 dark:bg-white/10 lg:px-2 lg:py-0 btn">
@@ -181,6 +184,7 @@
                 </button>
                 {{-- </div> --}}
             </div>
+            @endif
         </div>
     </div>
     <div class="grid w-full grid-cols-4 gap-1 mt-4 lg:mt-2">
