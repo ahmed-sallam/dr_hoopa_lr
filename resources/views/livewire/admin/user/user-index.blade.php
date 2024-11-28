@@ -157,12 +157,12 @@
                 @close="$wire.set('showChangePasswordModal', false)"
         >
             <div class="space-y-4">
-                <x-mary-input
-                        label="كلمة المرور الحالية"
-                        type="password"
-                        x-model="oldPassword"
-                        wire:model="oldPassword"
-                />
+{{--                <x-mary-input--}}
+{{--                        label="كلمة المرور الحالية"--}}
+{{--                        type="password"--}}
+{{--                        x-model="oldPassword"--}}
+{{--                        wire:model="oldPassword"--}}
+{{--                />--}}
 
                 <x-mary-input
                         label="كلمة المرور الجديدة"

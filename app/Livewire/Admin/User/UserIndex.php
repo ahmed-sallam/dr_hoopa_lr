@@ -174,7 +174,7 @@ EOT;
     public function changePassword()
     {
         $validationRules = [
-            'oldPassword' => 'required',
+//            'oldPassword' => 'required',
             'newPassword' => [
                 'required', 
                 'min:8', 
@@ -199,10 +199,10 @@ EOT;
         $user = User::findOrFail($this->selectedUserId);
 
         // Verify old password
-        if (!Hash::check($this->oldPassword, $user->password)) {
-            $this->addError('oldPassword', 'كلمة المرور القديمة غير صحيحة');
-            return;
-        }
+//        if (!Hash::check($this->oldPassword, $user->password)) {
+//            $this->addError('oldPassword', 'كلمة المرور القديمة غير صحيحة');
+//            return;
+//        }
 
         // Update password
         $user->update([
