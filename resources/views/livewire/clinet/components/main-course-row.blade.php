@@ -147,7 +147,8 @@
             </div>
             <div
                     class="flex items-center justify-between h-full gap-2 p-2 md:rounded-e-full bg-white/5 dark:bg-white/5">
-                @if(!auth()->check() || auth()?->user()?->role_id == 2)
+                @if(!auth()->check() || (auth()?->user()?->role_id == 2 &&
+                !auth()?->user()?->hasCourse($course->id)))
                     {{--  --}}
                     <div>
 

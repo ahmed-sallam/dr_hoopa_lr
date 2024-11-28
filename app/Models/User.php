@@ -97,4 +97,9 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    // is user has course in enrollments
+    public function hasCourse(int $courseId): bool
+    {
+        return $this->enrollments()->where('course_id', $courseId)->exists();
+    }
 }
