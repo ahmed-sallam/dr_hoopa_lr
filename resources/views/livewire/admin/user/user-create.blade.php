@@ -1,6 +1,7 @@
 <div>
-    <x-mary-modal wire:model="showModal" title="إضافة مستخدم جديد">
-        <div class="space-y-4">
+    <x-mary-modal wire:model="showModal" title="إضافة مستخدم جديد"
+                  box-class="w-full max-w-[1000px]">
+        <div class=" grid lg:grid-cols-2 grid-cols-1 gap-4">
             <div class="grid grid-cols-2 gap-4">
                 <x-mary-input label="الاسم الأول" wire:model="form.first_name" />
                 <x-mary-input label="اسم الأب" wire:model="form.middle_name" />
