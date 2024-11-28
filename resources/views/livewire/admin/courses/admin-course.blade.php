@@ -4,7 +4,7 @@
     <div class="flex items-center justify-end gap-2 text-xs md:text-base">
         <div
                 class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-neutral">
-            <a href="{{ route('admin.courses.index') }}"
+            <a href="{{ route('admin.course.index') }}"
                wire:navigate
                class="cursor-pointer">الكورسات</a>
             @foreach ($this->getFoldersTree() as $folder)
