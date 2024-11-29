@@ -66,14 +66,14 @@ EOT;
         $this->categories = $this->getCategoriesWithCoursesGroupdedByStage($stage != 'all' ? $stage['id'] : null);
     }
 
-    public function getCategoriesWithCoursesGroupdedByStage($stage = null): array
+    public function getCategoriesWithCoursesGroupdedByStage($stageId = null)
     {
-        return Category::with([
-            'courses' => function ($query) use ($stage) {
+        $categories = Category::with([
+            'courses' => function ($query) use ($stageId) {
                 $query->whereNull('parent_id')
-                    ->when($stage, function ($query) use ($stage) {
-                        $query->whereHas('stage', function ($query) use ($stage) {
-                            $query->where('id', $stage);
+                    ->when($stageId, function ($query) use ($stageId) {
+                        $query->whereHas('stage', function ($query) use ($stageId) {
+                            $query->where('id', $stageId);
                         });
                     })
                     ->withCount('children as children_count')
@@ -92,10 +92,17 @@ EOT;
                             $query->where('content_type', 'quiz');
                         }
                     ]);
-            }
-        ])->get()->groupBy(function ($category) {
-            return $category->courses->first()->stage->name ?? null;
-        })->filter()->all();
+            },
+            'courses.stage'
+        ])->get();
+
+        return $categories->mapWithKeys(function ($category) {
+            return [
+                $category->name => $category->courses->groupBy('stage.name')->mapWithKeys(function ($courses, $stageName) {
+                    return [$stageName => $courses];
+                })
+            ];
+        })->all();
     }
 
     #[On('addToCart')]
