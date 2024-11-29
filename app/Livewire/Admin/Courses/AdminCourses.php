@@ -41,6 +41,7 @@ EOT;
         $this->stages = $this->getStages();
         $this->activedStage = 'all';
         $this->categories = $this->getCategoriesWithCoursesGroupdedByStage();
+//        dd($this->categories);
     }
 
     public function render()
@@ -51,6 +52,7 @@ EOT;
                 "logo" => $this->logo,
             ]);
     }
+
     public function getStages()
     {
         return Stage::all();
@@ -62,27 +64,43 @@ EOT;
         $this->categories = $this->getCategoriesWithCoursesGroupdedByStage($stage != 'all' ? $stage['id'] : null);
     }
 
-    public function getCategoriesWithCoursesGroupdedByStage($stage = null)
+    public function getCategoriesWithCoursesGroupdedByStage($stageId = null)
     {
-        return Category::with(['courses' => function ($query) use ($stage) {
-            $query->whereNull('parent_id')
-                ->when($stage, function ($query) use ($stage) {
-                    $query->whereHas('stage', function ($query) use ($stage) {
-                        $query->where('id', $stage);
-                    });
+        $categories = Category::with([
+            'courses' => function ($query) use ($stageId) {
+                $query->whereNull('parent_id')
+                    ->when($stageId, function ($query) use ($stageId) {
+                        $query->whereHas('stage', function ($query) use ($stageId) {
+                            $query->where('id', $stageId);
+                        });
+                    })
+                    ->withCount('children as children_count')
+                    ->withCount([
+                        'lessons as video_lessons_count' => function ($query) {
+                            $query->where('content_type', 'video');
+                        }
+                    ])
+                    ->withCount([
+                        'lessons as item_lessons_count' => function ($query) {
+                            $query->where('content_type', 'item');
+                        }
+                    ])
+                    ->withCount([
+                        'lessons as quiz_lessons_count' => function ($query) {
+                            $query->where('content_type', 'quiz');
+                        }
+                    ]);
+            },
+            'courses.stage'
+        ])->get();
+
+        return $categories->mapWithKeys(function ($category) {
+            return [
+                $category->name => $category->courses->groupBy('stage.name')->mapWithKeys(function ($courses, $stageName) {
+                    return [$stageName => $courses];
                 })
-                ->withCount('children as children_count')
-                ->withCount(['lessons as video_lessons_count' => function ($query) {
-                    $query->where('content_type', 'video');
-                }])
-                ->withCount(['lessons as item_lessons_count' => function ($query) {
-                    $query->where('content_type', 'item');
-                }])
-                ->withCount(['lessons as quiz_lessons_count' => function ($query) {
-                    $query->where('content_type', 'quiz');
-                }]);
-        }])->get()->groupBy(function ($category) {
-            return $category->courses->first()->stage->name ?? null;
-        })->filter()->all();
+            ];
+        })->all();
     }
+
 }
