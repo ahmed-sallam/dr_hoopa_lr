@@ -14,10 +14,10 @@ class CreateCourse extends Component
     public CourseForm $form;
     public $course = null;
 
-    public function mount($parent_id, $course = null)
+    public function mount($parent_id=0, $course = null)
     {
         // $this->form = new CourseForm();
-        $this->form->parent_id = $parent_id;
+        $this->form->parent_id = $parent_id ==0 ? null : $parent_id;
         if ($course) {
             $this->course=$course;
             $this->form->setCourse($course);
@@ -50,7 +50,7 @@ class CreateCourse extends Component
 
     public function render()
     {
-        return view("livewire.courses.create-course");
+        return view("livewire.courses.create-course")->layout('layouts.admin');
     }
 
     #[On("reset-form")]
