@@ -28,6 +28,9 @@ class CourseForm extends Form
     public string $newDataSvg = '';
     public string $newDataTitle = '';
     public string $newDataLink = '';
+    public ?int $category_id = null;
+    public ?int $stage_id = null;
+    public ?int $instructor_id = null;
 
     public function rules()
     {
@@ -48,6 +51,9 @@ class CourseForm extends Form
             'newDataSvg' => 'nullable|string',
             'newDataTitle' => 'nullable|string',
             'newDataLink' => 'nullable|string|url',
+            'category_id' => 'required|exists:categories,id',
+            'stage_id' => 'required|exists:stages,id',
+            'instructor_id' => 'required|exists:users,id',
         ];
     }
 
@@ -65,6 +71,9 @@ class CourseForm extends Form
         $this->status = $course->status;
         $this->data = is_string($course->data) ? json_decode($course->data, true) : $course->data ?? [];
         $this->parent_id = $course->parent_id;
+        $this->category_id = $course->category_id;
+        $this->stage_id = $course->stage_id;
+        $this->instructor_id = $course->instructor_id;
     }
 
     public function save()
@@ -105,6 +114,9 @@ class CourseForm extends Form
             'newDataSvg' => 'nullable|string',
             'newDataTitle' => 'nullable|string',
             'newDataLink' => 'nullable|string|url',
+            'category_id' => 'required|exists:categories,id',
+            'stage_id' => 'required|exists:stages,id',
+            'instructor_id' => 'required|exists:users,id',
         ];
 
         // Add thumbnail validation rule if it's a file upload
@@ -173,5 +185,8 @@ class CourseForm extends Form
         $this->newDataSvg = '';
         $this->newDataTitle = '';
         $this->newDataLink = '';
+        $this->category_id = null;
+        $this->stage_id = null;
+        $this->instructor_id = null;
     }
 }

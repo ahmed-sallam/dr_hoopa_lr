@@ -75,6 +75,11 @@ class User extends Authenticatable
         return $this->role->name === $role;
     }
 
+    public static function getTeachers()
+    {
+        return static::where('role_id', 3)->get();
+    }
+
     public function hasPermission(string $table, string $permission): bool
     {
         return $this->role->permissions->contains(function ($value, $key) use ($table, $permission) {

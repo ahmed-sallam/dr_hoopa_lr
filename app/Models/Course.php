@@ -27,7 +27,6 @@ class Course extends Model
         'thumbnail',
         'featured_video',
         'status',
-        'level',
         'duration_in_minutes',
         'data',
         'parent_id',
