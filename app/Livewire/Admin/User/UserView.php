@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\User;
 use App\Models\User;
 use JetBrains\PhpStorm\NoReturn;
 use Livewire\Attributes\On;
+use Livewire\WithPagination;
 use Mary\Traits\Toast;
 use Livewire\Component;
 
@@ -12,6 +13,7 @@ class UserView extends Component
 {
 
     use Toast;
+    use WithPagination;
 
     public string $title = 'المستخدمين';
     public string $logo = <<<'EOT'
@@ -28,6 +30,9 @@ EOT;
 
     public $user;
     public $nested= false;
+    public array $headers;
+    public array $sortBy=['column' => 'id', 'direction' => 'asc', 'class' => 'text-red-500'];
+
     public function mount($id, $nested=false)
     {
         $this->user = $this->getUser($id);
@@ -75,6 +80,13 @@ EOT;
                 break;
             case 'orders':
                 $this->selectedTabContent = $this->user->orders;
+                $this->headers = [
+                    ['key' => 'id', 'label' => '#'],
+                    ['key' => 'course_id', 'label' => 'الكورس'],
+                    ['key' => 'price', 'label' => 'السعر'],
+                    ['key' => 'discount', 'label' => 'الخصم'],
+                    ['key' => 'net_price', 'label' => 'السعر النهائي'],
+                ];
                 break;
             case 'cart':
                 $this->selectedTabContent = $this->user->cart;

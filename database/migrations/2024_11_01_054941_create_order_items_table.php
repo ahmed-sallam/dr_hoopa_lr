@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->decimal('price', 10, 2);
-            $table->decimal('discount', 10, 2)->default(0.00);
+            $table->decimal('discount', 10, 2)->default(0.00)->nullable(false);
             $table->decimal('net_price', 10, 2);
             $table->string('currency')->default('EGP'); // if needed in future
             $table->boolean('is_refunded')->default(false);

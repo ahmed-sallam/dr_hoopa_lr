@@ -1,6 +1,5 @@
 <div class="w-full max-w-2xl min-h-[calc(100vh-220px)] flex flex-col
 justify-between">
-
     @if(count($cartItems)>0 )
 
         <div class="overflow-y-auto space-y-3">
@@ -13,16 +12,16 @@ justify-between">
         href="{{route('user.create-order', auth()->user()->id)}}"
                 wire:navigate
         >
-            إتمام الشراء
+            إتمام الدفع
         </button>
     @else
         <div class="flex flex-col items-center justify-center h-full gap-2">
-                لا يوجد منتجات في السلة
+                لا توجد منتجات في سلة التسوق
                 <button class="btn btn-primary w-full mt-6"
                 href="{{route('client.courses.index')}}"
                         wire:navigate
                 >
-                        استكشف الكورسات
+                        استكشف الدورات التدريبية
                 </button>
         </div>
     @endif
