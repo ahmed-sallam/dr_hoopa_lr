@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Course;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -100,6 +101,10 @@ class Lesson extends Model
             return null;
         }
         
+        if (!auth()->check() || !Gate::allows('view', $this)) {
+            return null;
+        }
+
         // Convert YouTube URL to embed format and add security parameters
         $url = str_replace('watch?v=', 'embed/', $this->content_url);
         return $url . '?origin=' . config('app.url') 
@@ -112,5 +117,14 @@ class Lesson extends Model
                . '&amp;controls=0'
                . '&amp;autohide=1'
                . '&amp;wmode=transparent';
+    }
+
+    public function canBeViewedByUser(?User $user = null): bool
+    {
+        if (!$user) {
+            return !$this->is_premium;
+        }
+
+        return Gate::allows('view', $this);
     }
 }

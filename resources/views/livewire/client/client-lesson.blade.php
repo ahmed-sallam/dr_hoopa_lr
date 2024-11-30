@@ -56,16 +56,31 @@
         <div class="flex flex-col items-start justify-start gap-4 p-4
         lg:col-span-12">
             @if($lesson->content_type === 'video')
-                <div class="w-full aspect-video rounded-lg overflow-hidden">
-                    <div class="plyr__video-embed" id="player">
-                        <iframe
-                            src="{{ $lesson->getSecureVideoUrl() }}"
-                            allowfullscreen
-                            allowtransparency
-                            allow="autoplay"
-                        ></iframe>
+                @if($lesson->canBeViewedByUser(auth()->user()))
+                    <div class="w-full aspect-video rounded-lg overflow-hidden">
+                        <div class="plyr__video-embed" id="player">
+                            <iframe
+                                src="{{ $lesson->getSecureVideoUrl() }}"
+                                allowfullscreen
+                                allowtransparency
+                                allow="autoplay"
+                            ></iframe>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="w-full aspect-video rounded-lg overflow-hidden bg-base-200 flex items-center justify-center">
+                        <div class="text-center p-4">
+                            <h3 class="text-xl font-bold mb-2">محتوى مقيد</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                هذا المحتوى متاح فقط للمشتركين في الدورة
+                            </p>
+                            <a href="{{ route('courses.show', $course->id) }}"
+                               class="btn btn-primary mt-4">
+                                اشترك الآن
+                            </a>
+                        </div>
+                    </div>
+                @endif
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const player = new Plyr('#player', {
