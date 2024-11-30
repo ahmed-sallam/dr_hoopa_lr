@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use JetBrains\PhpStorm\NoReturn;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
@@ -34,6 +35,12 @@ EOT;
     public array $sortBy= ['column' => 'id', 'direction' => 'asc'];
     public $selectedTab = 'courses';
     public $selectedTabContent = [];
+
+    public $oldPassword = '';
+    public $newPassword = '';
+    public $confirmPassword = '';
+    public bool $showChangePasswordModal = false;
+
     public function mount($id, $nested=false)
     {
         $this->user = $this->getUser($id);
@@ -139,4 +146,57 @@ EOT;
         $cartItem->delete();
         $this->selectedTabContent = $this->user->cart;
     }
+
+    #[On('show-change-password-modal')]
+    public function showChangePasswordModalF($userId)
+    {
+        $this->selectedUserId = $userId;
+        $this->showChangePasswordModal = true;
+    }
+
+    public function changePassword()
+    {
+        $this->authorize('update', $this->user);
+        $validationRules = [
+            'oldPassword' => 'required',
+            'newPassword' => [
+                'required',
+                'min:8',
+                'different:oldPassword',
+//                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+            ],
+            'confirmPassword' => 'required|same:newPassword'
+        ];
+
+        $validationMessages = [
+            'oldPassword.required' => 'كلمة المرور الحالية مطلوبة',
+            'newPassword.required' => 'كلمة المرور الجديدة مطلوبة',
+            'newPassword.min' => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
+            'newPassword.different' => 'كلمة المرور الجديدة يجب أن تكون مختلفة عن كلمة المرور القديمة',
+            'newPassword.regex' => 'كلمة المرور يجب أن تحتوي على حرف كبير وصغير ورقم ورمز خاص',
+            'confirmPassword.required' => 'تأكيد كلمة المرور مطلوب',
+            'confirmPassword.same' => 'تأكيد كلمة المرور غير متطابق'
+        ];
+
+        $this->validate($validationRules, $validationMessages);
+
+        $user = User::findOrFail($this->selectedUserId);
+
+        // Verify old password
+        if (!Hash::check($this->oldPassword, $user->password)) {
+            $this->addError('oldPassword', 'كلمة المرور القديمة غير صحيحة');
+            return;
+        }
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($this->newPassword)
+        ]);
+
+        $this->reset(['selectedUserId', 'oldPassword', 'newPassword', 'confirmPassword']);
+        $this->showChangePasswordModal = false;
+        $this->success('تم تغيير كلمة المرور بنجاح');
+    }
+
+
 }

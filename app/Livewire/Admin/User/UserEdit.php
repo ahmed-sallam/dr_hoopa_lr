@@ -16,6 +16,7 @@ class UserEdit extends Component
 
     public UserForm $form;
     public $user;
+
     public function mount($id)
     {
         $this->user = $this->getUser($id);
@@ -27,6 +28,7 @@ class UserEdit extends Component
     {
         return view('livewire.admin.user.user-edit')->layout('layouts.admin');
     }
+
     public function getUser($id)
     {
         return User::findOrFail($id);
@@ -43,7 +45,10 @@ class UserEdit extends Component
         $this->authorize('update', $this->user);
         $this->form->update();
         $this->success('User updated successfully');
-        return $this->redirect(route('admin.user.view', $this->user->id), true);
-        // $this->dispatch('goBack');
+        if (request()->routeIs('admin.*')) {
+            return $this->redirect(route('admin.user.view', $this->user->id), true);
+        } else {
+            return $this->redirect(route('user.profile', $this->user->id), true);
+        }
     }
 }

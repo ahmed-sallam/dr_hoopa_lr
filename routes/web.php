@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     // Client user routes
     Route::prefix('users')->group(function () {
         Route::get('/{id}', \App\Livewire\Client\UserProfile::class)->name('user.profile');
-//        Route::get('/{id}/edit', UserEdit::class)->name('user.edit');
+        Route::get('/{id}/edit', UserEdit::class)->name('user.edit');
         Route::get('/{id}/cart', Cart::class)->name('user.cart');
         Route::get('/{id}/create-order', CreateOrder::class)->name('user.create-order');
     });
