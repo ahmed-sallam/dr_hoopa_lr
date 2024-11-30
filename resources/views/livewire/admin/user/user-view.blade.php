@@ -53,19 +53,36 @@
                             </svg>
                             المعلومات الشخصية
                         </div>
-                        <div class="flex items-center gap-1.5 bg-base-300
-                        dark:bg-white/15
-                        py-1 px-2 rounded cursor-pointer">
-                            <svg class="w-5 h-5" viewBox="0 0 14 14"
-                                 fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5.1266 7.11298C5.1266 6.02457 6.00894 5.14223 7.09735 5.14223C8.18576 5.14223 9.06809 6.02457 9.06809 7.11298C9.06809 8.20139 8.18576 9.08372 7.09735 9.08372C6.00894 9.08372 5.1266 8.20139 5.1266 7.11298Z"
-                                      fill="currentColor"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M6.77034 0.951229C6.94911 0.766257 7.24559 0.766257 7.42436 0.951229L8.98418 2.56511H11.1904C11.4416 2.56511 11.6452 2.76872 11.6452 3.01989V5.22615L13.2591 6.78596C13.4441 6.96474 13.4441 7.26122 13.2591 7.43999L11.6452 8.9998V11.2061C11.6452 11.4572 11.4416 11.6608 11.1904 11.6608H8.98418L7.42436 13.2747C7.24559 13.4597 6.94911 13.4597 6.77034 13.2747L5.21052 11.6608H3.00427C2.7531 11.6608 2.54948 11.4572 2.54948 11.2061V8.9998L0.935604 7.43999C0.750632 7.26122 0.750632 6.96474 0.935603 6.78596L2.54948 5.22615V3.01989C2.54948 2.76872 2.7531 2.56511 3.00427 2.56511H5.21053L6.77034 0.951229ZM7.09735 4.23266C5.50659 4.23266 4.21703 5.52222 4.21703 7.11298C4.21703 8.70373 5.50659 9.99329 7.09735 9.99329C8.6881 9.99329 9.97766 8.70373 9.97766 7.11298C9.97766 5.52222 8.6881 4.23266 7.09735 4.23266Z"
-                                      fill="currentColor"/>
-                            </svg>
-                            تعديل
-                        </div>
+
+                        <x-mary-dropdown right top>
+                            <x-slot:trigger>
+                                <x-mary-button class="flex items-center gap-1
+                                .5 bg-base-300 dark:bg-white/15 py-1 px-2 rounded cursor-pointer">
+
+                                    <svg class="w-5 h-5" viewBox="0 0 14 14"
+                                         fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.1266 7.11298C5.1266 6.02457 6.00894 5.14223 7.09735 5.14223C8.18576 5.14223 9.06809 6.02457 9.06809 7.11298C9.06809 8.20139 8.18576 9.08372 7.09735 9.08372C6.00894 9.08372 5.1266 8.20139 5.1266 7.11298Z"
+                                              fill="currentColor"/>
+                                        <path fill-rule="evenodd"
+                                              clip-rule="evenodd"
+                                              d="M6.77034 0.951229C6.94911 0.766257 7.24559 0.766257 7.42436 0.951229L8.98418 2.56511H11.1904C11.4416 2.56511 11.6452 2.76872 11.6452 3.01989V5.22615L13.2591 6.78596C13.4441 6.96474 13.4441 7.26122 13.2591 7.43999L11.6452 8.9998V11.2061C11.6452 11.4572 11.4416 11.6608 11.1904 11.6608H8.98418L7.42436 13.2747C7.24559 13.4597 6.94911 13.4597 6.77034 13.2747L5.21052 11.6608H3.00427C2.7531 11.6608 2.54948 11.4572 2.54948 11.2061V8.9998L0.935604 7.43999C0.750632 7.26122 0.750632 6.96474 0.935603 6.78596L2.54948 5.22615V3.01989C2.54948 2.76872 2.7531 2.56511 3.00427 2.56511H5.21053L6.77034 0.951229ZM7.09735 4.23266C5.50659 4.23266 4.21703 5.52222 4.21703 7.11298C4.21703 8.70373 5.50659 9.99329 7.09735 9.99329C8.6881 9.99329 9.97766 8.70373 9.97766 7.11298C9.97766 5.52222 8.6881 4.23266 7.09735 4.23266Z"
+                                              fill="currentColor"/>
+                                    </svg>
+                                    تعديل
+                                </x-mary-button>
+                            </x-slot:trigger>
+
+                            <x-mary-menu-item title="تعديل البيانات الشخصية"
+                                              icon="o-pencil"
+                                              wire:click=""
+                                              class="text-info"/>
+                            <x-mary-menu-item title="تغيير كلمة المرور"
+                                              icon="o-key"
+                                              wire:click=""
+                                              class="text-warning"/>
+
+                        </x-mary-dropdown>
                     </div>
 
                     @if($user->role_id == 2)
@@ -332,7 +349,9 @@
                                 <div class="flex flex-col items-start
                                 justify-start gap-2.5 w-full">
                                     @foreach($selectedTabContent as $enrollment)
-                                        @livewire('client.components.course-card', ['course' => $enrollment->course], key($enrollment->id))
+                                        @livewire('client.components.course-card',
+                                        ['course' => $enrollment->course],
+                                        key($enrollment->id))
                                     @endforeach
                                 </div>
                                 @break
@@ -352,10 +371,11 @@
                                             :rows="$this->getOrders() ?? []"
                                             :sort-by="$sortBy"
                                             class="[&_th>*]:!text-black [&_th>*]:!inline-flex [&_th>*]:!font-bold"
-                                            show-empty-text empty-text="{{ __('no_data_found') }}">
+                                            show-empty-text
+                                            empty-text="{{ __('no_data_found') }}">
 
                                         @scope('cell_created_at', $order)
-                                       {{ $order->created_at->format('Y-m-d') }}
+                                        {{ $order->created_at->format('Y-m-d') }}
                                         @endscope
                                         @scope('cell_discount', $order)
                                         {{ $order->discount . ' %' }}
@@ -363,22 +383,27 @@
                                         @scope('actions', $order)
                                         <x-mary-dropdown right top>
                                             <x-slot:trigger>
-                                                <x-mary-button class="btn-circle btn-ghost">
-                                                    <svg class="h-6 text-primary" viewBox="0 0 4 19"
-                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <x-mary-button
+                                                        class="btn-circle btn-ghost">
+                                                    <svg class="h-6 text-primary"
+                                                         viewBox="0 0 4 19"
+                                                         fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M1.81732 1.96003C2.36953 1.96003 2.81719 2.40768 2.81719 2.9599C2.81719 3.51211 2.36953 3.95977 1.81732 3.95977C1.26511 3.95977 0.817449 3.51211 0.817449 2.9599C0.817449 2.40768 1.26511 1.96003 1.81732 1.96003ZM1.81732 8.24493C2.36953 8.24493 2.81719 8.69259 2.81719 9.2448C2.81719 9.79702 2.36953 10.2447 1.81732 10.2447C1.26511 10.2447 0.81745 9.79702 0.81745 9.2448C0.81745 8.69259 1.26511 8.24493 1.81732 8.24493ZM1.81732 14.5298C2.36953 14.5298 2.81719 14.9775 2.81719 15.5297C2.81719 16.0819 2.36954 16.5296 1.81732 16.5296C1.26511 16.5296 0.81745 16.0819 0.81745 15.5297C0.81745 14.9775 1.26511 14.5298 1.81732 14.5298Z"
-                                                              fill="currentColor" stroke="currentColor"
+                                                              fill="currentColor"
+                                                              stroke="currentColor"
                                                               stroke-width="1.14271"/>
                                                     </svg>
                                                 </x-mary-button>
                                             </x-slot:trigger>
 
-                                            <x-mary-menu-item title="عرض" icon="o-eye"
-                                                          wire:click="showOrderDetails({{ $order->id }})"
-                                                          class="text-primary"/>
-{{--                                            <x-mary-menu-item title="طباعة الفاتورة" icon="o-printer"--}}
-{{--                                                          wire:click="printInvoice({{ $order->id }})"--}}
-{{--                                                          class="text-info"/>--}}
+                                            <x-mary-menu-item title="عرض"
+                                                              icon="o-eye"
+                                                              wire:click="showOrderDetails({{ $order->id }})"
+                                                              class="text-primary"/>
+                                            {{--                                            <x-mary-menu-item title="طباعة الفاتورة" icon="o-printer"--}}
+                                            {{--                                                          wire:click="printInvoice({{ $order->id }})"--}}
+                                            {{--                                                          class="text-info"/>--}}
                                         </x-mary-dropdown>
                                         @endscope
                                     </x-mary-table>
@@ -410,18 +435,18 @@
                         <span class="font-bold">تاريخ الطلب:</span>
                         <span>{{ $selectedOrder->created_at->format('Y-m-d') }}</span>
                     </div>
-{{--                    <div>--}}
-{{--                        <span class="font-bold">السعر:</span>--}}
-{{--                        <span>{{ $selectedOrder->total_price }}</span>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <span class="font-bold">الخصم:</span>--}}
-{{--                        <span>{{ $selectedOrder->discount }}%</span>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <span class="font-bold">السعر النهائي:</span>--}}
-{{--                        <span>{{ $selectedOrder->net_price }}</span>--}}
-{{--                    </div>--}}
+                    {{--                    <div>--}}
+                    {{--                        <span class="font-bold">السعر:</span>--}}
+                    {{--                        <span>{{ $selectedOrder->total_price }}</span>--}}
+                    {{--                    </div>--}}
+                    {{--                    <div>--}}
+                    {{--                        <span class="font-bold">الخصم:</span>--}}
+                    {{--                        <span>{{ $selectedOrder->discount }}%</span>--}}
+                    {{--                    </div>--}}
+                    {{--                    <div>--}}
+                    {{--                        <span class="font-bold">السعر النهائي:</span>--}}
+                    {{--                        <span>{{ $selectedOrder->net_price }}</span>--}}
+                    {{--                    </div>--}}
                     <div>
                         <span class="font-bold">طريقة الدفع:</span>
                         <span>{{ $selectedOrder->payment_method }}</span>
@@ -445,38 +470,39 @@
                     <div class="overflow-x-auto">
                         <table class="table table-zebra">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>اسم الكورس</th>
-                                    <th>المعلم</th>
-                                    <th>المرحلة</th>
-                                    <th>السعر</th>
-                                    <th>الخصم</th>
-                                    <th>السعر النهائي</th>
-                                </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم الكورس</th>
+                                <th>المعلم</th>
+                                <th>المرحلة</th>
+                                <th>السعر</th>
+                                <th>الخصم</th>
+                                <th>السعر النهائي</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($selectedOrder->items as $index => $item)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $item->course->title }}</td>
-                                        <td>{{ $item->course->instructor ? $item->course->instructor->first_name . ' ' . $item->course->instructor->last_name : '-' }}</td>
-                                        <td>{{ $item->course->stage ? $item->course->stage->name : '-' }}</td>
-                                        <td>{{ $item->price }}</td>
-                                        <td>{{ $item->discount }}%</td>
-                                        <td>{{ $item->net_price }}</td>
-                                    </tr>
-                                @endforeach
-                                <tr class="font-bold">
-                                    <td colspan="6" class="text-left">المجموع:</td>
-                                    <td>{{ $selectedOrder->net_price }}</td>
+                            @foreach($selectedOrder->items as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->course->title }}</td>
+                                    <td>{{ $item->course->instructor ? $item->course->instructor->first_name . ' ' . $item->course->instructor->last_name : '-' }}</td>
+                                    <td>{{ $item->course->stage ? $item->course->stage->name : '-' }}</td>
+                                    <td>{{ $item->price }}</td>
+                                    <td>{{ $item->discount }}%</td>
+                                    <td>{{ $item->net_price }}</td>
                                 </tr>
+                            @endforeach
+                            <tr class="font-bold">
+                                <td colspan="6" class="text-left">المجموع:</td>
+                                <td>{{ $selectedOrder->net_price }}</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="mt-4 flex justify-end">
-                    <x-mary-button @click="$wire.showingOrderDetails = false" label="إغلاق" class="btn-ghost" />
+                    <x-mary-button @click="$wire.showingOrderDetails = false"
+                                   label="إغلاق" class="btn-ghost"/>
                 </div>
             </div>
         @endif
