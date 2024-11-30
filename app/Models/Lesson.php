@@ -93,4 +93,24 @@ class Lesson extends Model
     {
         return CarbonInterval::seconds($this->duration)->cascade()->forHumans();
     }
+
+    public function getSecureVideoUrl()
+    {
+        if ($this->content_type !== 'video') {
+            return null;
+        }
+        
+        // Convert YouTube URL to embed format and add security parameters
+        $url = str_replace('watch?v=', 'embed/', $this->content_url);
+        return $url . '?origin=' . config('app.url') 
+               . '&amp;iv_load_policy=3'
+               . '&amp;modestbranding=1'
+               . '&amp;playsinline=1'
+               . '&amp;showinfo=0'
+               . '&amp;rel=0'
+               . '&amp;enablejsapi=1'
+               . '&amp;controls=0'
+               . '&amp;autohide=1'
+               . '&amp;wmode=transparent';
+    }
 }

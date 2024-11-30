@@ -29,7 +29,9 @@
     <!-- Scripts -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Lato&display=swap">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 
 </head>
 

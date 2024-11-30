@@ -57,15 +57,24 @@
         lg:col-span-12">
             @if($lesson->content_type === 'video')
                 <div class="w-full aspect-video rounded-lg overflow-hidden">
-                    <iframe 
-                        class="w-full h-full"
-                        src="{{ str_replace('watch?v=', 'embed/', $lesson->content_url) }}"
-                        title="{{ $lesson->title }}"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
+                    <div class="plyr__video-embed" id="player">
+                        <iframe
+                            src="{{ $lesson->getSecureVideoUrl() }}"
+                            allowfullscreen
+                            allowtransparency
+                            allow="autoplay"
+                        ></iframe>
+                    </div>
                 </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const player = new Plyr('#player', {
+                            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+                            settings: ['captions', 'quality', 'speed'],
+                            youtube: { noCookie: true }
+                        });
+                    });
+                </script>
             @elseif($lesson->content_type === 'quiz')
                 <div class="w-full aspect-[4/3] rounded-lg overflow-hidden">
                     <iframe 
