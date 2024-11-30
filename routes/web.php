@@ -7,6 +7,7 @@ use App\Livewire\Admin\OrderIndex;
 use App\Livewire\Admin\PaymentIndex;
 use App\Livewire\Client\Cart;
 use App\Livewire\Client\CreateOrder;
+use App\Livewire\Courses\CreateLesson;
 use App\Livewire\Dashboard;
 use App\Livewire\Client\Home;
 use App\Livewire\Users\UserIndex;
@@ -54,6 +55,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminPermissionMiddleware::class
     Route::get('admin/courses', AdminCourses::class)->name('admin.course.index');
     Route::get('admin/courses/{id}', AdminCourse::class)->name('admin.course.view');
     Route::get('admin/courses/{id}/create', CreateCourse::class)->name('admin.course.create');
+    Route::get('admin/courses/{id}/create-lesson', CreateLesson::class)->name('admin.course.create-lesson');
     Route::get('old/courses', CourseIndex::class)->name('old.admin.course.index');
     Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
     Route::get('admin/users/{id}', UserView::class)->name('admin.user.view');
