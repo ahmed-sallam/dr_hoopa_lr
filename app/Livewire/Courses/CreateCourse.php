@@ -38,10 +38,10 @@ EOT;
     public CourseForm $form;
     public $course = null;
 
-    public function mount($parent_id = 0, $course = null)
+    public function mount($id = 0, $course = null)
     {
         // $this->form = new CourseForm();
-        $this->form->parent_id = $parent_id == 0 ? null : $parent_id;
+        $this->form->parent_id = $id == 0 ? null : $id;
         if ($course) {
             $this->course = $course;
             $this->form->setCourse($course);

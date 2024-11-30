@@ -230,7 +230,9 @@
 
                     {{--  --}}
                     <button
-                            class="rounded-full btn btn-info !text-xs px-2 md:px-4 hover:bg-info-600 transition-colors duration-200 flex items-center gap-2"
+                            class="rounded-full btn btn-info !text-xs px-2
+                            md:px-4 hover:bg-info-600 transition-colors
+                            duration-200 flex items-center gap-2 text-white"
                             {{--                        wire:click="addToCart"--}}
                             wire:loading.attr="disabled"
                             wire:target="addToCart"

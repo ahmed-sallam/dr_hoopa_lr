@@ -112,7 +112,7 @@ hover:bg-gray-200  dark:hover:bg-white/10 --}}
                     </div>
 
                     {{--  --}}
-                    <button class=" btn btn-error !text-xs px-2 md:px-4"
+                    <button class=" btn btn-error !text-xs px-2 md:px-4 text-white"
                             wire:click="removeFromCart">
                         حذف من السلة
                     </button>
