@@ -348,6 +348,9 @@
                                         @scope('cell_created_at', $order)
                                        {{ $order->created_at->format('Y-m-d') }}
                                         @endscope
+                                        @scope('cell_discount', $order)
+                                        {{ $order->discount . ' %' }}
+                                        @endscope
 {{--                                        @scope('actions', $user)--}}
 {{--                                        <x-mary-dropdown right top>--}}
 {{--                                            <x-slot:trigger>--}}
