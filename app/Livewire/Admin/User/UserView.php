@@ -31,7 +31,7 @@ EOT;
     public $user;
     public $nested= false;
     public array $headers;
-    public array $sortBy=['column' => 'id', 'direction' => 'asc', 'class' => 'text-red-500'];
+    public array $sortBy= ['column' => 'id', 'direction' => 'asc'];
 
     public function mount($id, $nested=false)
     {
@@ -79,14 +79,20 @@ EOT;
             case 'reviews':
                 break;
             case 'orders':
-                $this->selectedTabContent = $this->user->orders;
+                $this->selectedTabContent = $this->user->orders()->orderBy(...array_values($this->sortBy))->get();
                 $this->headers = [
                     ['key' => 'id', 'label' => '#'],
-                    ['key' => 'course_id', 'label' => 'الكورس'],
-                    ['key' => 'price', 'label' => 'السعر'],
+                    ['key' => 'created_at', 'label' => 'تاريخ الطلب'],
+                    ['key' => 'total_price', 'label' => 'السعر'],
                     ['key' => 'discount', 'label' => 'الخصم'],
                     ['key' => 'net_price', 'label' => 'السعر النهائي'],
+                    ['key' => 'payment_method', 'label' => 'طريقة الدفع'],
+                    ['key' => 'payment_status', 'label' => 'حالة الدفع'],
+                    ['key' => 'currency', 'label' => 'العملة'],
+                    ['key' => 'status', 'label' => 'حالة الطلب'],
+//                    ['key' => 'customer_ip', 'label' => 'عنوان IP المستخدم', 'sortable' => false],
                 ];
+                $this->sortBy = ['column' => 'id', 'direction' => 'asc', 'class' => 'text-red-500'];
                 break;
             case 'cart':
                 $this->selectedTabContent = $this->user->cart;
@@ -98,6 +104,10 @@ EOT;
 //        dd($this->selectedTabContent);
     }
 
+    function getOrders()
+    {
+        return $this->user->orders()->orderBy(...array_values($this->sortBy))->get();
+    }
 
 
     #[On('removeFromCart')]

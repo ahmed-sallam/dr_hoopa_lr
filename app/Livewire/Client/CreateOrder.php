@@ -4,12 +4,16 @@ namespace App\Livewire\Client;
 
 use App\Livewire\Forms\OrderForm;
 use App\Models\Cart;
+use App\Models\Enrollment;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
 class CreateOrder extends Component
 {
-    Use Toast;
+    use Toast;
+
     public OrderForm $form;
     public $cartItems = [];
     public string $title = 'إتمام الدفع';
@@ -30,10 +34,11 @@ class CreateOrder extends Component
                                     fill="currentColor" />
                             </svg>
 EOT;
+
     public function mount()
     {
         $this->cartItems = Cart::where('user_id', auth()->id())->with('course')->get();
-        $this->form->setCartItems($this->cartItems->map(function($item) {
+        $this->form->setCartItems($this->cartItems->map(function ($item) {
             return [
                 'course_id' => $item->course_id,
                 'price' => $item->course->price,
@@ -45,18 +50,35 @@ EOT;
 
     public function createOrder()
     {
-        $order = $this->form->createOrder(auth()->id());
-        
-        if ($order) {
-            // Clear the cart
-            Cart::where('user_id', auth()->id())->delete();
-            
-            // Redirect to success page or payment gateway
-            $this->success('تم إنشاء الطلب بنجاح!');
-//            session()->flash('message', 'Order created successfully!');
-            $this->redirect(route('user.profile', auth()->id()), navigate: true);        }
+        // handle payment and order creation here
+//        $order = $this->form->createOrder(auth()->id(), $this->form->payment_method);
+        DB::beginTransaction();
+        try {
+            $this->form->payment_status = 'paid';
+            $this->form->status = 'completed';
+            $order = $this->form->createOrder(auth()->id());
+            if ($order) {
+                // Clear the cart
+                Cart::where('user_id', auth()->id())->delete();
+                // implement add courses (order items) to enrollments
+                Enrollment::insert($this->cartItems->map(function ($item) use ($order) {
+                    return [
+                        'user_id' => auth()->id(),
+                        'course_id' => $item->course_id,
+                        'order_id' => $order->id
+                    ];
+                })->toArray());
+                DB::commit();
 
-        $this->warning('فشل إنشاء الطلب. يرجى المحاولة مرة أخرى');
+                // Redirect to success page or payment gateway
+                $this->success('تم إنشاء الطلب بنجاح!');
+                $this->redirect(route('user.profile', auth()->id()), navigate: true);
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->warning('فشل إنشاء الطلب. يرجى المحاولة مرة أخرى');
+        }
+
 //        session()->flash('error', 'Failed to create order. Please try again.');
         return null;
     }

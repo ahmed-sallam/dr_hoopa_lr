@@ -29,7 +29,10 @@
                                 <div class="text-right">
                                     <p class="font-medium">{{ number_format($item->course->price, 2) }} EGP</p>
                                     @if($item->course->discount > 0)
-                                        <p class="text-sm text-red-600">-{{ number_format($item->course->discount, 2) }} EGP</p>
+                                        <p class="text-sm text-red-600">-{{
+                                        number_format
+                                        ($item->course->discount, 2) }}
+                                            %</p>
                                     @endif
                                     <p class="font-bold">{{ number_format($item->course->net_price, 2) }} EGP</p>
                                 </div>
@@ -43,11 +46,11 @@
                     <div class="space-y-2">
                         <div class="flex justify-between">
                             <span>المجموع الفرعي:</span>
-                            <span>{{ number_format($form->total_price, 2) }} جنيه</span>
+                            <span>{{ number_format($form->total_price, 2) }} EGP</span>
                         </div>
                         <div class="flex justify-between text-red-600">
                             <span>الخصم:</span>
-                            <span>-{{ number_format($form->discount, 2) }} جنيه</span>
+                            <span>-{{ number_format($form->discount, 2) }}%</span>
                         </div>
                         <div class="flex justify-between font-bold text-lg">
                             <span>الإجمالي:</span>
@@ -60,20 +63,17 @@
                     <h3 class="text-xl font-semibold mb-4">طريقة الدفع</h3>
                     <div class="space-y-4">
                         <label class="flex items-center ">
-                            <input type="radio" wire:model="form
-                            .payment_method" value="credit_card" class="radio
+                            <input type="radio" wire:model="form.payment_method" value="credit_card" class="radio
                              radio-primary me-3">
                             <span>بطاقة ائتمان</span>
                         </label>
                         <label class="flex items-center ">
-                            <input type="radio" wire:model="form
-                            .payment_method" value="bank_transfer"
+                            <input type="radio" wire:model="form.payment_method" value="bank_transfer"
                                    class="radio radio-primary me-3">
                             <span>تحويل بنكي</span>
                         </label>
                         <label class="flex items-center ">
-                            <input type="radio" wire:model="form
-                            .payment_method" value="cash" class="radio
+                            <input type="radio" wire:model="form.payment_method" value="cash" class="radio
                             radio-primary me-3">
                             <span>نقداً</span>
                         </label>

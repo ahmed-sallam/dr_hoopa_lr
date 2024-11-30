@@ -13,6 +13,11 @@ class OrderForm extends Form
     public $total_price = 0;
     public $discount = 0;
     public $net_price = 0;
+    public $payment_status = 'pending';
+    public $payment_transaction_id = '';
+    public $currency = 'EGP';
+    public $status = 'pending';
+
 
     public function rules()
     {
@@ -44,8 +49,10 @@ class OrderForm extends Form
             'discount' => $this->discount,
             'net_price' => $this->net_price,
             'payment_method' => $this->payment_method,
-            'payment_status' => 'pending',
-            'status' => 'pending',
+            'payment_status' => $this->payment_status,
+            'payment_transaction_id' => $this->payment_transaction_id,
+            'currency' => $this->currency,
+            'status' => $this->status,
             'customer_ip' => request()->ip(),
         ]);
 

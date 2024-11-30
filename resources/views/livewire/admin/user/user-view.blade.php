@@ -340,11 +340,14 @@
                                 <div class="overflow-table">
                                     <x-mary-table
                                             :headers="$headers"
-                                            :rows="$selectedTabContent ?? []" :sort-by="$sortBy"
-
+                                            :rows="$this->getOrders() ?? []"
+                                            :sort-by="$sortBy"
                                             class="[&_th>*]:!text-black [&_th>*]:!inline-flex [&_th>*]:!font-bold"
                                             show-empty-text empty-text="{{ __('no_data_found') }}">
 
+                                        @scope('cell_created_at', $order)
+                                       {{ $order->created_at->format('Y-m-d') }}
+                                        @endscope
 {{--                                        @scope('actions', $user)--}}
 {{--                                        <x-mary-dropdown right top>--}}
 {{--                                            <x-slot:trigger>--}}

@@ -22,7 +22,6 @@ class Order extends Model
         'currency',
         'notes',
         'status',
-        'coupon_code',
         'customer_ip'
     ];
 
