@@ -154,7 +154,7 @@
                     <p>الماده : {{ $course->category?->name }} </p>
                     <p> السنة الدراسية : {{ $course->stage?->name }} </p>
                     <div class="divider divider-primary dark:divider-neutral"></div>
-                    <p>{{ $course->description }} </p>
+                    <p>{{ $lesson->description }} </p>
                 </div>
 
         </div>
