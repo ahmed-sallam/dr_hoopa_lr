@@ -19,6 +19,7 @@ class UserEdit extends Component
     public function mount($id)
     {
         $this->user = $this->getUser($id);
+        $this->authorize('update', $this->user);
         $this->form->setUserData($this->user);
     }
 
@@ -39,6 +40,7 @@ class UserEdit extends Component
 
     public function save()
     {
+        $this->authorize('update', $this->user);
         $this->form->update();
         $this->success('User updated successfully');
         return $this->redirect(route('admin.user.view', $this->user->id), true);
