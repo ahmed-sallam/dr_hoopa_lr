@@ -7,10 +7,11 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Livewire\Forms\LessonForm;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
+use Mary\Traits\Toast;
 
 class CreateLesson extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, Toast;
 
     public string $title = "الكورسات";
     public string $logo = <<<'EOT'
@@ -36,12 +37,12 @@ EOT;
     public LessonForm $form;
     public ?Lesson $lesson = null;
 
-    public function mount($id, $lesson = null)
+    public function mount($id, $lessonId = null)
     {
         $this->form->course_id = $id;
-        if ($lesson) {
-            $this->lesson = $lesson;
-            $this->form->setLesson($lesson);
+        if ($lessonId) {
+            $this->lesson = Lesson::findOrFail($lessonId);
+            $this->form->setLesson(  $this->lesson);
         }
     }
 
@@ -57,10 +58,12 @@ EOT;
     {
         if ($this->lesson) {
             $this->form->update();
-            session()->flash('message', 'Lesson Updated successfully.');
+//            session()->flash('message', 'Lesson Updated successfully.');
+            $this->success('تم تحديث الدرس بنجاح');
         } else {
             $this->form->save();
-            session()->flash('message', 'Lesson created successfully.');
+//            session()->flash('message', 'Lesson created successfully.');
+            $this->success('تم إنشاء الدرس بنجاح');
         }
         $this->dispatch('lesson-saved');
     }

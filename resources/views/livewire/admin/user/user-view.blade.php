@@ -351,49 +351,27 @@
                                         @scope('cell_discount', $order)
                                         {{ $order->discount . ' %' }}
                                         @endscope
-{{--                                        @scope('actions', $user)--}}
-{{--                                        <x-mary-dropdown right top>--}}
-{{--                                            <x-slot:trigger>--}}
-{{--                                                <x-mary-button class="btn-circle btn-ghost">--}}
-{{--                                                    <svg class="h-6 text-primary" viewBox="0 0 4 19"--}}
-{{--                                                         fill="none" xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                                        <path d="M1.81732 1.96003C2.36953 1.96003 2.81719 2.40768 2.81719 2.9599C2.81719 3.51211 2.36953 3.95977 1.81732 3.95977C1.26511 3.95977 0.817449 3.51211 0.817449 2.9599C0.817449 2.40768 1.26511 1.96003 1.81732 1.96003ZM1.81732 8.24493C2.36953 8.24493 2.81719 8.69259 2.81719 9.2448C2.81719 9.79702 2.36953 10.2447 1.81732 10.2447C1.26511 10.2447 0.81745 9.79702 0.81745 9.2448C0.81745 8.69259 1.26511 8.24493 1.81732 8.24493ZM1.81732 14.5298C2.36953 14.5298 2.81719 14.9775 2.81719 15.5297C2.81719 16.0819 2.36954 16.5296 1.81732 16.5296C1.26511 16.5296 0.81745 16.0819 0.81745 15.5297C0.81745 14.9775 1.26511 14.5298 1.81732 14.5298Z"--}}
-{{--                                                              fill="currentColor" stroke="currentColor"--}}
-{{--                                                              stroke-width="1.14271"/>--}}
-{{--                                                    </svg>--}}
-{{--                                                </x-mary-button>--}}
-{{--                                            </x-slot:trigger>--}}
+                                        @scope('actions', $order)
+                                        <x-mary-dropdown right top>
+                                            <x-slot:trigger>
+                                                <x-mary-button class="btn-circle btn-ghost">
+                                                    <svg class="h-6 text-primary" viewBox="0 0 4 19"
+                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M1.81732 1.96003C2.36953 1.96003 2.81719 2.40768 2.81719 2.9599C2.81719 3.51211 2.36953 3.95977 1.81732 3.95977C1.26511 3.95977 0.817449 3.51211 0.817449 2.9599C0.817449 2.40768 1.26511 1.96003 1.81732 1.96003ZM1.81732 8.24493C2.36953 8.24493 2.81719 8.69259 2.81719 9.2448C2.81719 9.79702 2.36953 10.2447 1.81732 10.2447C1.26511 10.2447 0.81745 9.79702 0.81745 9.2448C0.81745 8.69259 1.26511 8.24493 1.81732 8.24493ZM1.81732 14.5298C2.36953 14.5298 2.81719 14.9775 2.81719 15.5297C2.81719 16.0819 2.36954 16.5296 1.81732 16.5296C1.26511 16.5296 0.81745 16.0819 0.81745 15.5297C0.81745 14.9775 1.26511 14.5298 1.81732 14.5298Z"
+                                                              fill="currentColor" stroke="currentColor"
+                                                              stroke-width="1.14271"/>
+                                                    </svg>
+                                                </x-mary-button>
+                                            </x-slot:trigger>
 
-{{--                                            @if ($this->showArchived)--}}
-{{--                                                <x-mary-menu-item title="إعادة تنشيط"--}}
-{{--                                                                  icon="o-arrow-path"--}}
-{{--                                                                  class="text-primary"--}}
-{{--                                                                  wire:click="restore({{ $user['id'] }})"--}}
-{{--                                                                  wire:confirm="{{ __('are_you_sure_restore') }}"/>--}}
-{{--                                            @else--}}
-{{--                                                @if ($user->role_id != 1)--}}
-{{--                                                    <x-mary-menu-item title="ارشفة"--}}
-{{--                                                                      icon="o-trash"--}}
-{{--                                                                      class="text-error"--}}
-{{--                                                                      wire:click="delete({{ $user['id'] }})"--}}
-{{--                                                                      wire:confirm="{{ __('are_you_sure_delete') }}"/>--}}
-{{--                                                @endif--}}
-
-{{--                                                <x-mary-menu-item title="تعديل" icon="o-pencil"--}}
-{{--                                                                  href="{{ route('admin.user.edit', $user['id']) }}"--}}
-{{--                                                                  wire:navigate class="text-info"/>--}}
-{{--                                                <x-mary-menu-item title="عرض" icon="o-eye"--}}
-{{--                                                                  href="{{ route('admin.user.view', $user['id']) }}"--}}
-{{--                                                                  wire:navigate class="text-primary"/>--}}
-{{--                                                <x-mary-menu-item title="تغيير كلمة المرور"--}}
-{{--                                                                  icon="o-key"--}}
-{{--                                                                  @click="$dispatch('show-change-password-modal', { userId: {{ $user['id'] }} })"--}}
-{{--                                                                  class="text-warning"/>--}}
-{{--                                            @endif--}}
-
-
-{{--                                        </x-mary-dropdown>--}}
-{{--                                        @endscope--}}
+                                            <x-mary-menu-item title="عرض" icon="o-eye"
+                                                          wire:click="showOrderDetails({{ $order->id }})"
+                                                          class="text-primary"/>
+{{--                                            <x-mary-menu-item title="طباعة الفاتورة" icon="o-printer"--}}
+{{--                                                          wire:click="printInvoice({{ $order->id }})"--}}
+{{--                                                          class="text-info"/>--}}
+                                        </x-mary-dropdown>
+                                        @endscope
                                     </x-mary-table>
                                 </div>
                                 @break
@@ -410,4 +388,88 @@
     </div>
 
 
+    <x-mary-modal wire:model="showingOrderDetails" title="تفاصيل الطلب"
+                  box-class="w-full max-w-[1000px]">
+        @if($selectedOrder)
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <span class="font-bold">رقم الطلب:</span>
+                        <span>#{{ $selectedOrder->id }}</span>
+                    </div>
+                    <div>
+                        <span class="font-bold">تاريخ الطلب:</span>
+                        <span>{{ $selectedOrder->created_at->format('Y-m-d') }}</span>
+                    </div>
+{{--                    <div>--}}
+{{--                        <span class="font-bold">السعر:</span>--}}
+{{--                        <span>{{ $selectedOrder->total_price }}</span>--}}
+{{--                    </div>--}}
+{{--                    <div>--}}
+{{--                        <span class="font-bold">الخصم:</span>--}}
+{{--                        <span>{{ $selectedOrder->discount }}%</span>--}}
+{{--                    </div>--}}
+{{--                    <div>--}}
+{{--                        <span class="font-bold">السعر النهائي:</span>--}}
+{{--                        <span>{{ $selectedOrder->net_price }}</span>--}}
+{{--                    </div>--}}
+                    <div>
+                        <span class="font-bold">طريقة الدفع:</span>
+                        <span>{{ $selectedOrder->payment_method }}</span>
+                    </div>
+                    <div>
+                        <span class="font-bold">حالة الدفع:</span>
+                        <span>{{ $selectedOrder->payment_status }}</span>
+                    </div>
+                    <div>
+                        <span class="font-bold">العملة:</span>
+                        <span>{{ $selectedOrder->currency }}</span>
+                    </div>
+                    <div>
+                        <span class="font-bold">حالة الطلب:</span>
+                        <span>{{ $selectedOrder->status }}</span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h3 class="font-bold mb-2">محتويات الطلب:</h3>
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>اسم الكورس</th>
+                                    <th>المعلم</th>
+                                    <th>المرحلة</th>
+                                    <th>السعر</th>
+                                    <th>الخصم</th>
+                                    <th>السعر النهائي</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($selectedOrder->items as $index => $item)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $item->course->title }}</td>
+                                        <td>{{ $item->course->instructor ? $item->course->instructor->first_name . ' ' . $item->course->instructor->last_name : '-' }}</td>
+                                        <td>{{ $item->course->stage ? $item->course->stage->name : '-' }}</td>
+                                        <td>{{ $item->price }}</td>
+                                        <td>{{ $item->discount }}%</td>
+                                        <td>{{ $item->net_price }}</td>
+                                    </tr>
+                                @endforeach
+                                <tr class="font-bold">
+                                    <td colspan="6" class="text-left">المجموع:</td>
+                                    <td>{{ $selectedOrder->net_price }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <x-mary-button @click="$wire.showingOrderDetails = false" label="إغلاق" class="btn-ghost" />
+                </div>
+            </div>
+        @endif
+    </x-mary-modal>
 </div>

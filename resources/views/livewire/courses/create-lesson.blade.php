@@ -1,4 +1,4 @@
-<div class="w-full">
+<div class="w-full" x-on:lesson-saved="window.history.back()">
     <div class="flex items-center justify-end gap-2 text-xs md:text-base">
         {{--        <x-mary-dropdown>--}}
         {{--            <x-slot:trigger>--}}
@@ -74,7 +74,8 @@
         </div>
     </div>
     <div class="mt-10">
-        <x-mary-header title="إضافة درس" subtitle="إضافة درس جديد"
+        <x-mary-header title="{{$lesson ? 'إضافة درس' : 'تعديل درس'}}"
+                       subtitle="{{$lesson ? 'إضافة درس جديد' : 'تعديل درس ' . $lesson->title}}"
                        separator
                        progress-indicator>
             <x-slot name="actions">

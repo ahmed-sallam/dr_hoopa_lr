@@ -90,7 +90,7 @@ EOT;
                     ['key' => 'payment_status', 'label' => 'حالة الدفع'],
                     ['key' => 'currency', 'label' => 'العملة'],
                     ['key' => 'status', 'label' => 'حالة الطلب'],
-//                    ['key' => 'customer_ip', 'label' => 'عنوان IP المستخدم', 'sortable' => false],
+                    ['key' => 'actions', 'label' => 'الإجراءات', 'sortable' => false],
                 ];
                 $this->sortBy = ['column' => 'id', 'direction' => 'asc', 'class' => 'text-red-500'];
                 break;
@@ -107,6 +107,21 @@ EOT;
     function getOrders()
     {
         return $this->user->orders()->orderBy(...array_values($this->sortBy))->get();
+    }
+
+    public $showingOrderDetails = false;
+    public $selectedOrder = null;
+
+    public function showOrderDetails($orderId)
+    {
+        $this->selectedOrder = \App\Models\Order::with(['items.course'])->find($orderId);
+        $this->showingOrderDetails = true;
+    }
+
+    public function printInvoice($orderId) 
+    {
+        // TODO: Implement invoice printing
+        $this->info('جاري تطوير هذه الميزة');
     }
 
 
