@@ -5,9 +5,11 @@ namespace App\Livewire\Client;
 use App\Models\Course;
 use App\Models\Lesson;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 class ClientLesson extends Component
 {
+    use Toast;
     public $courseId;
     public $lessonId;
     public $lesson;
@@ -34,5 +36,19 @@ class ClientLesson extends Component
     public function getCourse()
     {
         return Course::findOrFail($this->courseId);
+    }
+    public function addToCart(int $courseId): void
+    {
+        $cart = auth()->user()->cart->where('course_id', $courseId)->first();
+        if (!$cart) {
+            $cart = \App\Models\Cart::create([
+                'course_id' => $courseId,
+                'user_id' => auth()->id(),
+            ]);
+            $this->success('تمت إضافة الكورس إلى سلة المشتريات');
+
+        } else {
+            $this->warning('الكورس موجود بالفعل في سلة المشتريات');
+        }
     }
 }

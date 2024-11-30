@@ -74,10 +74,18 @@
                             <p class="text-gray-600 dark:text-gray-400">
                                 هذا المحتوى متاح فقط للمشتركين في الدورة
                             </p>
-                            <a href="{{ route('courses.show', $course->id) }}"
-                               class="btn btn-primary mt-4">
-                                اشترك الآن
-                            </a>
+                            @auth
+                                <a wire:click="addToCart({{$lesson->course_id
+                                 }})"
+                                   class="btn btn-primary mt-4">
+                                    اشترك الآن
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                   class="btn btn-primary mt-4">
+                                    سجل دخول للاشتراك
+                                </a>
+                            @endauth
                         </div>
                     </div>
                 @endif

@@ -12,6 +12,11 @@ class LessonPolicy
 
     public function view(User $user, Lesson $lesson)
     {
+        // If user is admin, allow access
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
         // If lesson is not premium, allow access
         if (!$lesson->is_premium) {
             return true;
