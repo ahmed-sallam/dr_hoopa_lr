@@ -428,7 +428,7 @@
                     </button>
                     <!-- @click="$store.courses.reset(); $wire.dispatch('reset-form')" -->
                     <button type="button"
-                            wire:click="$parent.cancel"
+                            @click="window.history.back()"
                             class="text-white bg-danger/70 hover:bg-danger/80 focus:ring-4   font-medium rounded-lg text-sm w-20 px-5 py-2.5 text-center dark:bg-danger/60 dark:hover:bg-danger/70 ">
                         إلغاء
                     </button>

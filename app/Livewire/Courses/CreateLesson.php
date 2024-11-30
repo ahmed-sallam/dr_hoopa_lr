@@ -36,9 +36,9 @@ EOT;
     public LessonForm $form;
     public ?Lesson $lesson = null;
 
-    public function mount($course_id, $lesson = null)
+    public function mount($id, $lesson = null)
     {
-        $this->form->course_id = $course_id;
+        $this->form->course_id = $id;
         if ($lesson) {
             $this->lesson = $lesson;
             $this->form->setLesson($lesson);
@@ -80,4 +80,5 @@ EOT;
     {
         $this->form->reset();
     }
+
 }
