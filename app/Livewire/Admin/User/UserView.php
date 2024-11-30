@@ -32,15 +32,17 @@ EOT;
     public $nested= false;
     public array $headers;
     public array $sortBy= ['column' => 'id', 'direction' => 'asc'];
-
+    public $selectedTab = 'courses';
+    public $selectedTabContent = [];
     public function mount($id, $nested=false)
     {
         $this->user = $this->getUser($id);
         $this->nested = $nested;
+        $this->setSelectedTab($this->selectedTab);
+
     }
 
-    public $selectedTab = 'courses';
-    public $selectedTabContent = [];
+
 
     public function render()
     {
@@ -72,14 +74,14 @@ EOT;
         $this->selectedTab = $tab;
         switch ($tab) {
             case 'courses':
-                $this->selectedTabContent = $this->user->enrollments;
+                $this->selectedTabContent = $this->user->enrollments()->with(['course.instructor'])->get();
                 break;
             case 'books':
                 break;
             case 'reviews':
                 break;
             case 'orders':
-                $this->selectedTabContent = $this->user->orders()->orderBy(...array_values($this->sortBy))->get();
+                $this->selectedTabContent = $this->getEnrolledCourses();
                 $this->headers = [
                     ['key' => 'id', 'label' => '#'],
                     ['key' => 'created_at', 'label' => 'تاريخ الطلب'],
@@ -107,6 +109,11 @@ EOT;
     function getOrders()
     {
         return $this->user->orders()->orderBy(...array_values($this->sortBy))->get();
+    }
+
+    function getEnrolledCourses()
+    {
+        return $this->user->enrollments()->with(['course.instructor'])->get();
     }
 
     public $showingOrderDetails = false;

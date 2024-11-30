@@ -269,6 +269,10 @@
                                     <h2 class="text-2xl font-semibold">
                                         فواتيري</h2>
                                 </div>
+
+                                @if(count($selectedTabContent) == 0)
+                                    <p>لا يوجد كورسات مسجلة</p>
+                                @endif
                                 @break
                             @case('cart')
                                 <svg class="w-12 h-12" viewBox="0 0 31 31"
@@ -325,7 +329,12 @@
                 items-start justify-start gap-2.5">
                         @switch($selectedTab)
                             @case('courses')
-
+                                <div class="flex flex-col items-start
+                                justify-start gap-2.5 w-full">
+                                    @foreach($selectedTabContent as $enrollment)
+                                        @livewire('client.components.course-card', ['course' => $enrollment->course], key($enrollment->id))
+                                    @endforeach
+                                </div>
                                 @break
                             @case('cart')
                                 @foreach($selectedTabContent as $item)
