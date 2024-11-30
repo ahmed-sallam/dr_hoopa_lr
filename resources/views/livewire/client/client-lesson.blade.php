@@ -77,7 +77,7 @@
                 </script>
             @elseif($lesson->content_type === 'quiz')
                 <div class="w-full aspect-[4/3] rounded-lg overflow-hidden">
-                    <iframe 
+                    <iframe
                         class="w-full h-full"
                         src="{{ $lesson->content_url }}"
                         title="{{ $lesson->title }}"
@@ -127,7 +127,7 @@
 
                 <div class="p-4 mt-4 space-y-2 rounded shadow bg-base-200
                 w-full">
-                    <p>د. عبدالوهاب - Doctor HOopa</p>
+                    <p>{{ $course->instructor ? $course->instructor->first_name.' ' .$course->instructor->last_name : ''}}</p>
                     <p>الماده : {{ $course->category?->name }} </p>
                     <p> السنة الدراسية : {{ $course->stage?->name }} </p>
                     <div class="divider divider-primary dark:divider-neutral"></div>

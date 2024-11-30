@@ -101,7 +101,7 @@
             </div>
 
             <div class="p-4 mt-4 space-y-2 rounded shadow bg-base-200">
-                <p>د. عبدالوهاب - Doctor HOopa</p>
+                <p>{{ $course->instructor ? $course->instructor->first_name.' ' .$course->instructor->last_name : ''}}</p>
                 <p>الماده : {{ $course->category?->name }} </p>
                 <p> السنة الدراسية : {{ $course->stage?->name }} </p>
                 <div class="divider divider-primary dark:divider-neutral"></div>
