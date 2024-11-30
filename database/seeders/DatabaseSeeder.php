@@ -107,49 +107,49 @@ class DatabaseSeeder extends Seeder
 
 
         // seed data for test courses 10 courses some of theme active and some of them inactive and some of them child courses
-        for ($i = 0; $i < 10; $i++) {
-            $price = 100 * $i;
-            $discount = $i == 0 ? 10 : null;
-            $net_price = $price - ($price * $discount / 100);
-            $course = Course::create([
-                'title' => 'Course ' . $i,
-                'sub_title' => 'Sub Title ' . $i,
-                'description' => 'Description ' . $i,
-                'price' => $price,
-                'discount' => $discount,
-                'net_price' => $net_price,
-                'status' => $i == 0 ? 'inactive' : 'active',
-                'parent_id' => ($i >= 2) ? 1 : null,
-                'category_id' => $category1->id,
-                'stage_id' => ($i >= 2) ? 1 : 2,
-                // 'data' => [
-                //     'duration' => '10 hours',
-                //     'level' => 'beginner',
-                //     'language' => 'Arabic',
-                //     'certificate' => 'yes',
-                // ],
-                'thumbnail' => 'images/hero1.jpg',
-                'featured_video' => 'https://www.youtube.com/embed/XbVBHyK9Nxw',
-            ]);
-        }
+//        for ($i = 0; $i < 10; $i++) {
+//            $price = 100 * $i;
+//            $discount = $i == 0 ? 10 : null;
+//            $net_price = $price - ($price * $discount / 100);
+//            $course = Course::create([
+//                'title' => 'Course ' . $i,
+//                'sub_title' => 'Sub Title ' . $i,
+//                'description' => 'Description ' . $i,
+//                'price' => $price,
+//                'discount' => $discount,
+//                'net_price' => $net_price,
+//                'status' => $i == 0 ? 'inactive' : 'active',
+//                'parent_id' => ($i >= 2) ? 1 : null,
+//                'category_id' => $category1->id,
+//                'stage_id' => ($i >= 2) ? 1 : 2,
+//                // 'data' => [
+//                //     'duration' => '10 hours',
+//                //     'level' => 'beginner',
+//                //     'language' => 'Arabic',
+//                //     'certificate' => 'yes',
+//                // ],
+//                'thumbnail' => 'images/hero1.jpg',
+//                'featured_video' => 'https://www.youtube.com/embed/XbVBHyK9Nxw',
+//            ]);
+//        }
 
-        for ($i = 0; $i < 10; $i++) {
-            $user = User::create([
-                'first_name' => 'User ' . $i,
-                'last_name' => 'User ' . $i,
-                'email' => 'user' . $i . '@gmail.com',
-                'password' => Hash::make('12345678'),
-                'role_id' => $userRole->id,
-                'avatar' => 'images/avatar.png',
-                'phone' => '010000000' . $i,
-                'guardian_phone' => '010000000' . $i,
-                'address' => 'Cairo',
-                'gender' => 'male',
-                'birth_date' => '2000-01-01',
-                'address_description' => 'Cairo',
-                'city' => 'Cairo',
-                'state' => 'Cairo',
-            ]);
-        }
+//        for ($i = 0; $i < 10; $i++) {
+//            $user = User::create([
+//                'first_name' => 'User ' . $i,
+//                'last_name' => 'User ' . $i,
+//                'email' => 'user' . $i . '@gmail.com',
+//                'password' => Hash::make('12345678'),
+//                'role_id' => $userRole->id,
+//                'avatar' => 'images/avatar.png',
+//                'phone' => '010000000' . $i,
+//                'guardian_phone' => '010000000' . $i,
+//                'address' => 'Cairo',
+//                'gender' => 'male',
+//                'birth_date' => '2000-01-01',
+//                'address_description' => 'Cairo',
+//                'city' => 'Cairo',
+//                'state' => 'Cairo',
+//            ]);
+//        }
     }
 }
