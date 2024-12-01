@@ -22,7 +22,7 @@ class OrderForm extends Form
     public function rules()
     {
         return [
-            'payment_method' => 'required|in:credit_card,bank_transfer,cash',
+            'payment_method' => 'nullable|in:credit_card,bank_transfer,cash',
         ];
     }
 

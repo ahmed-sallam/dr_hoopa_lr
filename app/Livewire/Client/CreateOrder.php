@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
+
 class CreateOrder extends Component
 {
     use Toast;
@@ -34,6 +38,7 @@ class CreateOrder extends Component
                                     fill="currentColor" />
                             </svg>
 EOT;
+    public $paymentData;
 
     public function mount()
     {
@@ -46,6 +51,43 @@ EOT;
                 'net_price' => $item->course->net_price,
             ];
         })->toArray());
+
+//        'cartItems': [
+//        {
+//            'name': product?.name,
+//          'quantity': selectedSizeAndColor.quantity,
+//          'price': product?.salePrice ?? product?.price,
+//        }
+//      ],
+//      'cartTotal': totalPrice,
+//      'shipping': ShippingMethodModel.selectedShippingMethodCost.value,
+//      'customer': customer,
+//      'currency': 'EGP',
+//      'payLoad': {},
+//      'sendEmail': true,
+//      'sendSMS': false,
+
+        $this->paymentData = [
+            'cartItems' => $this->cartItems->map(function ($item) {
+                return [
+                    'name' => $item->course->title,
+                    'quantity' => 1,
+                    'price' => $item->course->net_price,
+                ];
+            })->toArray(),
+            'cartTotal' => collect($this->cartItems)->sum('course.net_price'),
+            'shipping' => 0,
+            'customer' => [
+                'first_name' => auth()->user()->first_name,
+                'last_name' => auth()->user()->last_name,
+                'phone' => auth()->user()->phone,
+                'address' => auth()->user()->address,
+            ],
+            'currency' => 'EGP',
+            'payLoad' => [],
+            'sendEmail' => true,
+            'sendSMS' => false,
+        ];
     }
 
     public function createOrder()
@@ -72,7 +114,7 @@ EOT;
 
                 // Redirect to success page or payment gateway
                 $this->success('تم إنشاء الطلب بنجاح!');
-                $this->redirect(route('user.profile', auth()->id()), navigate: true);
+//                $this->redirect(route('user.profile', auth()->id()), navigate: true);
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -80,7 +122,7 @@ EOT;
         }
 
 //        session()->flash('error', 'Failed to create order. Please try again.');
-        return null;
+//        return null;
     }
 
     public function render()
@@ -89,4 +131,54 @@ EOT;
             'cartItems' => $this->cartItems,
         ])->layout('layouts.client', ['title' => $this->title, 'logo' => $this->logo]);
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//    public function createInvoiceLink()
+//    {
+//        // Example payment data; you can pull this from the request
+//        $fawaterakBaseURL=  "https://staging.fawaterk.com";
+////        $fawaterakBaseURL = config('app.environment') === 'dev'
+////            ? 'https://staging.fawaterk.com'
+////            : 'https://app.fawaterk.com';
+//
+//        $response = Http::withHeaders([
+//            'Content-Type' => 'application/json',
+//            'Authorization' => 'Bearer 17fd75bc99a68940549a7c98c3c33f521a274f353c3714eb46', // todo: Replace with your actual token
+//        ])->post("{$fawaterakBaseURL}/api/v2/createInvoiceLink", $this->paymentData);
+//
+//        // Log the response
+//        \Log::info('PaymentRes: ' . $response->body());
+//
+//
+////        if ($response->body()['status'] === 'success') {
+//            $responseBody = $response->json();
+////            dd($responseBody['data']);
+//            return redirect()->away($responseBody['data']['url']);
+////        } else {
+////            return response()->json(['error' => 'Failed to create invoice link'], $response->status());
+////        }
+//    }
+    public function createInvoiceLink()
+    {
+        $fawaterakBaseURL = "https://staging.fawaterk.com";
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer 17fd75bc99a68940549a7c98c3c33f521a274f353c3714eb46',
+        ])->post("{$fawaterakBaseURL}/api/v2/createInvoiceLink", $this->paymentData);
+
+//        dd($response->body());
+//        $responseData = json_decode($response->body() );
+//
+//        if (isset($responseData['data']['url'])) {
+        $this->createOrder();
+
+        return redirect()->away('https://staging.fawaterk.com/lk/28171');
+    }
+
+//        $this->warning('حدث خطأ في عملية الدفع');
+//        return null;
+//    }
+
 }

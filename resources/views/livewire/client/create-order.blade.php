@@ -59,35 +59,82 @@
                     </div>
                 </div>
 
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold mb-4">طريقة الدفع</h3>
-                    <div class="space-y-4">
-                        <label class="flex items-center ">
-                            <input type="radio" wire:model="form.payment_method" value="credit_card" class="radio
-                             radio-primary me-3">
-                            <span>بطاقة ائتمان</span>
-                        </label>
-                        <label class="flex items-center ">
-                            <input type="radio" wire:model="form.payment_method" value="bank_transfer"
-                                   class="radio radio-primary me-3">
-                            <span>تحويل بنكي</span>
-                        </label>
-                        <label class="flex items-center ">
-                            <input type="radio" wire:model="form.payment_method" value="cash" class="radio
-                            radio-primary me-3">
-                            <span>نقداً</span>
-                        </label>
-                        @error('form.payment_method')
-                            <span class="text-red-600 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
+{{--                <div class="mb-8">--}}
+{{--                    <h3 class="text-xl font-semibold mb-4">طريقة الدفع</h3>--}}
+{{--                    <div class="space-y-4">--}}
+{{--                        <label class="flex items-center ">--}}
+{{--                            <input type="radio" wire:model="form.payment_method" value="credit_card" class="radio--}}
+{{--                             radio-primary me-3">--}}
+{{--                            <span>بطاقة ائتمان</span>--}}
+{{--                        </label>--}}
+{{--                        <label class="flex items-center ">--}}
+{{--                            <input type="radio" wire:model="form.payment_method" value="bank_transfer"--}}
+{{--                                   class="radio radio-primary me-3">--}}
+{{--                            <span>تحويل بنكي</span>--}}
+{{--                        </label>--}}
+{{--                        <label class="flex items-center ">--}}
+{{--                            <input type="radio" wire:model="form.payment_method" value="cash" class="radio--}}
+{{--                            radio-primary me-3">--}}
+{{--                            <span>نقداً</span>--}}
+{{--                        </label>--}}
+{{--                        @error('form.payment_method')--}}
+{{--                            <span class="text-red-600 text-sm">{{ $message }}</span>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <div class="flex justify-end">
-                    <button wire:click="createOrder" class="btn btn-primary
+                <div class="flex justify-end" x-data="invoiceLink()">
+                    <button wire:click="createInvoiceLink" class="btn btn-primary
                     text-white font-bold py-2 px-4 rounded">
                         تأكيد الطلب
                     </button>
+{{--                    <button x-data="{ paymentData: $wire.paymentData }" @click="createInvoiceLink()" class="btn--}}
+{{--                    btn-primary--}}
+{{--                    text-white font-bold py-2 px-4 rounded">--}}
+{{--                        تأكيد الطلب--}}
+{{--                    </button>--}}
+{{--                    <script>--}}
+{{--                        function invoiceLink() {--}}
+{{--                            return {--}}
+
+{{--                                // this with--}}
+{{--                                // your payment data--}}
+{{--                                warning: '',--}}
+{{--                                async createInvoiceLink() {--}}
+{{--                                    console.log("paymentData", this.paymentData);--}}
+
+{{--                                    const fawaterakBaseURL = "https://staging.fawaterk.com";--}}
+{{--                                    const token = 'Bearer 17fd75bc99a68940549a7c98c3c33f521a274f353c3714eb46';--}}
+
+{{--                                    try {--}}
+{{--                                        const response = await fetch(`${fawaterakBaseURL}/api/v2/createInvoiceLink`, {--}}
+{{--                                            method: 'POST',--}}
+{{--                                            headers: {--}}
+{{--                                                'Content-Type': 'application/json',--}}
+{{--                                                'Authorization': token,--}}
+{{--                                            },--}}
+{{--                                            body: JSON.stringify(this.paymentData),--}}
+{{--                                        });--}}
+{{--                                        console.log("response", response);--}}
+
+{{--                                        const responseData = await response.json();--}}
+{{--                                        console.log("response", JSON.stringify(responseData));--}}
+{{--                                        // const responseData = await response.json();--}}
+{{--                                        console.log("responseData", responseData);--}}
+
+{{--                                        if (responseData.data && responseData.data.url) {--}}
+{{--                                            window.location.href = responseData.data.url;--}}
+{{--                                        } else {--}}
+{{--                                            this.warning = 'حدث خطأ في عملية الدفع';--}}
+{{--                                        }--}}
+{{--                                    } catch (error) {--}}
+{{--                                        this.warning = 'حدث خطأ في عملية الدفع';--}}
+{{--                                    }--}}
+{{--                                }--}}
+{{--                            };--}}
+{{--                        }--}}
+{{--                    </script>--}}
+
                 </div>
             </div>
         </div>
