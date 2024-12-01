@@ -140,22 +140,38 @@
                     </div>
 
                     <!-- Teacher -->
-                    <div class="mb-6">
-                        <label for="status"
-                               class="block mb-2 text-sm font-medium
+                    @if($parentCourse)
+                        <div class="mb-6">
+                            <label for="instructor_id"
+                                   class="block mb-2 text-sm font-medium
+                                   text-gray-900 dark:text-white">المعلم</label>
+                            <input type="text"
+                                   disabled
+                                   value="{{$parentCourse->instructor->first_name.' '.$parentCourse->instructor->last_name}}"
+                                   id="instructor_id"
+                                   class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @error('form.instructor_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @else
+                        <div class="mb-6">
+                            <label for="status"
+                                   class="block mb-2 text-sm font-medium
                                text-gray-900 dark:text-white">المعلم</label>
-                        <select wire:model="form.instructor_id"
-                                id="instructor_id"
-                                class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <Option value="0">اختر معلم</Option>
-                            @foreach($this->getTeachers() as $teacher)
-                                <option value="{{ $teacher->id }}">{{$teacher->first_name.' '.$teacher->last_name}}</option>
-                            @endforeach
-                        </select>
-                        @error('form.instructor_id')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+                            <select wire:model="form.instructor_id"
+                                    id="instructor_id"
+                                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <Option value="0">اختر معلم</Option>
+                                @foreach($this->getTeachers() as $teacher)
+                                    <option value="{{ $teacher->id }}">{{$teacher->first_name.' '.$teacher->last_name}}</option>
+                                @endforeach
+                            </select>
+                            @error('form.instructor_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @endif
 
                     <!-- Price, Discount, and Net Price -->
                     <div class="grid grid-cols-3 gap-4 mb-6"
@@ -205,7 +221,7 @@
                         </div>
                     </div>
 
-                    <!-- Featured Video -->
+                    {{--                   Featured Video --}}
                     <div class="mb-6">
                         <label for="featured_video"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الفيديو
@@ -220,39 +236,72 @@
                     </div>
 
                     <!-- Category -->
-                    <div class="mb-6">
-                        <label for="status"
-                               class="block mb-2 text-sm font-medium
+                    @if($parentCourse)
+                        <div class="mb-6">
+                            <label for="category_id"
+                                   class="block mb-2 text-sm font-medium
+                                   text-gray-900 dark:text-white">الفئة</label>
+                            <input type="text"
+                                   disabled
+                                   value="{{ $parentCourse->category->name }}"
+                                   id="category_id"
+                                   class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @error('form.category_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @else
+                        <div class="mb-6">
+                            <label for="status"
+                                   class="block mb-2 text-sm font-medium
                                text-gray-900 dark:text-white">الفئة</label>
-                        <select wire:model="form.category_id"
-                                id="category_id"
-                                class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                           <option value="0">اختر الفئة</option>
-                            @foreach($this->getCategories() as $category)
-                               <option value="{{ $category->id }}">{{$category->name }}</option>
-                           @endforeach
-                        </select>
-                        @error('form.category_id')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+                            <select wire:model="form.category_id"
+                                    id="category_id"
+                                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="0">اختر الفئة</option>
+                                @foreach($this->getCategories() as $category)
+                                    <option value="{{ $category->id }}">{{$category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('form.category_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @endif
                     <!-- Stage -->
-                    <div class="mb-6">
-                        <label for="status"
-                               class="block mb-2 text-sm font-medium
+                    @if($parentCourse)
+                        <div class="mb-6">
+                            <label for="stage_id"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                المرحلة</label>
+                            <input type="text"
+                                   disabled
+                                   value="{{ $parentCourse->stage->name }}"
+                                   id="stage_id"
+                                   class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @error('form.stage_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                    @else
+                        <div class="mb-6">
+                            <label for="stage_id"
+                                   class="block mb-2 text-sm font-medium
                                text-gray-900 dark:text-white">المرحلة</label>
-                        <select wire:model="form.stage_id"
-                                id="stage_id"
-                                class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                           <option value="0">اختر المرحلة</option>
-                            @foreach($this->getStages() as $stage)
-                                <option value="{{ $stage->id }}">{{ $stage->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('form.stage_id')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+                            <select wire:model="form.stage_id"
+                                    id="stage_id"
+                                    class="bg-dark/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="0">اختر المرحلة</option>
+                                @foreach($this->getStages() as $stage)
+                                    <option value="{{ $stage->id }}">{{ $stage->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('form.stage_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @endif
 
 
                     <!-- Status -->

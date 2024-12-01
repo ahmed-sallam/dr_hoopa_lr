@@ -3,6 +3,7 @@
 namespace App\Livewire\Courses;
 
 use App\Models\Category;
+use App\Models\Course;
 use App\Models\Stage;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,11 +38,20 @@ EOT;
 
     public CourseForm $form;
     public $course = null;
+    public $parentCourse;
 
     public function mount($id = 0, $course = null)
     {
         // $this->form = new CourseForm();
-        $this->form->parent_id = $id == 0 ? null : $id;
+        if($id != 0) {
+            $this->parentCourse = Course::find($id);
+            $this->form->parent_id = $id;
+            $this->form->stage_id = $this->parentCourse->stage_id;
+            $this->form->category_id = $this->parentCourse->category_id;
+            $this->form->instructor_id = $this->parentCourse->instructor_id;
+
+        }
+
         if ($course) {
             $this->course = $course;
             $this->form->setCourse($course);
