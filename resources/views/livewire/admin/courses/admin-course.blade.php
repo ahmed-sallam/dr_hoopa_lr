@@ -50,6 +50,7 @@
                                                    :currentChildrenView="'one_course'"
                                                    :key="'one_course' . $course->id"/>
 
+
         {{-- right side --}}
         <div class="p-3 rounded-lg lg:col-span-4 ">
             {{-- rounded card for play youtube video --}}
