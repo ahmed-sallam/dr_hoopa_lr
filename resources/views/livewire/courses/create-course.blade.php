@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="relative" x-on:goback.window="window.history.back()">
     <div class="w-full">
         {{-- nvigation line --}}
         <div class="flex items-center justify-end gap-2 text-xs md:text-base">
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="mt-10">
-            <x-mary-header title="إضافة كورس" subtitle="إضافة كورس جديد"
+            <x-mary-header title="{{$course?'تعديل الكورس':'اضافة كورس'}}"
                            separator
                            progress-indicator>
                 <x-slot name="actions">

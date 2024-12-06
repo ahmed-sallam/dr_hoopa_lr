@@ -187,7 +187,9 @@
                                     </svg>
                                 </x-slot:trigger>
                         @can('update', $content)
-                                <x-mary-menu-item >
+                                <x-mary-menu-item href="{{ route('admin.course.edit', ['id' => $content->id, 'edit' => true]) }}"
+                                                  wire:loading.class.delay="opacity-50"
+                                                  wire:navigate>
                                     <div class="flex items-center
                                     justify-evenly text-info gap-2">
                                         <svg class="w-4 h-4  md:w-6

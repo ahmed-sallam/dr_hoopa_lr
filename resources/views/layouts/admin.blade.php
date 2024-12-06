@@ -275,7 +275,8 @@
             </div>
         </div>
     </div> --}}
-
+    {{--  TOAST area --}}
+    <x-mary-toast/>
 </body>
 
 </html>

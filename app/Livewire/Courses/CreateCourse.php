@@ -11,10 +11,11 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
 use App\Livewire\Forms\CourseForm;
+use Mary\Traits\Toast;
 
 class CreateCourse extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, Toast;
 
     public string $title = "الكورسات";
     public string $logo = <<<'EOT'
@@ -40,35 +41,43 @@ EOT;
     public $course = null;
     public $parentCourse;
 
-    public function mount($id = 0, $course = null)
+    public function mount($id = 0, $edit = false) //$course = null,
     {
-        // $this->form = new CourseForm();
-        if($id != 0) {
-            $this->parentCourse = Course::find($id);
-            $this->form->parent_id = $id;
-            $this->form->stage_id = $this->parentCourse->stage_id;
-            $this->form->category_id = $this->parentCourse->category_id;
-            $this->form->instructor_id = $this->parentCourse->instructor_id;
-
+        if ($edit) {
+            $this->course = Course::find($id);
+            $this->form->setCourse($this->course);
+            $this->parentCourse = $this->course->parent;
+            $this->form->parent_id = $this->course->parent_id;
+            $this->form->stage_id = $this->course->stage_id;
+            $this->form->category_id = $this->course->category_id;
+            $this->form->instructor_id = $this->course->instructor_id;
+        } else {
+            if ($id != 0) {
+                $this->parentCourse = Course::find($id);
+                $this->form->parent_id = $id;
+                $this->form->stage_id = $this->parentCourse->stage_id;
+                $this->form->category_id = $this->parentCourse->category_id;
+                $this->form->instructor_id = $this->parentCourse->instructor_id;
+            }
         }
 
-        if ($course) {
-            $this->course = $course;
-            $this->form->setCourse($course);
-        }
+//        if ($course) {
+//            $this->course = $course;
+//            $this->form->setCourse($course);
+//        }
     }
 
     public function save(): void
     {
         if ($this->course) {
             $this->form->update();
-            session()->flash("message", "Course Updated successfully.");
+            $this->success('تم تحديث الكورس بنجاح');
         } else {
             $this->form->save();
-            session()->flash("message", "Course created successfully.");
+            $this->success('تم إنشاء الكورس بنجاح');
         }
-//        $this->dispatch("course-created");
-          redirect()->route('admin.course.index');
+        $this->dispatch("goback");
+//        redirect()->route('admin.course.index');
     }
 
     public function addDataItem()

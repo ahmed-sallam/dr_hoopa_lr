@@ -55,6 +55,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminPermissionMiddleware::class
     Route::get('admin/courses', AdminCourses::class)->name('admin.course.index');
     Route::get('admin/courses/{id}', AdminCourse::class)->name('admin.course.view');
     Route::get('admin/courses/{id}/create', CreateCourse::class)->name('admin.course.create');
+    Route::get('admin/courses/{id}/edit/{edit}', CreateCourse::class)->name('admin.course.edit');
     Route::get('admin/courses/{id}/create-lesson', CreateLesson::class)->name('admin.course.create-lesson');
     Route::get('admin/courses/{id}/lesson/{lessonId}/edit', CreateLesson::class)->name('admin.course.edit-lesson');
     Route::get('old/courses', CourseIndex::class)->name('old.admin.course.index');
