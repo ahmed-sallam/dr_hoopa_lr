@@ -85,7 +85,7 @@ class Course extends Model
     {
         return $this->hasMany(Lesson::class)->orderBy('order');
     }
-    public function INSTRUCTOR(): BelongsTo
+    public function instructor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'instructor_id');
     }
