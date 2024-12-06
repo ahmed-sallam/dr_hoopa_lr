@@ -76,8 +76,8 @@ EOT;
             $this->form->save();
             $this->success('تم إنشاء الكورس بنجاح');
         }
-        $this->dispatch("goback");
-//        redirect()->route('admin.course.index');
+//        $this->dispatch("goback");
+        redirect()->route('admin.course.index');
     }
 
     public function addDataItem()

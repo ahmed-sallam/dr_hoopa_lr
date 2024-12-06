@@ -1,5 +1,5 @@
 <div class="p-4 col-span-12 bg-transparent absolute  top-[-160px] md:top-[-180px] right-0 left-0 z-10"
-     x-data="{ show_delete_confirm: false }">
+     x-data="{ show_delete_confirm: false, show_share: false }">
     <div
             class="flex flex-col items-start justify-between w-full p-2 text-white shadow-lg min-h-40 md:min-h-48 bg-primary dark:bg-neutral rounded-3xl width md:p-3">
         {{-- first row title --}}
@@ -317,7 +317,7 @@
         {{-- last row actions --}}
         <div
                 class="grid w-full grid-cols-1 gap-2 mt-4 text-lg text-white md:grid-cols-4 min-h-16">
-            <button
+            <button x-on:click="show_share = true"
                     class="flex items-center justify-center w-full h-full col-span-1 gap-2 p-4 text-white border-0 bg-white/5 dark:bg-white/5 btn rounded-3xl hover:bg-white/10 dark:hover:bg-white/10">
                 <svg width="26"
                      height="23"
@@ -399,6 +399,110 @@
                         نعم، انا متأكد
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- share modal --}}
+    <div x-show="show_share"
+         id="share-modal"
+         tabindex="-1"
+         data-modal-backdrop="static"
+         class="flex items-center justify-center overflow-y-auto overflow-x-hidden bg-dark/50
+     fixed top-0 right-0 left-0 z-50
+     w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full p-4">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button x-on:click="show_share = false"
+                        type="button"
+                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3"
+                         aria-hidden="true"
+                         xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 14 14">
+                        <path stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-4 text-center md:p-5">
+                    <div class="flex flex-col items-center justify-center gap-4">
+                        <!-- Share Icon -->
+                        <svg class="w-16 h-16 text-primary"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.96 6.17004C18.96 7.56004 20.34 9.77004 20.62 12.32"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M3.49023 12.37C3.75023 9.83001 5.11023 7.62001 7.09023 6.22001"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M8.19043 20.94C9.35043 21.53 10.6704 21.86 12.0604 21.86C13.4004 21.86 14.6704 21.54 15.8004 20.97"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M12.06 11.87C13.5954 11.87 14.84 10.6254 14.84 9.09C14.84 7.55456 13.5954 6.31 12.06 6.31C10.5246 6.31 9.28003 7.55456 9.28003 9.09C9.28003 10.6254 10.5246 11.87 12.06 11.87Z"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M5.84003 18.87C7.37547 18.87 8.62003 17.6254 8.62003 16.09C8.62003 14.5546 7.37547 13.31 5.84003 13.31C4.30459 13.31 3.06003 14.5546 3.06003 16.09C3.06003 17.6254 4.30459 18.87 5.84003 18.87Z"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M18.15 18.87C19.6854 18.87 20.93 17.6254 20.93 16.09C20.93 14.5546 19.6854 13.31 18.15 13.31C16.6146 13.31 15.37 14.5546 15.37 16.09C15.37 17.6254 16.6146 18.87 18.15 18.87Z"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+
+                        <!-- Title -->
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">
+                            مشاركة الكورس
+                        </h3>
+
+                        <!-- Share Link Input Group -->
+                        <div class="flex w-full max-w-md gap-2 p-2 bg-gray-100 border rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                            <input type="text"
+                                   id="share-link"
+                                   value="{{ url()->current() }}"
+                                   class="w-full bg-transparent border-0 focus:ring-0 text-gray-700 dark:text-gray-300"
+                                   readonly>
+                            <button onclick="copyShareLink()"
+                                    class="px-4 py-2 text-sm font-medium text-white transition-colors rounded-md bg-primary hover:bg-primary/90">
+                                نسخ الرابط
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add this script to handle copy functionality -->
+                    <script>
+                        function copyShareLink() {
+                            const shareLink = document.getElementById('share-link');
+                            shareLink.select();
+                            document.execCommand('copy');
+
+                            // Optional: Show feedback
+                            const button = event.currentTarget;
+                            const originalText = button.textContent;
+                            button.textContent = 'تم النسخ!';
+                            setTimeout(() => {
+                                button.textContent = originalText;
+                            }, 2000);
+                        }
+                    </script>
             </div>
         </div>
     </div>

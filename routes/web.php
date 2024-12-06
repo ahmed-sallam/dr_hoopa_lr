@@ -58,6 +58,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminPermissionMiddleware::class
     Route::get('admin/courses/{id}/edit/{edit}', CreateCourse::class)->name('admin.course.edit');
     Route::get('admin/courses/{id}/create-lesson', CreateLesson::class)->name('admin.course.create-lesson');
     Route::get('admin/courses/{id}/lesson/{lessonId}/edit', CreateLesson::class)->name('admin.course.edit-lesson');
+    Route::get('admin/courses/{courseId}/lesson/{lessonId}', \App\Livewire\Admin\Courses\AdminLesson::class)->name('admin.course.lesson');
     Route::get('old/courses', CourseIndex::class)->name('old.admin.course.index');
     Route::get('admin/users', \App\Livewire\Admin\User\UserIndex::class)->name('admin.user.index');
     Route::get('admin/users/{id}', UserView::class)->name('admin.user.view');

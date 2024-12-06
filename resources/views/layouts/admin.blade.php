@@ -19,20 +19,20 @@
 
     <title>{{ $title ?? config('app.name', 'Dr Hoopa') }}</title>
 
+
     <!-- Fonts -->
     <link rel="preconnect"
-        href="https://fonts.bunny.net">
+          href="https://fonts.bunny.net">
     <link
-        href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
-        rel="stylesheet" />
+            href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
+            rel="stylesheet"/>
 
     <!-- Scripts -->
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Lato&display=swap">
+          href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Lato&display=swap">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 
 </head>
 
