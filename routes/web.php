@@ -17,6 +17,7 @@ use App\Livewire\Client\ClientCourse;
 use App\Livewire\Client\ClientLesson;
 use App\Livewire\Courses\CourseIndex;
 use App\Livewire\VideoPlayer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\User\RoleIndex;
 use App\Livewire\Client\ClientCourses;
@@ -90,6 +91,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminPermissionMiddleware::class
 
 // test video
 use App\Http\Controllers\VideoStreamController;
+use Illuminate\Support\Facades\Session;
 
 
 Route::middleware(['auth'])->group(function () {
@@ -98,6 +100,11 @@ Route::middleware(['auth'])->group(function () {
         ->name('video.stream')
         ->middleware('signed');
 });
+Route::get('logout', function () {
+    Auth::guard('web')->logout();
+    Session::invalidate();
+    Session::regenerateToken();
 
-
+    return redirect('/');
+})->name('logout');
 require __DIR__ . '/auth.php';

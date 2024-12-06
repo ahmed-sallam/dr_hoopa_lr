@@ -173,7 +173,7 @@
 
 
                     @canany(['update', 'create'], $content)
-                        <x-mary-dropdown>
+                        <x-mary-dropdown right>
                             <x-slot:trigger>
                                 <svg class="h-8 cursor-pointer"
                                      viewBox="0 0 5 19"

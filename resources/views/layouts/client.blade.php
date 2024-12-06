@@ -58,14 +58,36 @@
                     <div
                             class="flex items-center justify-center h-full px-6 py-2 text-center transition-all duration-300 cursor-pointer min-w-28 rounded-s-full bg-primary dark:bg-neutral hover:bg-primary/70 dark:hover:bg-white/25 hover:scale-105">
                         @if (auth()->user())
-                            <div class="flex items-center justify-center "
-                                 href="{{ route('user.profile', auth()
-                            ->user()->id) }}"
-                               wire:navigate>
-                            <img src="{{ asset(auth()->user()->avatar) }}"
-                                 class="w-10 h-10 rounded-full me-2"/>
-                            {{ auth()->user()->first_name }}
-                            </div>
+                            <x-mary-popover>
+                                <x-slot:trigger>
+
+                                    <x-mary-avatar
+                                            :image="asset(auth()->user()->avatar)"
+                                            :title="auth()->user()->first_name"/>
+                                </x-slot:trigger>
+                                <x-slot:content class="w-52">
+                                    <x-mary-menu class="">
+                                        @if(auth()->user()->role_id != 2)
+
+                                        <x-mary-menu-item title="لوحة
+                                            التحكم"
+                                                          class="text-primary"
+                                                          href="{{route('admin.dashboard')}}"
+                                                          wire:navigate/>
+                                        @endif
+                                        <x-mary-menu-item title="رئيسية
+                                            الموقع"
+                                                          class="text-primary"
+                                                          href="{{route('home')}}"
+                                                          wire:navigate/>
+                                        <x-mary-menu-item title="تسجيل خروج"
+                                                          class="text-error"
+                                                          href="{{ route('logout') }}"
+                                        />
+
+                                    </x-mary-menu>
+                                </x-slot:content>
+                            </x-mary-popover>
                         @else
                             <a href="{{ route('login') }}"
                                wire:navigate>
