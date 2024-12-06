@@ -173,23 +173,24 @@
 
 
                     @canany(['update', 'create'], $content)
-                            <x-mary-dropdown>
-                                <x-slot:trigger>
-                                    <svg class="h-8 cursor-pointer"
-                                         viewBox="0 0 5 19"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                                d="M2.42596 2.14149C2.98177 2.14149 3.43235 2.59206 3.43235 3.14788C3.43235 3.70369 2.98177 4.15427 2.42596 4.15427C1.87014 4.15427 1.41956 3.70369 1.41956 3.14788C1.41956 2.59206 1.87014 2.14149 2.42596 2.14149ZM2.42596 8.46738C2.98177 8.46738 3.43235 8.91796 3.43235 9.47377C3.43235 10.0296 2.98177 10.4802 2.42596 10.4802C1.87014 10.4802 1.41956 10.0296 1.41956 9.47377C1.41956 8.91796 1.87014 8.46738 2.42596 8.46738ZM2.42596 14.7933C2.98177 14.7933 3.43235 15.2438 3.43235 15.7997C3.43235 16.3555 2.98177 16.8061 2.42596 16.8061C1.87014 16.8061 1.41956 16.3555 1.41956 15.7997C1.41956 15.2438 1.87014 14.7933 2.42596 14.7933Z"
-                                                fill="white"
-                                                stroke="white"
-                                                stroke-width="1.15016"/>
-                                    </svg>
-                                </x-slot:trigger>
-                        @can('update', $content)
-                                <x-mary-menu-item href="{{ route('admin.course.edit', ['id' => $content->id, 'edit' => true]) }}"
-                                                  wire:loading.class.delay="opacity-50"
-                                                  wire:navigate>
+                        <x-mary-dropdown>
+                            <x-slot:trigger>
+                                <svg class="h-8 cursor-pointer"
+                                     viewBox="0 0 5 19"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                            d="M2.42596 2.14149C2.98177 2.14149 3.43235 2.59206 3.43235 3.14788C3.43235 3.70369 2.98177 4.15427 2.42596 4.15427C1.87014 4.15427 1.41956 3.70369 1.41956 3.14788C1.41956 2.59206 1.87014 2.14149 2.42596 2.14149ZM2.42596 8.46738C2.98177 8.46738 3.43235 8.91796 3.43235 9.47377C3.43235 10.0296 2.98177 10.4802 2.42596 10.4802C1.87014 10.4802 1.41956 10.0296 1.41956 9.47377C1.41956 8.91796 1.87014 8.46738 2.42596 8.46738ZM2.42596 14.7933C2.98177 14.7933 3.43235 15.2438 3.43235 15.7997C3.43235 16.3555 2.98177 16.8061 2.42596 16.8061C1.87014 16.8061 1.41956 16.3555 1.41956 15.7997C1.41956 15.2438 1.87014 14.7933 2.42596 14.7933Z"
+                                            fill="white"
+                                            stroke="white"
+                                            stroke-width="1.15016"/>
+                                </svg>
+                            </x-slot:trigger>
+                            @can('update', $content)
+                                <x-mary-menu-item
+                                        href="{{ route('admin.course.edit', ['id' => $content->id, 'edit' => true]) }}"
+                                        wire:loading.class.delay="opacity-50"
+                                        wire:navigate>
                                     <div class="flex items-center
                                     justify-evenly text-info gap-2">
                                         <svg class="w-4 h-4  md:w-6
@@ -202,15 +203,16 @@
                                              stroke-linecap="round"
                                              stroke-linejoin="round">
                                             <path
-                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                                            <path d="m15 5 4 4" />
+                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                                            <path d="m15 5 4 4"/>
                                         </svg>
                                         <p>تعديل</p>
                                     </div>
                                 </x-mary-menu-item>
-                                @endcan
-                                @can('delete', $content)
-                                <x-mary-menu-item x-on:click="show_delete_confirm = true">
+                            @endcan
+                            @can('delete', $content)
+                                <x-mary-menu-item
+                                        x-on:click="show_delete_confirm = true">
                                     <div class="flex items-center
                                     justify-evenly text-danger gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -221,26 +223,25 @@
                                              stroke-linecap="round"
                                              stroke-linejoin="round"
                                              class="w-4 h-4  md:w-6 md:h-6">
-                                            <path d="M3 6h18" />
-                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                            <path d="M3 6h18"/>
+                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
                                             <line x1="10"
                                                   x2="10"
                                                   y1="11"
-                                                  y2="17" />
+                                                  y2="17"/>
                                             <line x1="14"
                                                   x2="14"
                                                   y1="11"
-                                                  y2="17" />
+                                                  y2="17"/>
                                         </svg>
                                         <p>حذث</p>
                                     </div>
                                 </x-mary-menu-item>
-                                @endcan
-                            </x-mary-dropdown>
+                            @endcan
+                        </x-mary-dropdown>
 
-
-                        @endcanany
+                    @endcanany
                     {{-- <button
                         wire:click="$parent.selectChildrenView('edit_course')"
                         type="button"
@@ -373,7 +374,7 @@
                               stroke-linecap="round"
                               stroke-linejoin="round"
                               stroke-width="2"
-                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
@@ -387,7 +388,7 @@
                               stroke-linecap="round"
                               stroke-linejoin="round"
                               stroke-width="2"
-                              d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                              d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h3
                             class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
@@ -425,7 +426,7 @@
                               stroke-linecap="round"
                               stroke-linejoin="round"
                               stroke-width="2"
-                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
@@ -503,8 +504,9 @@
                             }, 2000);
                         }
                     </script>
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
