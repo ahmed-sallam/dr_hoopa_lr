@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="relative  " style="height: 100% !important;">
 
     {{-- nvigation line --}}
     <div class="flex items-center justify-end gap-2 text-xs md:text-base">
@@ -88,8 +88,8 @@
             @endforeach
         @endforeach
     </div>
-
-    <div class="sticky left-0 z-20 flex flex-col items-end justify-center gap-4 bottom-10"
+    <div class="absolute left-0  ms-0 z-20 flex flex-col items-end 
+    justify-center gap-4 bottom-10 "
          x-data="{ show_dropdown: false }">
         <div x-show="show_dropdown"
              class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">
