@@ -70,7 +70,7 @@ class CoursePolicy
     public function delete(User $user, Course $course)
     {
         // Logic to determine if the user can delete the course
-        return $user->hasPermission('courses', 'force-delete');
+        return $user->hasPermission('courses', 'soft-delete');
     }
 
     /**

@@ -4,10 +4,13 @@ namespace App\Livewire\Admin\Courses;
 
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 class AdminCourse extends Component
 {
+    use Toast;
     public string $title = "الكورسات";
     public string $logo = <<<'EOT'
      <svg class="w-12 h-12 "
@@ -71,4 +74,31 @@ EOT;
 
         return $tree;
     }
-}
+
+    #[On('deleteCourse')]
+    public function deleteCourse($id)
+    {
+        if (count($this->course->children) >0) {
+             $this->warning('لا يمكن حذف الكورس لوجود كورسات فرعية');
+            return null;
+        }
+        if(count($this->course->lessons)>0) {
+            $this->warning(  'لا يمكن حذف الكورس لوجود محاضرات');
+            return null;
+        }
+        if (count($this->course->enrollments)>0) {
+             $this->warning('لا يمكن حذف الكورس لوجود مشتركين');
+            return null;
+        }
+        $items = $this->getFoldersTree();
+
+        $this->course->delete();
+        $this->success('تم حذف الكورس بنجاح');
+        if(count($items) > 1){
+            return redirect()->route('admin.course.view', $items[count($items)-2]->id);
+        }else{
+            return redirect()->route('admin.course.index');
+        }
+    }
+
+};

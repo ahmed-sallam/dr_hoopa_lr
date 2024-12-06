@@ -19,4 +19,11 @@ class ContentHeader extends Component
         $this->dispatch('addToCart', $this->content->id);
     }
 
+    public function deleteCourse()
+    {
+
+        $this->dispatch('deleteCourse', $this->content->id);
+
+    }
+
 }

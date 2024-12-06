@@ -88,7 +88,7 @@
             @endforeach
         @endforeach
     </div>
-    <div class="absolute left-0  ms-0 z-20 flex flex-col items-end
+    <div class="sticky left-0  ms-0 z-20 flex flex-col items-end
     justify-center gap-4 bottom-10 "
          x-data="{ show_dropdown: false }">
         <div x-show="show_dropdown"
