@@ -7,10 +7,13 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Stage;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 class AdminCourses extends Component
 {
+    use Toast;
     public string $title = "الكورسات";
     public string $logo = <<<'EOT'
      <svg class="w-12 h-12 "
@@ -102,5 +105,27 @@ EOT;
             ];
         })->all();
     }
+    #[On('deleteCourse')]
+    public function deleteCourse($id)
+    {
+        $course = Course::find($id);
+        if (count($course->children) >0) {
+            $this->warning('لا يمكن حذف الكورس لوجود كورسات فرعية');
+            return null;
+        }
+        if(count($course->lessons)>0) {
+            $this->warning(  'لا يمكن حذف الكورس لوجود محاضرات');
+            return null;
+        }
+        if (count($course->enrollments)>0) {
+            $this->warning('لا يمكن حذف الكورس لوجود مشتركين');
+            return null;
+        }
 
+        $course->delete();
+        $this->success('تم حذف الكورس بنجاح');
+
+            return redirect()->route('admin.course.index');
+
+    }
 }

@@ -34,4 +34,10 @@ class MainCourseRow extends Component
 
 
     }
+
+
+    public function deleteCourse($id)
+    {
+        $this->dispatch('deleteCourse', $id);
+    }
 }
