@@ -118,4 +118,15 @@ EOT;
     {
         return User::getTeachers();
     }
+
+    public function getFoldersTree()
+    {
+        if ($this->parentCourse == null) {
+            return [];
+        }
+        $tree = $this->parentCourse->parentsArray();
+        $tree[] = $this->parentCourse;
+
+        return $tree;
+    }
 }

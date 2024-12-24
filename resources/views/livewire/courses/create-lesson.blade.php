@@ -31,25 +31,26 @@
             <a href="{{ route('admin.course.index') }}"
                wire:navigate
                class="cursor-pointer">الكورسات</a>
-            {{--            @foreach ($this->getFoldersTree() as $folder)--}}
-            {{--                <div><svg class="w-6 h-6 text-gray-800 dark:text-white"--}}
-            {{--                          aria-hidden="true"--}}
-            {{--                          xmlns="http://www.w3.org/2000/svg"--}}
-            {{--                          width="24"--}}
-            {{--                          height="24"--}}
-            {{--                          fill="none"--}}
-            {{--                          viewBox="0 0 24 24">--}}
-            {{--                        <path stroke="currentColor"--}}
-            {{--                              stroke-linecap="round"--}}
-            {{--                              stroke-linejoin="round"--}}
-            {{--                              stroke-width="2"--}}
-            {{--                              d="m10 16 4-4-4-4" />--}}
-            {{--                    </svg>--}}
-            {{--                </div>--}}
-            {{--                <div wire:click="selectCourse({{ $folder->id }})"--}}
-            {{--                     @click="$store.courses.reset()"--}}
-            {{--                     class="cursor-pointer">{{ $folder->title }}</div>--}}
-            {{--            @endforeach--}}
+            @foreach ($this->getFoldersTree() as $folder)
+            <div>
+                <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                     aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     fill="none"
+                     viewBox="0 0 24 24">
+                    <path stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m10 16 4-4-4-4"/>
+                </svg>
+            </div>
+            <a href="{{ route('admin.course.view', $folder->id) }}"
+               wire:navigate
+               class="cursor-pointer">{{ $folder->title }}</a>
+            @endforeach
         </div>
         {{-- Back Button --}}
         <div>

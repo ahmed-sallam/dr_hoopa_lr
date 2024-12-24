@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Courses;
 
+use App\Models\Course;
 use App\Models\Lesson;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -36,10 +37,12 @@ EOT;
 
     public LessonForm $form;
     public ?Lesson $lesson = null;
+    public $course_id = null;
 
     public function mount($id, $lessonId = null)
     {
         $this->form->course_id = $id;
+        $this->course_id = $id;
         if ($lessonId) {
             $this->lesson = Lesson::findOrFail($lessonId);
             $this->form->setLesson(  $this->lesson);
@@ -84,4 +87,15 @@ EOT;
         $this->form->reset();
     }
 
+    public function getFoldersTree()
+    {
+        if ($this->course_id == null) {
+            return [];
+        }
+        $parentCourse = Course::findOrFail($this->course_id);
+        $tree = $parentCourse->parentsArray();
+        $tree[] = $parentCourse;
+
+        return $tree;
+    }
 }
