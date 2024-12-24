@@ -69,7 +69,9 @@ shadow hover:bg-gray-200  dark:hover:bg-white/5 w-full p-4 ">
                         target="_blank"> {{ $lesson->title }}</a>
                 </h5>
                 @else
-                <h5 href="{{ route('client.lesson.view', [$lesson->course_id, $lesson->id]) }}"
+                <h5
+                    href="{{ Route::is('admin.*') ? route('admin.course.lesson',
+                    [$lesson->course_id, $lesson->id]) : route('client.lesson.view', [$lesson->course_id, $lesson->id]) }}"
                     wire:navigate
                     class="mb-2 text-2xl font-bold tracking-tight text-gray-900 cursor-pointer dark:text-white hover:text-primary hover:underline">
                     {{ $lesson->title }}
