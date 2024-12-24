@@ -8,8 +8,7 @@
             {{-- title & icon --}}
             <div class="flex justify-start gap-2 itms-center">
                 @if ($currentChildrenView == 'one_course')
-                    <svg class="w-12 h-12 md:w-16 md:h-16"
-                         viewBox="0 0 79 57"
+                    <svg class="w-12 h-12 md:w-16 md:h-16"                         viewBox="0 0 79 57"
                          fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path d="M62.5411 57H7.37846C5.42779 57 3.55701 56.2493 2.17767
@@ -172,128 +171,88 @@
                     @endif
 
 
-                    @canany(['update', 'create'], $content)
-                        <x-mary-dropdown right>
-                            <x-slot:trigger>
-                                <svg class="h-8 cursor-pointer"
-                                     viewBox="0 0 5 19"
-                                     fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                            d="M2.42596 2.14149C2.98177 2.14149 3.43235 2.59206 3.43235 3.14788C3.43235 3.70369 2.98177 4.15427 2.42596 4.15427C1.87014 4.15427 1.41956 3.70369 1.41956 3.14788C1.41956 2.59206 1.87014 2.14149 2.42596 2.14149ZM2.42596 8.46738C2.98177 8.46738 3.43235 8.91796 3.43235 9.47377C3.43235 10.0296 2.98177 10.4802 2.42596 10.4802C1.87014 10.4802 1.41956 10.0296 1.41956 9.47377C1.41956 8.91796 1.87014 8.46738 2.42596 8.46738ZM2.42596 14.7933C2.98177 14.7933 3.43235 15.2438 3.43235 15.7997C3.43235 16.3555 2.98177 16.8061 2.42596 16.8061C1.87014 16.8061 1.41956 16.3555 1.41956 15.7997C1.41956 15.2438 1.87014 14.7933 2.42596 14.7933Z"
-                                            fill="white"
-                                            stroke="white"
-                                            stroke-width="1.15016"/>
-                                </svg>
-                            </x-slot:trigger>
-                            @can('update', $content)
-                                <x-mary-menu-item
-                                        href="{{ route('admin.course.edit', ['id' => $content->id, 'edit' => true]) }}"
-                                        wire:loading.class.delay="opacity-50"
-                                        wire:navigate>
-                                    <div class="flex items-center
-                                    justify-evenly text-info gap-2">
-                                        <svg class="w-4 h-4  md:w-6
-                                        md:h-6"
-                                             xmlns="http://www.w3.org/2000/svg"
-                                             viewBox="0 0 24 24"
-                                             fill="none"
-                                             stroke="currentColor"
-                                             stroke-width="2"
-                                             stroke-linecap="round"
-                                             stroke-linejoin="round">
-                                            <path
-                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
-                                            <path d="m15 5 4 4"/>
-                                        </svg>
-                                        <p>تعديل</p>
-                                    </div>
-                                </x-mary-menu-item>
-                            @endcan
-                            @can('delete', $content)
-                                <x-mary-menu-item
-                                        x-on:click="show_delete_confirm = true">
-                                    <div class="flex items-center
-                                    justify-evenly text-danger gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                             viewBox="0 0 24 24"
-                                             fill="none"
-                                             stroke="currentColor"
-                                             stroke-width="2"
-                                             stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="w-4 h-4  md:w-6 md:h-6">
-                                            <path d="M3 6h18"/>
-                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-                                            <line x1="10"
-                                                  x2="10"
-                                                  y1="11"
-                                                  y2="17"/>
-                                            <line x1="14"
-                                                  x2="14"
-                                                  y1="11"
-                                                  y2="17"/>
-                                        </svg>
-                                        <p>حذث</p>
-                                    </div>
-                                </x-mary-menu-item>
-                            @endcan
-                        </x-mary-dropdown>
+{{--                    @canany(['update', 'create'], $content)--}}
+{{--                        <x-mary-dropdown right>--}}
+{{--                            <x-slot:trigger>--}}
+{{--                                <svg class="h-8 cursor-pointer"--}}
+{{--                                     viewBox="0 0 5 19"--}}
+{{--                                     fill="none"--}}
+{{--                                     xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                    <path--}}
+{{--                                            d="M2.42596 2.14149C2.98177 2.14149 3.43235 2.59206 3.43235 3.14788C3.43235 3.70369 2.98177 4.15427 2.42596 4.15427C1.87014 4.15427 1.41956 3.70369 1.41956 3.14788C1.41956 2.59206 1.87014 2.14149 2.42596 2.14149ZM2.42596 8.46738C2.98177 8.46738 3.43235 8.91796 3.43235 9.47377C3.43235 10.0296 2.98177 10.4802 2.42596 10.4802C1.87014 10.4802 1.41956 10.0296 1.41956 9.47377C1.41956 8.91796 1.87014 8.46738 2.42596 8.46738ZM2.42596 14.7933C2.98177 14.7933 3.43235 15.2438 3.43235 15.7997C3.43235 16.3555 2.98177 16.8061 2.42596 16.8061C1.87014 16.8061 1.41956 16.3555 1.41956 15.7997C1.41956 15.2438 1.87014 14.7933 2.42596 14.7933Z"--}}
+{{--                                            fill="white"--}}
+{{--                                            stroke="white"--}}
+{{--                                            stroke-width="1.15016"/>--}}
+{{--                                </svg>--}}
+{{--                            </x-slot:trigger>--}}
+{{--                            @can('update', $content)--}}
+{{--                                <x-mary-menu-item--}}
+{{--                                        href="{{ route('admin.course.edit', ['id' => $content->id, 'edit' => true]) }}"--}}
+{{--                                        wire:loading.class.delay="opacity-50"--}}
+{{--                                        wire:navigate>--}}
+{{--                                    <div class="flex items-center--}}
+{{--                                    justify-evenly text-info gap-2">--}}
+{{--                                        <svg class="w-4 h-4  md:w-6--}}
+{{--                                        md:h-6"--}}
+{{--                                             xmlns="http://www.w3.org/2000/svg"--}}
+{{--                                             viewBox="0 0 24 24"--}}
+{{--                                             fill="none"--}}
+{{--                                             stroke="currentColor"--}}
+{{--                                             stroke-width="2"--}}
+{{--                                             stroke-linecap="round"--}}
+{{--                                             stroke-linejoin="round">--}}
+{{--                                            <path--}}
+{{--                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>--}}
+{{--                                            <path d="m15 5 4 4"/>--}}
+{{--                                        </svg>--}}
+{{--                                        <p>تعديل</p>--}}
+{{--                                    </div>--}}
+{{--                                </x-mary-menu-item>--}}
+{{--                            @endcan--}}
+{{--                            @can('delete', $content)--}}
+{{--                                <x-mary-menu-item--}}
+{{--                                        x-on:click="show_delete_confirm = true">--}}
+{{--                                    <div class="flex items-center--}}
+{{--                                    justify-evenly text-danger gap-2">--}}
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg"--}}
+{{--                                             viewBox="0 0 24 24"--}}
+{{--                                             fill="none"--}}
+{{--                                             stroke="currentColor"--}}
+{{--                                             stroke-width="2"--}}
+{{--                                             stroke-linecap="round"--}}
+{{--                                             stroke-linejoin="round"--}}
+{{--                                             class="w-4 h-4  md:w-6 md:h-6">--}}
+{{--                                            <path d="M3 6h18"/>--}}
+{{--                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>--}}
+{{--                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>--}}
+{{--                                            <line x1="10"--}}
+{{--                                                  x2="10"--}}
+{{--                                                  y1="11"--}}
+{{--                                                  y2="17"/>--}}
+{{--                                            <line x1="14"--}}
+{{--                                                  x2="14"--}}
+{{--                                                  y1="11"--}}
+{{--                                                  y2="17"/>--}}
+{{--                                        </svg>--}}
+{{--                                        <p>حذث</p>--}}
+{{--                                    </div>--}}
+{{--                                </x-mary-menu-item>--}}
+{{--                            @endcan--}}
+{{--                        </x-mary-dropdown>--}}
 
-                    @endcanany
-                    {{-- <button
-                        wire:click="$parent.selectChildrenView('edit_course')"
-                        type="button"
-                        class="p-1.5 md:p-3 rounded-full bg-white/90 dark:bg-white/90 hover:bg-white/10 cursor-pointer">
-                        <svg class="w-4 h-4 text-secondary md:w-6 md:h-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path
-                                d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                            <path d="m15 5 4 4" />
-                        </svg>
-                    </button>
-                    <button x-on:click="show_delete_confirm = true"
-                        type="button"
-                        class="p-1.5 md:p-3 rounded-full bg-danger/80 hover:bg-white/10 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="w-4 h-4 text-white md:w-6 md:h-6">
-                            <path d="M3 6h18" />
-                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                            <line x1="10"
-                                x2="10"
-                                y1="11"
-                                y2="17" />
-                            <line x1="14"
-                                x2="14"
-                                y1="11"
-                                y2="17" />
-                        </svg>
-                    </button> --}}
-                @elseif($currentChildrenView == 'view_lesson')
-                    <svg class="h-8 cursor-pointer"
-                         viewBox="0 0 5 19"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                                d="M2.42596 2.14149C2.98177 2.14149 3.43235 2.59206 3.43235 3.14788C3.43235 3.70369 2.98177 4.15427 2.42596 4.15427C1.87014 4.15427 1.41956 3.70369 1.41956 3.14788C1.41956 2.59206 1.87014 2.14149 2.42596 2.14149ZM2.42596 8.46738C2.98177 8.46738 3.43235 8.91796 3.43235 9.47377C3.43235 10.0296 2.98177 10.4802 2.42596 10.4802C1.87014 10.4802 1.41956 10.0296 1.41956 9.47377C1.41956 8.91796 1.87014 8.46738 2.42596 8.46738ZM2.42596 14.7933C2.98177 14.7933 3.43235 15.2438 3.43235 15.7997C3.43235 16.3555 2.98177 16.8061 2.42596 16.8061C1.87014 16.8061 1.41956 16.3555 1.41956 15.7997C1.41956 15.2438 1.87014 14.7933 2.42596 14.7933Z"
-                                fill="white"
-                                stroke="white"
-                                stroke-width="1.15016"/>
-                    </svg>
+{{--                    @endcanany--}}
+
+{{--                @elseif($currentChildrenView == 'view_lesson')--}}
+{{--                    <svg class="h-8 cursor-pointer"--}}
+{{--                         viewBox="0 0 5 19"--}}
+{{--                         fill="none"--}}
+{{--                         xmlns="http://www.w3.org/2000/svg">--}}
+{{--                        <path--}}
+{{--                                d="M2.42596 2.14149C2.98177 2.14149 3.43235 2.59206 3.43235 3.14788C3.43235 3.70369 2.98177 4.15427 2.42596 4.15427C1.87014 4.15427 1.41956 3.70369 1.41956 3.14788C1.41956 2.59206 1.87014 2.14149 2.42596 2.14149ZM2.42596 8.46738C2.98177 8.46738 3.43235 8.91796 3.43235 9.47377C3.43235 10.0296 2.98177 10.4802 2.42596 10.4802C1.87014 10.4802 1.41956 10.0296 1.41956 9.47377C1.41956 8.91796 1.87014 8.46738 2.42596 8.46738ZM2.42596 14.7933C2.98177 14.7933 3.43235 15.2438 3.43235 15.7997C3.43235 16.3555 2.98177 16.8061 2.42596 16.8061C1.87014 16.8061 1.41956 16.3555 1.41956 15.7997C1.41956 15.2438 1.87014 14.7933 2.42596 14.7933Z"--}}
+{{--                                fill="white"--}}
+{{--                                stroke="white"--}}
+{{--                                stroke-width="1.15016"/>--}}
+{{--                    </svg>--}}
                     {{-- <button
                         wire:click="$parent.selectChildrenView('edit_lesson')"
                         type="button"

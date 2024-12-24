@@ -76,7 +76,7 @@
                                           y1="11"
                                           y2="17" />
                                 </svg>
-                                <p>حذث</p>
+                                <p>حذف</p>
                             </div>
                         </x-mary-menu-item>
                     @endcan

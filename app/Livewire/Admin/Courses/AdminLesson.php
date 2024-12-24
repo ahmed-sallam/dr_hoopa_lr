@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Courses;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -36,5 +37,26 @@ use Toast;
     public function getCourse()
     {
         return Course::findOrFail($this->courseId);
+    }
+
+
+    #[On('deleteLesson')]
+    public function deleteLesson($id)
+    {
+        $this->lesson->delete();
+        $this->success('تم حذف الدرس بنجاح');
+        return redirect()->route('admin.course.view', $this->courseId);
+    }
+
+    public function getFoldersTree()
+    {
+        if ($this->course == null) {
+            return [];
+        }
+
+        $tree = $this->course->parentsArray();
+        $tree[] = $this->course;
+
+        return $tree;
     }
 }

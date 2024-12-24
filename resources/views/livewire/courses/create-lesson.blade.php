@@ -76,7 +76,7 @@
     </div>
     <div class="mt-10">
         <x-mary-header title="{{$lesson ?  'تعديل درس': 'إضافة درس'}}"
-                       subtitle="{{$lesson ?  'تعديل درس جديد' : 'إضافة درس جديد'}}"
+                       subtitle="{{$lesson ?  'تعديل درس ' : 'إضافة درس جديد'}}"
                        separator
                        progress-indicator>
             <x-slot name="actions">

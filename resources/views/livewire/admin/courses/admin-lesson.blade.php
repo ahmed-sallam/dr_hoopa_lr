@@ -3,30 +3,34 @@
 
    <div class="flex items-center justify-end gap-2 text-xs md:text-base">
       <div
+              class="flex items-center h-10 gap-2 px-4 py-3 rounded-full w-28 btn-primary dark:text-base-300 dark:bg-white btn-sm btn">
+
+      </div>
+      <div
               class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-neutral">
          <a href="{{ route('admin.course.index') }}"
             wire:navigate
             class="cursor-pointer">الكورسات</a>
-         {{--            @foreach ($this->getFoldersTree() as $folder)--}}
-         {{--                <div>--}}
-         {{--                    <svg class="w-6 h-6 text-gray-800 dark:text-white"--}}
-         {{--                         aria-hidden="true"--}}
-         {{--                         xmlns="http://www.w3.org/2000/svg"--}}
-         {{--                         width="24"--}}
-         {{--                         height="24"--}}
-         {{--                         fill="none"--}}
-         {{--                         viewBox="0 0 24 24">--}}
-         {{--                        <path stroke="currentColor"--}}
-         {{--                              stroke-linecap="round"--}}
-         {{--                              stroke-linejoin="round"--}}
-         {{--                              stroke-width="2"--}}
-         {{--                              d="m10 16 4-4-4-4"/>--}}
-         {{--                    </svg>--}}
-         {{--                </div>--}}
-         {{--                <a href="{{ route('admin.course.view', $folder->id) }}"--}}
-         {{--                   wire:navigate--}}
-         {{--                   class="cursor-pointer">{{ $folder->title }}</a>--}}
-         {{--            @endforeach--}}
+         @foreach ($this->getFoldersTree() as $folder)
+            <div>
+               <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24">
+                  <path stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m10 16 4-4-4-4"/>
+               </svg>
+            </div>
+            <a href="{{ route('admin.course.view', $folder->id) }}"
+               wire:navigate
+               class="cursor-pointer">{{ $folder->title }}</a>
+         @endforeach
       </div>
    </div>
 
@@ -46,9 +50,9 @@
    {{-- main contetn --}}
    <div
            class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px] md:pt-[100px]">
-      <livewire:clinet.components.content-header :content="$course"
-                                                 :currentChildrenView="'one_course'"
-                                                 :key="'one_course' . $course->id"/>
+      <livewire:courses.components.content-header :content="$lesson"
+                                                 :currentChildrenView="'view_lesson'"
+                                                 :key="'view_lesson' . $lesson->id"/>
 
 
       {{-- full side --}}

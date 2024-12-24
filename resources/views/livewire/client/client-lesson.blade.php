@@ -46,9 +46,9 @@
     {{-- main contetn --}}
     <div
             class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px] md:pt-[100px]">
-        <livewire:clinet.components.content-header :content="$course"
-                                                   :currentChildrenView="'one_course'"
-                                                   :key="'one_course' . $course->id"/>
+        <livewire:clinet.components.content-header :content="$lesson"
+                                                   :currentChildrenView="'view_lesson'"
+                                                   :key="'view_lesson' . $lesson->id"/>
 
 
         {{-- full side --}}

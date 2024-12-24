@@ -74,6 +74,14 @@ class DatabaseSeeder extends Seeder
         $viewRolePermission = Permission::create(['name' => 'view', 'table_name' => 'roles']);
         $restoreRolePermission = Permission::create(['name' => 'restore', 'table_name' => 'roles']);
 
+        // create permission for lessons
+        $createLessonPermission = Permission::create(['name' => 'create', 'table_name' => 'lessons']);
+        $updateLessonPermission = Permission::create(['name' => 'update', 'table_name' => 'lessons']);
+        $deleteLessonPermission = Permission::create(['name' => 'delete', 'table_name' => 'lessons']);
+        $SoftDeleteLessonPermission = Permission::create(['name' => 'soft-delete', 'table_name' => 'lessons']);
+        $viewLessonPermission = Permission::create(['name' => 'view', 'table_name' => 'lessons']);
+        $restoreLessonPermission = Permission::create(['name' => 'restore', 'table_name' => 'lessons']);
+
 
         // create default stages
         $stage1 = Stage::create(['name' => 'اولى ثانوي']);
@@ -103,6 +111,12 @@ class DatabaseSeeder extends Seeder
             $SoftDeleteRolePermission->id,
             $viewRolePermission->id,
             $restoreRolePermission->id,
+            $createLessonPermission->id,
+            $updateLessonPermission->id,
+            $deleteLessonPermission->id,
+            $SoftDeleteLessonPermission->id,
+            $viewLessonPermission->id,
+            $restoreLessonPermission->id,
         ]);
 
 
