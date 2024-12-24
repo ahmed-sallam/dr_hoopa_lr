@@ -55,41 +55,49 @@
         @endforeach
     </div>
 
-    <div class="">
+    <div class="" x-data="{ isCollapsed: false }">
         @foreach ($categories as $key => $category)
             @foreach ($category as $key2 => $courses)
-            @if ($courses->count() > 0)
-                <div
-                        class="flex items-center gap-2 text-2xl font-semibold
+                @if ($courses->count() > 0)
+                    <div
+                            class="flex items-center gap-2 text-2xl font-semibold
                          cursor-pointer mt-10">
-                    <div class="px-2 py-1 rounded bg-base-300 dark:bg-neutral">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             width="24"
-                             height="24"
-                             viewBox="0 0 24 24"
-                             fill="none"
-                             stroke="currentColor"
-                             stroke-width="2"
-                             stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="lucide lucide-chevron-down">
-                            <path d="m6 9 6 6 6-6"/>
-                        </svg>
+                        <div class="px-2 py-1 rounded bg-base-300 dark:bg-neutral"
+                             x-on:click="isCollapsed = !isCollapsed">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="lucide lucide-chevron-down"
+                                 :class="{ 'rotate-180': !isCollapsed }">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </div>
+                        {{ $key . ' | ' . $key2 }}
                     </div>
-                    {{ $key . ' | ' . $key2 }}
-                </div>
-                <div class="flex flex-col gap-6 mt-12">
-                    @foreach ($courses as $k => $course)
-                        <livewire:clinet.components.main-course-row :$course
-                                                                    :key="$course->id"/>
-                    @endforeach
-                </div>
-            @endif
+                    <div class="flex flex-col gap-6 mt-12"
+                         x-show="!isCollapsed"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="transform -translate-y-4 opacity-0"
+                         x-transition:enter-end="transform translate-y-0 opacity-100"
+                         x-transition:leave="transition ease-in duration-300"
+                         x-transition:leave-start="transform translate-y-0 opacity-100"
+                         x-transition:leave-end="transform -translate-y-4 opacity-0">
+                        @foreach ($courses as $k => $course)
+                            <livewire:clinet.components.main-course-row :$course
+                                                                        :key="$course->id"/>
+                        @endforeach
+                    </div>
+                @endif
             @endforeach
         @endforeach
     </div>
-    <div class="sticky left-0  ms-0 z-20 flex flex-col items-end
-    justify-center gap-4 bottom-10 "
+    <div class="sticky left-0  ms-0 z-20 flex flex-col items-end    justify-center gap-4 bottom-10 "
          x-data="{ show_dropdown: false }">
         <div x-show="show_dropdown"
              class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">
