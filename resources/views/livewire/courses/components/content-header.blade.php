@@ -1,4 +1,4 @@
-<div class="p-4 col-span-12 bg-transparent absolute  top-[-160px] md:top-[-180px] right-0 left-0 z-10"
+<div class="p-4 col-span-12 bg-transparent absolute  top-[-160px] md:top-[-180px] right-0 left-0"
     x-data>
     <div
         class="flex flex-col items-start justify-between w-full p-2 text-white shadow-lg h-44 md:h-56 bg-primary dark:bg-dark rounded-3xl width md:p-3">

@@ -27,6 +27,10 @@
                               href="{{ route('admin.stage.index') }}"
                               wire:navigate
                               class="text-primary"/>
+            <x-mary-menu-item title="اضف كورس"
+                              href="{{route('admin.course.create', 0)}}"
+                              wire:navigate
+                              class="text-primary"/>
         </x-mary-dropdown>
         <div
                 class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-dark">
@@ -55,7 +59,7 @@
         @endforeach
     </div>
 
-    <div class="" x-data="{ isCollapsed: false }">
+    <div class="" x-data="{ isCollapsed: {} }">
         @foreach ($categories as $key => $category)
             @foreach ($category as $key2 => $courses)
                 @if ($courses->count() > 0)
@@ -63,7 +67,7 @@
                             class="flex items-center gap-2 text-2xl font-semibold
                          cursor-pointer mt-10">
                         <div class="px-2 py-1 rounded bg-base-300 dark:bg-neutral"
-                             x-on:click="isCollapsed = !isCollapsed">
+                             x-on:click="isCollapsed[`${@js($key)}_${@js($key2)}`] = !isCollapsed[`${@js($key)}_${@js($key2)}`]">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  width="24"
                                  height="24"
@@ -74,14 +78,14 @@
                                  stroke-linecap="round"
                                  stroke-linejoin="round"
                                  class="lucide lucide-chevron-down"
-                                 :class="{ 'rotate-180': !isCollapsed }">
+                                 :class="{ 'rotate-180': !isCollapsed[`${@js($key)}_${@js($key2)}`] }">
                                 <path d="m6 9 6 6 6-6"/>
                             </svg>
                         </div>
                         {{ $key . ' | ' . $key2 }}
                     </div>
                     <div class="flex flex-col gap-6 mt-12"
-                         x-show="!isCollapsed"
+                         x-show="!isCollapsed[`${@js($key)}_${@js($key2)}`]"
                          x-transition:enter="transition ease-out duration-300"
                          x-transition:enter-start="transform -translate-y-4 opacity-0"
                          x-transition:enter-end="transform translate-y-0 opacity-100"
@@ -97,44 +101,44 @@
             @endforeach
         @endforeach
     </div>
-    <div class="sticky left-0  ms-0 z-20 flex flex-col items-end    justify-center gap-4 bottom-10 "
-         x-data="{ show_dropdown: false }">
-        <div x-show="show_dropdown"
-             class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownDefault">
-                <li>
-                    <button href="{{route('admin.course.create', 0)}}"
-                            wire:navigate
-                            x-on:click="show_dropdown=false"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                        اضف
-                        كورس
-                    </button>
-                </li>
-            </ul>
-        </div>
+{{--    <div class="sticky left-0  ms-0 z-20 flex flex-col items-end    justify-center gap-4 bottom-10 "--}}
+{{--         x-data="{ show_dropdown: false }">--}}
+{{--        <div x-show="show_dropdown"--}}
+{{--             class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">--}}
+{{--            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"--}}
+{{--                aria-labelledby="dropdownDefault">--}}
+{{--                <li>--}}
+{{--                    <button href="{{route('admin.course.create', 0)}}"--}}
+{{--                            wire:navigate--}}
+{{--                            x-on:click="show_dropdown=false"--}}
+{{--                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">--}}
+{{--                        اضف--}}
+{{--                        كورس--}}
+{{--                    </button>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
 
-        <button type="button"
-                x-on:click="show_dropdown = !show_dropdown"
-                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-secondary
-            hover:scale-105 transition-all duration-300 shadow-md
-            shadow-primary dark:shadow-white/50 ">
-            <svg class="w-6 h-6 "
-                 aria-hidden="true"
-                 xmlns="http://www.w3.org/2000/svg"
-                 width="24"
-                 height="24"
-                 fill="none"
-                 viewBox="0 0 24 24">
-                <path stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d=" M5 12h14m-7 7V5"/>
-            </svg>
-            <span class="sr-only">add course</span>
-        </button>
-    </div>
+{{--        <button type="button"--}}
+{{--                x-on:click="show_dropdown = !show_dropdown"--}}
+{{--                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-secondary--}}
+{{--            hover:scale-105 transition-all duration-300 shadow-md--}}
+{{--            shadow-primary dark:shadow-white/50 ">--}}
+{{--            <svg class="w-6 h-6 "--}}
+{{--                 aria-hidden="true"--}}
+{{--                 xmlns="http://www.w3.org/2000/svg"--}}
+{{--                 width="24"--}}
+{{--                 height="24"--}}
+{{--                 fill="none"--}}
+{{--                 viewBox="0 0 24 24">--}}
+{{--                <path stroke="currentColor"--}}
+{{--                      stroke-linecap="round"--}}
+{{--                      stroke-linejoin="round"--}}
+{{--                      stroke-width="2"--}}
+{{--                      d=" M5 12h14m-7 7V5"/>--}}
+{{--            </svg>--}}
+{{--            <span class="sr-only">add course</span>--}}
+{{--        </button>--}}
+{{--    </div>--}}
 
 </div>

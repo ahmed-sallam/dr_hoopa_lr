@@ -2,6 +2,34 @@
     {{-- nvigation line --}}
 
     <div class="flex items-center justify-end gap-2 text-xs md:text-base">
+        <x-mary-dropdown>
+            <x-slot:trigger>
+                <div
+                        class="flex items-center h-10 gap-2 px-4 py-3 rounded-full w-28 btn-primary dark:text-base-300 dark:bg-white btn-sm btn">
+                    <svg class="h-4 font-semibold"
+                         viewBox="0 0 4 19"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                                d="M1.81732 1.96003C2.36953 1.96003 2.81719 2.40768 2.81719 2.9599C2.81719 3.51211 2.36953 3.95977 1.81732 3.95977C1.26511 3.95977 0.817449 3.51211 0.817449 2.9599C0.817449 2.40768 1.26511 1.96003 1.81732 1.96003ZM1.81732 8.24493C2.36953 8.24493 2.81719 8.69259 2.81719 9.2448C2.81719 9.79702 2.36953 10.2447 1.81732 10.2447C1.26511 10.2447 0.81745 9.79702 0.81745 9.2448C0.81745 8.69259 1.26511 8.24493 1.81732 8.24493ZM1.81732 14.5298C2.36953 14.5298 2.81719 14.9775 2.81719 15.5297C2.81719 16.0819 2.36954 16.5296 1.81732 16.5296C1.26511 16.5296 0.81745 16.0819 0.81745 15.5297C0.81745 14.9775 1.26511 14.5298 1.81732 14.5298Z"
+                                fill="currentColor"
+                                stroke="currentColor"
+                                stroke-width="1.14271"/>
+                    </svg>
+                    المزيد
+                </div>
+            </x-slot:trigger>
+
+            <x-mary-menu-item title="اضف كورس"
+                              href="{{route('admin.course.create', $course->id)}}"
+                              wire:navigate
+                              class="text-primary"/>
+            <x-mary-menu-item title="اضف درس"
+                              href="{{route('admin.course.create-lesson', $course->id)}}"
+                              wire:navigate
+                              class="text-primary"/>
+        </x-mary-dropdown>
+
         <div
                 class="flex flex-row-reverse flex-wrap items-center justify-start flex-1 gap-2 px-4 py-2 bg-dark rounded-3xl dark:bg-neutral">
             <a href="{{ route('admin.course.index') }}"
@@ -124,54 +152,54 @@
         </div>
     </div>
 
-    <div class="sticky left-0 z-20 flex flex-col items-end justify-center gap-4 bottom-10"
-         x-data="{ show_dropdown: false }">
-        <div x-show="show_dropdown"
-             class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownDefault">
-                <li>
-                    <button href="{{route('admin.course.create', $course->id)}}"
-                            wire:navigate
-                            x-on:click="show_dropdown=false"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                        اضف
-                        كورس
-                    </button>
-                </li>
+{{--    <div class="sticky left-0 z-20 flex flex-col items-end justify-center gap-4 bottom-10"--}}
+{{--         x-data="{ show_dropdown: false }">--}}
+{{--        <div x-show="show_dropdown"--}}
+{{--             class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">--}}
+{{--            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"--}}
+{{--                aria-labelledby="dropdownDefault">--}}
+{{--                <li>--}}
+{{--                    <button href="{{route('admin.course.create', $course->id)}}"--}}
+{{--                            wire:navigate--}}
+{{--                            x-on:click="show_dropdown=false"--}}
+{{--                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">--}}
+{{--                        اضف--}}
+{{--                        كورس--}}
+{{--                    </button>--}}
+{{--                </li>--}}
 
-                <li>
-                    <button
-                            href="{{route('admin.course.create-lesson', $course->id)}}"
-                            wire:navigate
-                            x-on:click="show_dropdown=false"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                        اضف
-                        درس
-                    </button>
-                </li>
-            </ul>
-        </div>
+{{--                <li>--}}
+{{--                    <button--}}
+{{--                            href="{{route('admin.course.create-lesson', $course->id)}}"--}}
+{{--                            wire:navigate--}}
+{{--                            x-on:click="show_dropdown=false"--}}
+{{--                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">--}}
+{{--                        اضف--}}
+{{--                        درس--}}
+{{--                    </button>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
 
-        <button type="button"
-                x-on:click="show_dropdown = !show_dropdown"
-                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-secondary
-            hover:scale-105 transition-all duration-300 shadow-md
-            shadow-primary dark:shadow-white/50 ">
-            <svg class="w-6 h-6 "
-                 aria-hidden="true"
-                 xmlns="http://www.w3.org/2000/svg"
-                 width="24"
-                 height="24"
-                 fill="none"
-                 viewBox="0 0 24 24">
-                <path stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d=" M5 12h14m-7 7V5"/>
-            </svg>
-            <span class="sr-only">add course</span>
-        </button>
-    </div>
+{{--        <button type="button"--}}
+{{--                x-on:click="show_dropdown = !show_dropdown"--}}
+{{--                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-secondary--}}
+{{--            hover:scale-105 transition-all duration-300 shadow-md--}}
+{{--            shadow-primary dark:shadow-white/50 ">--}}
+{{--            <svg class="w-6 h-6 "--}}
+{{--                 aria-hidden="true"--}}
+{{--                 xmlns="http://www.w3.org/2000/svg"--}}
+{{--                 width="24"--}}
+{{--                 height="24"--}}
+{{--                 fill="none"--}}
+{{--                 viewBox="0 0 24 24">--}}
+{{--                <path stroke="currentColor"--}}
+{{--                      stroke-linecap="round"--}}
+{{--                      stroke-linejoin="round"--}}
+{{--                      stroke-width="2"--}}
+{{--                      d=" M5 12h14m-7 7V5"/>--}}
+{{--            </svg>--}}
+{{--            <span class="sr-only">add course</span>--}}
+{{--        </button>--}}
+{{--    </div>--}}
 </div>
