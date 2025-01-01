@@ -1,17 +1,19 @@
 <div class="relative w-full h-56 p-2 mb-56 bg-center bg-no-repeat bg-cover border-2 md:mb-28 rounded-3xl border-base-300 dark:border-neutral "
      style="background: url({{ Storage::url($course->thumbnail) }})"
-     x-data="{ show_delete_confirm: false, selectedCourse:null }">
+     x-data="{ show_delete_confirm: false, selectedCourse:null }"
+     href="{{ Route::is('admin.*') ? route('admin.course.view', $course->id) : route('client.course.view', $course->id) }}"
+     wire:navigate class="text-white"
+>
     <div
             class="absolute left-0 right-0 w-[calc(100%-40px)] mx-auto rounded-3xl min-h-40 bg-primary dark:bg-neutral p-2 py-4 md:p-4 text-white bottom-[-200px] md:bottom-[-100px]">
         {{-- First Row --}}
         <div class="flex items-center justify-between ">
             <div class="flex flex-col">
-                <a href="{{ Route::is('admin.*') ? route('admin.course.view', $course->id) : route('client.course.view', $course->id) }}"
-                   wire:navigate class="text-white">
+{{--                <a >--}}
 
                     <h3 class="text-3xl font-semibold">
                         {{ $course->title }}</h3>
-                </a>
+{{--                </a>--}}
                 <h5 class="text-sm font-light">
                     {{ $course->sub_title }}</h5>
             </div>
@@ -81,7 +83,6 @@
                         </x-mary-menu-item>
                     @endcan
                 </x-mary-dropdown>
-
 
             @endcanany
 
