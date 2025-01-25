@@ -52,20 +52,6 @@ EOT;
             ];
         })->toArray());
 
-//        'cartItems': [
-//        {
-//            'name': product?.name,
-//          'quantity': selectedSizeAndColor.quantity,
-//          'price': product?.salePrice ?? product?.price,
-//        }
-//      ],
-//      'cartTotal': totalPrice,
-//      'shipping': ShippingMethodModel.selectedShippingMethodCost.value,
-//      'customer': customer,
-//      'currency': 'EGP',
-//      'payLoad': {},
-//      'sendEmail': true,
-//      'sendSMS': false,
 
         $this->paymentData = [
             'cartItems' => $this->cartItems->map(function ($item) {
@@ -93,7 +79,6 @@ EOT;
     public function createOrder()
     {
         // handle payment and order creation here
-//        $order = $this->form->createOrder(auth()->id(), $this->form->payment_method);
         DB::beginTransaction();
         try {
             $this->form->payment_status = 'paid';

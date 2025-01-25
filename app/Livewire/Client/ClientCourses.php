@@ -115,7 +115,6 @@ EOT;
                 'user_id' => auth()->id(),
             ]);
             $this->success('تمت إضافة الكورس إلى سلة المشتريات');
-//            $this->redirectRoute('user.cart', [auth()->user()->id], true, true);
 
         } else {
             $this->warning('الكورس موجود بالفعل في سلة المشتريات');

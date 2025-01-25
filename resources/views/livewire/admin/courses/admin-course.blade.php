@@ -74,9 +74,7 @@
     {{-- main contetn --}}
     <div
             class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px] md:pt-[100px]">
-{{--        <livewire:clinet.components.content-header :content="$course"--}}
-{{--                                                   :currentChildrenView="'one_course'"--}}
-{{--                                                   :key="'one_course' . $course->id"/>--}}
+
         <livewire:courses.components.content-header :content="$course"
                                                    :currentChildrenView="'one_course'"
                                                    :key="'one_course' . $course->id"/>
@@ -155,54 +153,4 @@
         </div>
     </div>
 
-{{--    <div class="sticky left-0 z-20 flex flex-col items-end justify-center gap-4 bottom-10"--}}
-{{--         x-data="{ show_dropdown: false }">--}}
-{{--        <div x-show="show_dropdown"--}}
-{{--             class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-dark bottom-14">--}}
-{{--            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"--}}
-{{--                aria-labelledby="dropdownDefault">--}}
-{{--                <li>--}}
-{{--                    <button href="{{route('admin.course.create', $course->id)}}"--}}
-{{--                            wire:navigate--}}
-{{--                            x-on:click="show_dropdown=false"--}}
-{{--                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">--}}
-{{--                        اضف--}}
-{{--                        كورس--}}
-{{--                    </button>--}}
-{{--                </li>--}}
-
-{{--                <li>--}}
-{{--                    <button--}}
-{{--                            href="{{route('admin.course.create-lesson', $course->id)}}"--}}
-{{--                            wire:navigate--}}
-{{--                            x-on:click="show_dropdown=false"--}}
-{{--                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">--}}
-{{--                        اضف--}}
-{{--                        درس--}}
-{{--                    </button>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </div>--}}
-
-{{--        <button type="button"--}}
-{{--                x-on:click="show_dropdown = !show_dropdown"--}}
-{{--                class="text-white bg-secondary hover:bg-secondary/80 focus:ring-4 focus:outline-none  font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-secondary--}}
-{{--            hover:scale-105 transition-all duration-300 shadow-md--}}
-{{--            shadow-primary dark:shadow-white/50 ">--}}
-{{--            <svg class="w-6 h-6 "--}}
-{{--                 aria-hidden="true"--}}
-{{--                 xmlns="http://www.w3.org/2000/svg"--}}
-{{--                 width="24"--}}
-{{--                 height="24"--}}
-{{--                 fill="none"--}}
-{{--                 viewBox="0 0 24 24">--}}
-{{--                <path stroke="currentColor"--}}
-{{--                      stroke-linecap="round"--}}
-{{--                      stroke-linejoin="round"--}}
-{{--                      stroke-width="2"--}}
-{{--                      d=" M5 12h14m-7 7V5"/>--}}
-{{--            </svg>--}}
-{{--            <span class="sr-only">add course</span>--}}
-{{--        </button>--}}
-{{--    </div>--}}
 </div>

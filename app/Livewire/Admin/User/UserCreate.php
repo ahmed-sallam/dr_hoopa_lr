@@ -28,14 +28,10 @@ class UserCreate extends Component
 
     public function save(): void
     {
-//        try {
             $this->form->store();
             $this->showModal = false;
             $this->success('تم إضافة المستخدم بنجاح');
             $this->dispatch('user-created');
-//        } catch (\Exception $e) {
-//            $this->error($e->getMessage());
-//        }
     }
 
     public function render()

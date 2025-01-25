@@ -75,11 +75,7 @@ class UserForm extends Form
         if ($this->avatar && !is_string($this->avatar)) {
             $this->avatar = $this->avatar->store('avatars', 'public');
         }
-        
-        // Ensure password is always set and hashed
-//        if (empty($this->password)) {
-//            $this->password = PasswordHelper::generate(); // Generate a secure random password if not provided
-//        }
+
         $data =  [
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
@@ -150,10 +146,6 @@ class UserForm extends Form
             'role_id' => $this->role_id,
         ];
 
-//        // Only update password if a new password is provided
-//        if (!empty($this->password)) {
-//            $updateData['password'] = bcrypt($this->password);
-//        }
 
         $this->user->update($updateData);
     }

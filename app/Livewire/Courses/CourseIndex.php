@@ -35,12 +35,6 @@ EOT;
     public ?Course $course = null;
     public ?Lesson $lesson = null;
 
-    // public bool $isCreateCourse = false;
-    // public bool $isEditCourse = false;
-    // public bool $showContent = true;
-    // public bool $isCreateLesson = false;
-    // public bool $isEditLesson = false;
-
     public array $availableChldrenViews = [
         'main_courses',
         'one_course',
@@ -65,10 +59,8 @@ EOT;
         $this->course = $selectedCourseId ? Course::with('children', 'lessons')->find($selectedCourseId) : null;
 
         // Order by id and get only parent courses
-        // $this->courses = Course::where('parent_id', null)->orderBy('id', 'desc')->get();
         $this->selectCourse($this->course);
 
-        // $this->createCourse();
     }
 
     public function render()
@@ -76,7 +68,7 @@ EOT;
         return view("livewire.courses.course-index")->layout("layouts.admin", [
             "title" => $this->title,
             "logo" => $this->logo,
-        ]); // Specify the layout directly here
+        ]);
     }
 
     public function selectCourse(?Course $course = null)
@@ -98,10 +90,7 @@ EOT;
             // $this->selectChildrenView("one_course");
         }
     }
-    // public function loadLessons()
-    // {
-    //     $this->lessons = $this->course->lessons()->orderBy(column: 'order')->get();
-    // }
+
 
     protected function setQueryParams($courseId)
     {
@@ -121,28 +110,7 @@ EOT;
         return $tree;
     }
 
-    // public function createCourse()
-    // {
-    //     $this->isCreateCourse = true;
-    //     $this->showContent = false;
-    // }
 
-    // public function createLesson(): void
-    // {
-    //     $this->isCreateLesson = true;
-    //     $this->showContent = false;
-    // }
-
-    // public function editCourse()
-    // {
-    //     $this->isEditCourse = true;
-    //     $this->showContent = false;
-    // }
-    // public function editLesson(): void
-    // {
-    //     $this->isEditLesson = true;
-    //     $this->showContent = false;
-    // }
 
     #[On("course-created")]
     #[On("lesson-saved")]

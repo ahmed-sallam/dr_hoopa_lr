@@ -77,11 +77,7 @@ EOT;
         $this->perPage = $this->perPageOptions[0];
         $this->sortBy = ['column' => 'id', 'direction' => 'asc', 'class' => 'text-red-500'];
         $this->roles = Role::all();
-        // $this->medicalCenters = MedicalCenter::all();
-        // $this->medicalCenters = Cache::remember('medical_centers', 60 * 60, function () {
-        //     return MedicalCenter::all();
-        // });
-        // $this->treatments = Treatment::all();
+
         $this->successMessage = __('success');
         $this->archivedMessage = __('archived');
     }

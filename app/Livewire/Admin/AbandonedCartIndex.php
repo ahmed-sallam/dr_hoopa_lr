@@ -84,7 +84,6 @@ EOT;
         $filters = [
             $this->searchWord !== '',
             $this->courseId > 0,
-            // $this->medicalCenterId > 0,
         ];
         return count(array_filter($filters));
     }
@@ -92,7 +91,6 @@ EOT;
     public function clearFilters(): void
     {
         $this->courseId = 0;
-        // $this->medicalCenterId = 0;
         $this->searchWord = '';
     }
 
