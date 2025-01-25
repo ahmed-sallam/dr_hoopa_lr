@@ -51,7 +51,7 @@
                     </div>
                     <div class="flex flex-col gap-6 mt-12">
                         @foreach ($courses as $k => $course)
-                            <livewire:clinet.components.main-course-row :$course
+                            <livewire:client.components.main-course-row :$course
                                                                         :key="$course->id"/>
                         @endforeach
                     </div>

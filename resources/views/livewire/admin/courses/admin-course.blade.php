@@ -142,7 +142,7 @@
         <div
                 class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
             @foreach ($course->children as $mCourse)
-                <livewire:clinet.components.course-row :course="$mCourse"
+                <livewire:client.components.course-row :course="$mCourse"
                                                        :key="'create-course-' . now()"/>
             @endforeach
 

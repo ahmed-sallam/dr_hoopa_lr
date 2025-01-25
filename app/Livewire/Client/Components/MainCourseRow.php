@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Clinet\Components;
+namespace App\Livewire\Client\Components;
 
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -15,7 +15,7 @@ class MainCourseRow extends Component
     }
     public function render()
     {
-        return view('livewire.clinet.components.main-course-row');
+        return view('livewire.client.components.main-course-row');
     }
 
     public function addToCart(): void

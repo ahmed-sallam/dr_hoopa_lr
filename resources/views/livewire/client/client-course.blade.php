@@ -48,7 +48,7 @@
     {{-- main contetn --}}
     <div
         class="grid w-full gap-4 mt-6 lg:grid-cols-12 lg:mt-10 relative pt-[100px] md:pt-[100px]">
-        <livewire:clinet.components.content-header :content="$course"
+        <livewire:client.components.content-header :content="$course"
             :currentChildrenView="'one_course'"
             :key="'one_course' . $course->id" />
 
@@ -114,7 +114,7 @@
         <div
             class="flex flex-col items-start justify-start gap-4 p-4 lg:col-span-8">
             @foreach ($course->children as $mCourse)
-                <livewire:clinet.components.course-row :course="$mCourse"
+                <livewire:client.components.course-row :course="$mCourse"
                     :key="'create-course-' . now()" />
             @endforeach
 

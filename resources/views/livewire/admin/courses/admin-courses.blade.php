@@ -93,7 +93,7 @@
                          x-transition:leave-start="transform translate-y-0 opacity-100"
                          x-transition:leave-end="transform -translate-y-4 opacity-0">
                         @foreach ($courses as $k => $course)
-                            <livewire:clinet.components.main-course-row :$course
+                            <livewire:client.components.main-course-row :$course
                                                                         :key="$course->id"/>
                         @endforeach
                     </div>

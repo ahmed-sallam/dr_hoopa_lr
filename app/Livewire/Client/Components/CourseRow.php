@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Clinet\Components;
+namespace App\Livewire\Client\Components;
 
 use App\Models\Course;
 use Livewire\Component;
@@ -11,7 +11,7 @@ class CourseRow extends Component
 
     public function render()
     {
-        return view('livewire.clinet.components.course-row');
+        return view('livewire.client.components.course-row');
     }
 
     public function addToCart(): void
